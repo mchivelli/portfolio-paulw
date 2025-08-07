@@ -1,25 +1,21 @@
 import { useState } from 'react';
 import { Terminal } from './components/Terminal';
 import { motion, AnimatePresence } from 'motion/react';
-import { SkillsPreview } from './components/SkillsPreview';
 import { ProjectsPage } from './components/ProjectsPage';
 import { SkillsPage } from './components/SkillsPage';
 import { ContactPage } from './components/ContactPage';
 import { Navbar } from './components/Navbar';
+import { Timeline } from './components/ui/timeline';
+import { timelineData } from './data/timeline';
 
 function App() {
   const [activeSection, setActiveSection] = useState<string>('about');
-  const [command, setCommand] = useState<string>('');
   const [previewData, setPreviewData] = useState<any>(null);
-  const [showPreview, setShowPreview] = useState(false);
   const [showHero, setShowHero] = useState(true);
   const [showFullProjectsPage, setShowFullProjectsPage] = useState(false);
   const [showSkillsPage, setShowSkillsPage] = useState(false);
   const [showContactPage, setShowContactPage] = useState(false);
   const [isTerminalFocused, setIsTerminalFocused] = useState(false);
-  const [showHeroTerminal, setShowHeroTerminal] = useState(false);
-  const [showMainTerminalOverlay, setShowMainTerminalOverlay] = useState(false);
-
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
     setIsTerminalFocused(false);
@@ -50,7 +46,6 @@ function App() {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
-    setTimeout(() => setCommand(''), 200);
   };
 
   const handleTerminalFocus = () => {
@@ -71,22 +66,13 @@ function App() {
     }
   };
 
-  const handleHeroTerminalToggle = () => {
-    setShowHeroTerminal(!showHeroTerminal);
-  };
-
-  const handleMainTerminalClick = () => {
-    // This function will now only be used for the overlay, 
-    // triggered after a command is executed.
-    if (!showMainTerminalOverlay) {
-      setShowMainTerminalOverlay(true);
-    }
-  };
-
   const handlePreviewUpdate = (data: any) => {
     setPreviewData(data);
-    setShowPreview(!!data);
   };
+
+
+
+
 
   // Show full projects page when projects section is active
   if (showFullProjectsPage) {
@@ -147,28 +133,28 @@ function App() {
           onTerminalFocus={handleTerminalFocus}
         />
 
-        {/* Matrix Rain Background */}
+        {/* Matrix Rain Background - Enhanced for terminal mode */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          {[...Array(30)].map((_, i) => (
+          {[...Array(60)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute text-terminal-green/30 font-mono text-xs select-none"
+              className="absolute text-terminal-green/40 font-mono text-xs select-none"
               style={{ 
                 left: `${Math.random() * 100}%`, 
                 top: '-50px',
               }}
               animate={{ 
                 y: ['0vh', '110vh'],
-                opacity: [0, Math.random() * 0.6 + 0.2, 0],
+                opacity: [0, Math.random() * 0.8 + 0.3, 0],
               }}
               transition={{
-                duration: Math.random() * 6 + 4,
+                duration: Math.random() * 5 + 3,
                 repeat: Infinity,
-                delay: Math.random() * 10,
+                delay: Math.random() * 8,
                 ease: "linear"
               }}
             >
-              {['0', '1', '01', '10', '101', '010'][Math.floor(Math.random() * 6)]}
+              {['0', '1', '01', '10', '101', '010', '001', '110', '011', '100'][Math.floor(Math.random() * 10)]}
             </motion.div>
           ))}
         </div>
@@ -186,7 +172,7 @@ function App() {
               <div className="h-full bg-gradient-to-br from-black/60 via-black/40 to-black/60 backdrop-blur-md border border-terminal-border rounded-lg shadow-2xl shadow-terminal-cyan/10">
                 <Terminal 
                   onPreviewUpdate={handlePreviewUpdate} 
-                  command={command}
+                  command=""
                   isFullScreen={true}
                   onTerminalInteraction={handleTerminalInteraction}
                   onClose={() => setIsTerminalFocused(false)}
@@ -215,90 +201,115 @@ function App() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                   >
                     <h2 className="text-2xl font-bold mb-2 glow-text flex items-center gap-3">
-                      <span className="text-3xl text-terminal-cyan">⚡</span>
+                      <span className="text-3xl text-terminal-cyan">◆</span>
                       Command Center
                     </h2>
                     <p className="text-terminal-cyan/70 text-sm">Interactive command options and previews</p>
                   </motion.div>
                 </div>
 
-                {/* Command Grid */}
+                {/* Terminal Output Preview UI */}
                 <div className="flex-1 p-6 overflow-y-auto">
                   <motion.div 
-                    className="grid gap-4"
+                    className="space-y-4"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                   >
-                    {/* Navigation Commands */}
-                    <div className="space-y-3">
-                      <h3 className="text-lg font-semibold text-terminal-green flex items-center gap-2">
-                        <span className="text-xl">🧭</span>
-                        Navigation Commands
-                      </h3>
-                      <div className="grid gap-2">
-                        {[
-                          { cmd: 'about', desc: 'Learn about Paul M.', icon: '👤', color: 'cyan' },
-                          { cmd: 'projects', desc: 'View portfolio projects', icon: '🚀', color: 'green' },
-                          { cmd: 'skills', desc: 'Technical expertise', icon: '⚡', color: 'yellow' },
-                          { cmd: 'contact', desc: 'Get in touch', icon: '📧', color: 'blue' }
-                        ].map((item, index) => (
-                          <motion.button
-                            key={item.cmd}
-                            onClick={() => setCommand(`${item.cmd}`)}
-                            className={`p-3 rounded-lg border border-terminal-cyan/30 bg-gradient-to-r from-terminal-cyan/10 to-terminal-cyan/5 hover:from-terminal-cyan/20 hover:to-terminal-cyan/10 transition-all duration-300 text-left group`}
-                            whileHover={{ scale: 1.02, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.6 + index * 0.1 }}
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="text-xl">{item.icon}</span>
-                              <div className="flex-1">
-                                <div className="font-mono font-bold text-terminal-cyan group-hover:glow-text">{item.cmd}</div>
-                                <div className="text-xs text-terminal-cyan/70">{item.desc}</div>
-                              </div>
-                              <span className="text-terminal-cyan/50 group-hover:text-terminal-cyan transition-colors">▶</span>
-                            </div>
-                          </motion.button>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Live Terminal Output */}
+                    {previewData?.type === 'command_output' ? (
+                      <motion.div 
+                        className="bg-gradient-to-r from-terminal-cyan/10 to-blue-500/10 rounded-lg border border-terminal-cyan/30 p-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <h3 className="text-lg font-semibold text-terminal-cyan mb-3 flex items-center gap-2">
+                          <span className="text-xl">▣</span>
+                          Live Terminal Output
+                          <span className="text-xs text-terminal-cyan/70 ml-2">
+                            {previewData.timestamp}
+                          </span>
+                        </h3>
+                        <div className="bg-black/40 rounded p-3 font-mono text-sm">
+                          {previewData.content}
+                        </div>
+                      </motion.div>
+                    ) : previewData?.type === 'clear' ? (
+                      <motion.div 
+                        className="bg-gradient-to-r from-terminal-green/10 to-emerald-500/10 rounded-lg border border-terminal-green/30 p-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <h3 className="text-lg font-semibold text-terminal-green mb-3 flex items-center gap-2">
+                          <span className="text-xl">◀</span>
+                          Terminal Cleared
+                        </h3>
+                        <div className="text-terminal-green/70 text-sm">
+                          Terminal output has been cleared. Ready for new commands.
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        className="bg-gradient-to-r from-terminal-cyan/10 to-purple-500/10 rounded-lg border border-terminal-cyan/30 p-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <h3 className="text-lg font-semibold text-terminal-cyan mb-3 flex items-center gap-2">
+                          <span className="text-xl">◉</span>
+                          Terminal Ready
+                        </h3>
+                        <div className="bg-black/40 rounded p-3 font-mono text-sm space-y-2">
+                          <div className="text-terminal-cyan">Execute commands to see live output here</div>
+                          <div className="text-terminal-green text-xs">
+                            Available commands: projects, skills, contact, help, clear
+                          </div>
+                          <div className="text-terminal-yellow text-xs">
+                            Try: "projects view 1" for detailed project info
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
 
-                    {/* System Commands */}
+                    {/* Usage Instructions */}
                     <div className="space-y-3">
                       <h3 className="text-lg font-semibold text-terminal-green flex items-center gap-2">
-                        <span className="text-xl">⚙️</span>
-                        System Commands
+                        <span className="text-xl">▶</span>
+                        How to Use Terminal
                       </h3>
-                      <div className="grid gap-2">
-                        {[
-                          { cmd: 'help', desc: 'Show all commands', icon: '❓', color: 'cyan' },
-                          { cmd: 'clear', desc: 'Clear terminal', icon: '🧹', color: 'yellow' },
-                          { cmd: 'history', desc: 'Command history', icon: '📜', color: 'blue' },
-                          { cmd: 'tree', desc: 'Portfolio structure', icon: '🌳', color: 'green' }
-                        ].map((item, index) => (
-                          <motion.button
-                            key={item.cmd}
-                            onClick={() => setCommand(`${item.cmd}`)}
-                            className={`p-3 rounded-lg border border-terminal-cyan/30 bg-gradient-to-r from-terminal-cyan/10 to-terminal-cyan/5 hover:from-terminal-cyan/20 hover:to-terminal-cyan/10 transition-all duration-300 text-left group`}
-                            whileHover={{ scale: 1.02, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.8 + index * 0.1 }}
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="text-xl">{item.icon}</span>
-                              <div className="flex-1">
-                                <div className="font-mono font-bold text-terminal-cyan group-hover:glow-text">{item.cmd}</div>
-                                <div className="text-xs text-terminal-cyan/70">{item.desc}</div>
-                              </div>
-                              <span className="text-terminal-cyan/50 group-hover:text-terminal-cyan transition-colors">▶</span>
+                      
+                      <div className="bg-gradient-to-r from-terminal-green/10 to-terminal-cyan/10 rounded-lg border border-terminal-green/30 p-4">
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <span className="text-terminal-yellow font-semibold">1. Type Commands:</span>
+                            <div className="text-terminal-cyan/70 ml-4 mt-1">
+                              Use the input field in the terminal on the left
                             </div>
-                          </motion.button>
-                        ))}
+                          </div>
+                          
+                          <div>
+                            <span className="text-terminal-yellow font-semibold">2. Use Suggestions:</span>
+                            <div className="text-terminal-cyan/70 ml-4 mt-1">
+                              Suggestions appear below the input as you type
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <span className="text-terminal-yellow font-semibold">3. Quick Commands:</span>
+                            <div className="text-terminal-cyan/70 ml-4 mt-1">
+                              Click the quick command buttons below the terminal
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <span className="text-terminal-yellow font-semibold">4. Live Preview:</span>
+                            <div className="text-terminal-cyan/70 ml-4 mt-1">
+                              Command output appears here in real-time
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -306,7 +317,7 @@ function App() {
                   {/* Quick Tips */}
                   <div className="mt-6 p-4 bg-gradient-to-r from-terminal-green/10 to-terminal-cyan/10 rounded-lg border border-terminal-green/30">
                     <h4 className="font-semibold text-terminal-green mb-2 flex items-center gap-2">
-                      <span>💡</span>
+                      <span>◆</span>
                       Quick Tips
                     </h4>
                     <div className="space-y-1 text-xs text-terminal-cyan/70">
@@ -334,28 +345,28 @@ function App() {
         onTerminalFocus={handleTerminalFocus}
       />
 
-      {/* Matrix-style background */}
+      {/* Matrix-style background - Enhanced density and visibility */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => (
+        {[...Array(80)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute text-terminal-green/20 font-mono text-xs select-none"
+            className="absolute text-terminal-green/35 font-mono text-xs select-none"
             style={{ 
               left: `${Math.random() * 100}%`, 
               top: '-50px',
             }}
             animate={{ 
               y: ['0vh', '110vh'],
-              opacity: [0, Math.random() * 0.6 + 0.2, 0],
+              opacity: [0, Math.random() * 0.8 + 0.3, 0],
             }}
             transition={{
-              duration: Math.random() * 6 + 4,
+              duration: Math.random() * 5 + 3,
               repeat: Infinity,
-              delay: Math.random() * 10,
+              delay: Math.random() * 8,
               ease: "linear"
             }}
           >
-            {['0', '1', '01', '10', '101', '010'][Math.floor(Math.random() * 6)]}
+            {['0', '1', '01', '10', '101', '010', '001', '110', '011', '100'][Math.floor(Math.random() * 10)]}
           </motion.div>
         ))}
       </div>
@@ -423,11 +434,11 @@ function App() {
                         </div>
                       </div>
                       
-                      {/* Floating particles */}
+                      {/* Floating particles - positioned behind the portrait */}
                       {[...Array(8)].map((_, i) => (
                         <motion.div
                           key={i}
-                          className="absolute w-2 h-2 bg-terminal-cyan rounded-full"
+                          className="absolute w-2 h-2 bg-terminal-cyan rounded-full -z-10"
                           style={{
                             top: `${20 + Math.random() * 60}%`,
                             left: `${20 + Math.random() * 60}%`,
@@ -488,7 +499,7 @@ function App() {
                       transition={{ duration: 0.8, delay: 1.1 }}
                     >
                       <motion.button
-                        onClick={handleHeroTerminalToggle}
+                        onClick={handleTerminalFocus}
                         className="px-8 py-4 bg-gradient-to-r from-terminal-cyan to-blue-500 text-black font-bold rounded-lg hover:shadow-lg hover:shadow-terminal-cyan/50 transition-all duration-300"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
@@ -536,174 +547,22 @@ function App() {
           )}
         </AnimatePresence>
 
-        {/* Main Content */}
-        <main className="flex-1 flex relative">
-          {/* Terminal Panel */}
+        {/* Main Content - Timeline */}
+        <main className="flex-1 relative">
           <motion.div 
-            className={`flex-1 ${showPreview ? 'lg:w-[70%]' : 'w-full'} relative`}
+            className="w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-
-            
-            <div 
-              className="h-full bg-black/20 backdrop-blur-sm border-r border-terminal-border"
-            >
-              <Terminal 
-                onPreviewUpdate={handlePreviewUpdate} 
-                command={command}
-                onCommandExecute={handleMainTerminalClick}
-                onNavigate={handleSectionChange}
-                activeSection={activeSection}
-                isTerminalPage={false}
-                hideTerminal={false}
-              />
-            </div>
+            <Timeline data={timelineData} />
           </motion.div>
-
-          {/* Enhanced Preview Panel */}
-          <AnimatePresence>
-            {showPreview && (
-              <motion.aside
-                initial={{ x: '100%', opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: '100%', opacity: 0 }}
-                transition={{ type: 'spring', damping: 20 }}
-                className="hidden lg:block lg:w-[30%] bg-gradient-to-b from-black/60 via-black/40 to-black/60 backdrop-blur-md border-l border-terminal-border"
-              >
-                <div className="h-full overflow-y-auto p-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  >
-                    <h2 className="text-xl font-bold mb-6 glow-text flex items-center gap-2">
-                      <span className="text-2xl text-terminal-cyan">▣</span>
-                      Preview Panel
-                    </h2>
-                  </motion.div>
-                
-                  {/* Dynamic Content Based on Active Section */}
-                  <AnimatePresence mode="wait">
-                    {previewData?.type === 'skills' ? (
-                      <motion.div
-                        key="skills-preview"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.6 }}
-                        className="h-full overflow-y-auto"
-                      >
-                        <SkillsPreview />
-                      </motion.div>
-                    ) : (
-                      <motion.div 
-                        key="default-preview"
-                        className="text-center py-12"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <div className="text-6xl mb-4 text-terminal-cyan/50">◈</div>
-                        <p className="text-terminal-cyan/50">Execute commands to see preview</p>
-                        <p className="text-terminal-cyan/30 text-sm mt-2">Terminal-focused interface</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </motion.aside>
-            )}
-          </AnimatePresence>
         </main>
       </div>
 
-      {/* Hero Terminal Overlay */}
-      <AnimatePresence>
-        {showHeroTerminal && (
-          <motion.div
-            className="fixed inset-0 z-[60]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Backdrop */}
-            <div 
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" 
-              onClick={() => setShowHeroTerminal(false)}
-            />
-            
-            {/* Terminal Container */}
-            <div className="relative flex items-center justify-center min-h-screen p-4">
-              <motion.div
-                className="relative w-full max-w-5xl h-[80vh] max-h-[600px]"
-                initial={{ scale: 0.8, y: 50 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.8, y: 50 }}
-                transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Terminal 
-                  onPreviewUpdate={handlePreviewUpdate} 
-                  command={command}
-                  isFullScreen={true}
-                  onTerminalInteraction={handleTerminalInteraction}
-                  onClose={() => setShowHeroTerminal(false)}
-                  isTerminalPage={false}
-                  activeSection={activeSection}
-                  hideTerminal={false}
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Main Terminal Overlay */}
-      <AnimatePresence>
-        {showMainTerminalOverlay && (
-          <motion.div
-            className="fixed inset-0 z-[70]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Backdrop */}
-            <div 
-              className="absolute inset-0 bg-black/80 backdrop-blur-md cursor-pointer" 
-              onClick={() => setShowMainTerminalOverlay(false)}
-            />
-            
-            {/* Terminal Container */}
-            <div className="relative flex items-center justify-center min-h-screen p-4">
-              <motion.div
-                className="relative w-full max-w-6xl h-[85vh] max-h-[700px] mx-auto"
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                onClick={(e) => e.stopPropagation()}
-                style={{ transform: 'translate(-50%, -50%)', position: 'absolute', top: '50%', left: '50%' }}
-              >
-                <Terminal 
-                  onPreviewUpdate={handlePreviewUpdate} 
-                  command={command}
-                  isFullScreen={true}
-                  onTerminalInteraction={() => {}}
-                  onClose={() => setShowMainTerminalOverlay(false)}
-                  onNavigate={handleSectionChange}
-                  activeSection={activeSection}
-                  isTerminalPage={false}
-                  hideTerminal={false}
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+
     </div>
   );
 }
