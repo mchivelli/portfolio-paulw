@@ -106,7 +106,7 @@ export const LinkPreview = ({
           className="[transform-origin:var(--radix-hover-card-content-transform-origin)]"
           side="top"
           align="center"
-          sideOffset={10}
+          sideOffset={-8000}
         >
           <AnimatePresence>
             {isOpen && (
@@ -114,7 +114,7 @@ export const LinkPreview = ({
                 initial={{ opacity: 0, y: 20, scale: 0.6 }}
                 animate={{
                   opacity: 1,
-                  y: 0,
+                  y: -600,
                   scale: 1,
                   transition: {
                     type: "spring",
@@ -126,6 +126,7 @@ export const LinkPreview = ({
                 className="shadow-xl rounded-xl"
                 style={{
                   x: translateX,
+                  transform: 'translateY(-800px)',
                 }}
               >
                 <a

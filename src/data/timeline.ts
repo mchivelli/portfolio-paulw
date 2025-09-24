@@ -5,213 +5,222 @@ export interface TimelineEntry {
   content: React.ReactNode;
 }
 
-export const timelineData: TimelineEntry[] = [
+// Helper function to create a card element with translation support
+const createCard = (type: 'work' | 'education', entryKey: string, dateRange: string, t: any) => {
+  const isWork = type === 'work';
+  const entry = t(`timeline.entries.${entryKey}`, { returnObjects: true });
+  
+  return React.createElement('div', {
+    key: `card-${type}-${entryKey}`,
+    className: `rounded-xl border ${isWork ? 'border-primary-purple/60 ring-1 ring-primary-purple/20' : 'border-primary-yellow/60 ring-1 ring-primary-yellow/20'} bg-black/40 p-4 md:p-6 hover:bg-black/60 transition-all hover:shadow-[0_0_24px_${isWork ? 'rgba(139,92,246,0.18)' : 'rgba(234,179,8,0.18)'}]`
+  }, [
+    React.createElement('div', { key: 'hdr', className: "flex items-center justify-between mb-2" }, [
+      React.createElement('span', { 
+        key: 'icon', 
+        className: `${isWork ? 'text-primary-purple' : 'text-primary-yellow'} font-semibold` 
+      }, `${isWork ? '💼' : '🎓'} ${t(`timeline.${type}`)}`),
+      React.createElement('span', { 
+        key: 'date', 
+        className: `text-[11px] md:text-xs px-2 py-0.5 rounded-full border ${isWork ? 'border-primary-purple/40 bg-primary-purple/10 text-primary-purple' : 'border-primary-yellow/40 bg-primary-yellow/10 text-primary-yellow'}` 
+      }, dateRange)
+    ]),
+    React.createElement('div', { 
+      key: 't', 
+      className: `font-semibold ${isWork ? 'text-primary-purple' : 'text-primary-yellow'}` 
+    }, entry.title),
+    entry.company && React.createElement('div', { 
+      key: 'company', 
+      className: `${isWork ? 'text-primary-purple/90' : 'text-primary-yellow/90'} text-sm mt-0.5 font-medium` 
+    }, entry.company),
+    entry.focus && React.createElement('div', { 
+      key: 'focus', 
+      className: `${isWork ? 'text-primary-purple/80' : 'text-primary-yellow/80'} text-sm mt-1` 
+    }, entry.focus),
+    entry.description && React.createElement('div', { 
+      key: 'd', 
+      className: `${isWork ? 'text-primary-purple/80' : 'text-primary-yellow/80'} text-sm mt-1 italic` 
+    }, `(${entry.description})`),
+    entry.location && React.createElement('div', { 
+      key: 'loc', 
+      className: `text-[12px] md:text-xs ${isWork ? 'text-primary-purple/70' : 'text-primary-yellow/70'} mt-2` 
+    }, entry.location)
+  ]);
+};
+
+// Timeline data factory function that takes translation function
+export const createTimelineData = (t: any): TimelineEntry[] => [
+  {
+    title: "2025 – Present",
+    content: React.createElement('div', {}, [
+      React.createElement('div', {
+        key: 'cards-present',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
+      }, [
+        createCard('work', 'civilServices', '2025 – Present', t)
+      ])
+    ])
+  },
+  {
+    title: "2022 – Present",
+    content: React.createElement('div', {}, [
+      React.createElement('div', {
+        key: 'cards',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
+      }, [
+        createCard('education', 'htlWienWest', '2022 – Present', t)
+      ])
+    ])
+  },
   {
     title: "2024",
     content: React.createElement('div', {}, [
-      React.createElement('p', { 
-        key: 'p1',
-        className: "mb-8 text-xs font-normal text-terminal-cyan md:text-sm" 
-      }, "Senior Full-Stack Developer - Leading innovative web applications with modern technologies"),
-      React.createElement('div', { 
-        key: 'skills',
-        className: "mb-6 space-y-2" 
+      React.createElement('div', {
+        key: 'cards-2024',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
       }, [
-        React.createElement('div', { 
-          key: 's1',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon1', className: "text-terminal-cyan" }, "▶"),
-          "React, TypeScript, Node.js, Python"
-        ]),
-        React.createElement('div', { 
-          key: 's2',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon2', className: "text-terminal-cyan" }, "▶"),
-          "Microservices, Docker, Kubernetes, AWS"
-        ]),
-        React.createElement('div', { 
-          key: 's3',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon3', className: "text-terminal-cyan" }, "▶"),
-          "Blockchain, DeFi, Smart Contracts"
-        ])
-      ]),
-      React.createElement('div', { 
-        key: 'images',
-        className: "grid grid-cols-2 gap-4" 
-      }, [
-        React.createElement('img', {
-          key: 'img1',
-          src: "/img/portrait1.png",
-          alt: "Portfolio Project",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img2',
-          src: "/img/portrait2.png",
-          alt: "Development Work",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img3',
-          src: "/img/portrait1.png",
-          alt: "Technical Architecture",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img4',
-          src: "/img/portrait2.png",
-          alt: "Innovation Projects",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        })
+        createCard('education', 'htlWienWest', '2024', t),
+        createCard('work', 'cashierXXXLutz2024', '2024', t)
       ])
-    ]),
+    ])
   },
   {
-    title: "2022-2023",
+    title: "2023",
     content: React.createElement('div', {}, [
-      React.createElement('p', { 
-        key: 'p1',
-        className: "mb-8 text-xs font-normal text-terminal-cyan md:text-sm" 
-      }, "Full-Stack Developer - Specialized in modern web technologies and scalable architectures"),
-      React.createElement('p', { 
-        key: 'p2',
-        className: "mb-8 text-xs font-normal text-terminal-cyan/80 md:text-sm" 
-      }, "Led development of multiple high-performance applications using React, Node.js, and cloud technologies."),
-      React.createElement('div', { 
-        key: 'images',
-        className: "grid grid-cols-2 gap-4" 
+      React.createElement('div', {
+        key: 'cards-2023',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
       }, [
-        React.createElement('img', {
-          key: 'img1',
-          src: "/img/portrait2.png",
-          alt: "Web Development",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img2',
-          src: "/img/portrait1.png",
-          alt: "System Design",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img3',
-          src: "/img/portrait2.png",
-          alt: "API Development",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img4',
-          src: "/img/portrait1.png",
-          alt: "Database Optimization",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        })
+        createCard('education', 'htlWienWest', '2023', t),
+        createCard('work', 'adminAssistantHodlmayr', '2023', t),
+        createCard('work', 'cashierXXXLutz2023', '2023', t)
       ])
-    ]),
+    ])
   },
   {
-    title: "2020-2021",
+    title: "2022 – 2023",
     content: React.createElement('div', {}, [
-      React.createElement('p', { 
-        key: 'p1',
-        className: "mb-4 text-xs font-normal text-terminal-cyan md:text-sm" 
-      }, "Junior Developer - Started journey in professional software development"),
-      React.createElement('div', { 
-        key: 'achievements',
-        className: "mb-8" 
+      React.createElement('div', {
+        key: 'cards-2022-2023',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
       }, [
-        React.createElement('div', { 
-          key: 'a1',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon1', className: "text-terminal-cyan" }, "✓"),
-          "Mastered JavaScript and modern frameworks"
-        ]),
-        React.createElement('div', { 
-          key: 'a2',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon2', className: "text-terminal-cyan" }, "✓"),
-          "Built first full-stack applications"
-        ]),
-        React.createElement('div', { 
-          key: 'a3',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon3', className: "text-terminal-cyan" }, "✓"),
-          "Learned cloud deployment and DevOps"
-        ]),
-        React.createElement('div', { 
-          key: 'a4',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon4', className: "text-terminal-cyan" }, "✓"),
-          "Contributed to open-source projects"
-        ]),
-        React.createElement('div', { 
-          key: 'a5',
-          className: "flex items-center gap-2 text-xs text-terminal-green md:text-sm" 
-        }, [
-          React.createElement('span', { key: 'icon5', className: "text-terminal-cyan" }, "✓"),
-          "Developed problem-solving and debugging skills"
-        ])
-      ]),
-      React.createElement('div', { 
-        key: 'images',
-        className: "grid grid-cols-2 gap-4" 
-      }, [
-        React.createElement('img', {
-          key: 'img1',
-          src: "/img/portrait1.png",
-          alt: "Learning Journey",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img2',
-          src: "/img/portrait2.png",
-          alt: "First Projects",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img3',
-          src: "/img/portrait1.png",
-          alt: "Team Collaboration",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        }),
-        React.createElement('img', {
-          key: 'img4',
-          src: "/img/portrait2.png",
-          alt: "Skill Development",
-          width: 500,
-          height: 500,
-          className: "h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
-        })
+        createCard('education', 'htlWienWest', '2022 – 2023', t),
+        createCard('work', 'eventStaff', '2022 – 2023', t)
       ])
-    ]),
+    ])
   },
+  {
+    title: "2021 – 2022",
+    content: React.createElement('div', {}, [
+      React.createElement('div', {
+        key: 'cards-2021-2022',
+        className: "grid grid-cols-1 gap-4 md:gap-6"
+      }, [
+        createCard('work', 'contactTracing', '2021 – 2022', t)
+      ])
+    ])
+  },
+  {
+    title: "2021",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2021', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('work', 'realEstateAgent', '2021', t),
+        createCard('work', 'laborsIntake', '2021', t)
+      ])
+    ])
+  },
+  {
+    title: "2020",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2020', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('work', 'financialConsultant', '2020', t)
+      ])
+    ])
+  },
+  {
+    title: "2019 – 2020",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2019-2020', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'vocationalConstruction', '2019 – 2020', t),
+        createCard('work', 'apprenticeDrywall', '2019 – 2020', t)
+      ])
+    ])
+  },
+  {
+    title: "2019",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2019', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('work', 'internOVB', '02/2019 – 04/2019', t)
+      ])
+    ])
+  },
+  {
+    title: "2018 – 2019",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2018-2019', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'vocationalOffice', '2018 – 2019', t)
+      ])
+    ])
+  },
+  {
+    title: "2018",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2018', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'youthWorkshop', '06/2018 – 08/2018', t)
+      ])
+    ])
+  },
+  {
+    title: "2017 – 2018",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2017-2018', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'compulsorySchool', '2017 – 2018', t)
+      ])
+    ])
+  },
+  {
+    title: "2013 – 2017",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2013-2017', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'highSchool', '2013 – 2017', t)
+      ])
+    ])
+  },
+  {
+    title: "2011 – 2013",
+    content: React.createElement('div', {}, [
+      React.createElement('div', { 
+        key: 'cards-2011-2013', 
+        className: "grid grid-cols-1 gap-4 md:gap-6" 
+      }, [
+        createCard('education', 'bernoulligymnasium', '2011 – 2013', t)
+      ])
+    ])
+  }
 ];
+
+// Export the timeline data - this will be used by the Timeline component
+export const timelineData: TimelineEntry[] = [];

@@ -9,115 +9,231 @@ export interface Project {
   url: string;
   liveUrl?: string;
   features?: string[];
+  category?: ProjectCategory;
+  status?: 'completed' | 'coming-soon';
+}
+
+// Project categories for better organization
+export enum ProjectCategory {
+  WEB_DEVELOPMENT = "Web Development",
+  GAME_DEVELOPMENT = "Game Development", 
+  MINECRAFT_MODS = "Minecraft Mods",
+  AUTOMATION = "Automation & Tools",
+  MOBILE_APPS = "Mobile Apps",
+  DATA_ANALYSIS = "Data Analysis"
 }
 
 export const projects: Project[] = [
+  // Web Development Projects
   {
     id: 1,
-    title: "Admin Dashboard",
-    description: "Modern analytics platform with real-time data visualization",
-    longDescription: "A comprehensive admin dashboard built with React and TypeScript, featuring real-time data updates, interactive charts, and a responsive design. Integrated with various APIs to provide meaningful insights.",
-    tech: ["React", "TypeScript", "D3.js", "Node.js", "WebSocket"],
-    image: "/img/portrait1.png",
-    images: ["/img/portrait1.png", "/img/portrait2.png", "/img/portrait1.png"],
-    url: "https://github.com/paulm/admin-dashboard",
-    liveUrl: "https://dashboard.example.com",
+    title: "EpicWars CvC - Minecraft SMP Platform",
+    description: "Complete ecosystem for modded Minecraft SMP with 300+ members",
+    longDescription: "A comprehensive web platform and game server infrastructure for a modded Minecraft Survival Multiplayer community. Features a full-stack web application with forums, wiki, admin/user management systems, and interconnected features running on a dedicated Ubuntu server.",
+    tech: ["Node.js", "React", "PostgreSQL", "Ubuntu Server", "Minecraft Server", "PHP", "JavaScript", "HTML/CSS"],
+    image: "/EWWebsite1.png",
+    images: ["/EWWebsite1.png", "/EWWebsite2.png"],
+    url: "https://github.com/paulm/epicwars-cvc",
+    liveUrl: "https://epicwarscvc.com",
+    category: ProjectCategory.WEB_DEVELOPMENT,
+    status: 'completed',
     features: [
-      "Real-time data synchronization",
-      "Interactive D3.js visualizations",
-      "User permission management",
-      "Export functionality"
+      "Community forums and wiki",
+      "Advanced user/admin management", 
+      "Server statistics and monitoring",
+      "Player progression tracking",
+      "Event management system",
+      "Integrated mod support",
+      "Real-time server status",
+      "Custom authentication system"
     ]
   },
+  {
+    id: 9,
+    title: "Zivildienst Management Platform",
+    description: "Community service organization platform with ticket tracking",
+    longDescription: "A web-based management system for community service (Zivildienst) operations featuring information dissemination, ticket tracking, weekly cooking assignments, and discussion forums. Currently in development to streamline organizational workflows.",
+    tech: ["React", "Node.js", "Express", "PostgreSQL", "Socket.io", "JWT"],
+    image: "/ZiviDienst1.png",
+    images: ["/ZiviDienst1.png", "/ZiviDienst2.png"],
+    url: "https://github.com/paulm/zivildienst-platform",
+    category: ProjectCategory.WEB_DEVELOPMENT,
+    status: 'coming-soon',
+    features: [
+      "Ticket tracking system",
+      "Weekly duty assignments", 
+      "Discussion forums",
+      "User role management",
+      "Task scheduling",
+      "Document management",
+      "Real-time notifications",
+      "Reporting dashboard"
+    ]
+  },
+
+  // Discord Bots & Automation
   {
     id: 2,
-    title: "CLI Tool",
-    description: "Developer productivity toolkit for automated workflows",
-    longDescription: "A powerful command-line interface tool designed to streamline development workflows. Features include automated testing, deployment scripts, and custom task runners.",
-    tech: ["Python", "Click", "Docker", "GitHub Actions"],
-    image: "/img/portrait2.png",
-    images: ["/img/portrait2.png", "/img/portrait1.png"],
-    url: "https://github.com/paulm/cli-tool",
+    title: "Minecraft SMP Discord Bot",
+    description: "Administrative assistant bot for server management and community engagement",
+    longDescription: "A sophisticated Discord bot designed specifically for Minecraft SMP server administration. Enables admins to assign tasks, track progress, manage changelogs, and create announcements with seamless integration to the server ecosystem.",
+    tech: ["Node.js", "Discord.js", "SQLite", "JavaScript", "REST API"],
+    image: "/DiscordBot.png",
+    images: ["/DiscordBot.png", "/DiscordBot2.png"],
+    url: "https://github.com/paulm/smp-discord-bot",
+    category: ProjectCategory.AUTOMATION,
+    status: 'completed',
     features: [
-      "Automated testing pipeline",
-      "Docker container management",
-      "Custom script execution",
-      "Plugin architecture"
+      "Task assignment and tracking",
+      "Automated changelog generation",
+      "Community announcements",
+      "Server status monitoring",
+      "Player statistics integration",
+      "Moderation tools",
+      "Custom command system",
+      "Admin permission management"
     ]
   },
+
+  // Minecraft Mods
   {
     id: 3,
-    title: "E-commerce Platform",
-    description: "Full-stack shopping experience with payment integration",
-    longDescription: "A modern e-commerce platform built with Next.js and integrated with Stripe for secure payment processing. Features include inventory management, order tracking, and customer analytics.",
-    tech: ["Next.js", "Stripe", "PostgreSQL", "Redis", "Tailwind CSS"],
-    image: "/img/portrait1.png",
-    images: ["/img/portrait1.png", "/img/portrait2.png"],
-    url: "https://github.com/paulm/ecommerce",
-    liveUrl: "https://shop.example.com",
+    title: "War 'N Taxes - Minecraft Mod",
+    description: "Popular Minecolonies addon with 150,000+ downloads on CurseForge",
+    longDescription: "A comprehensive addon mod for Minecolonies that introduces tax generation systems and war mechanics. Downloaded over 150,000 times on CurseForge, this mod adds strategic depth to colony management with economic and military features.",
+    tech: ["Java", "Minecraft Forge", "Gradle", "JSON", "Minecolonies API"],
+    image: "/WnTMod.png",
+    images: ["/WnTMod.png"],
+    url: "https://github.com/paulm/war-n-taxes",
+    liveUrl: "https://www.curseforge.com/minecraft/mc-mods/war-n-taxes",
+    category: ProjectCategory.MINECRAFT_MODS,
+    status: 'completed',
     features: [
-      "Secure payment processing",
-      "Real-time inventory updates",
-      "Order tracking system",
-      "Customer analytics dashboard"
+      "Tax collection system",
+      "War mechanics and combat",
+      "Colony economic management",
+      "Resource taxation algorithms",
+      "Military unit recruitment",
+      "Diplomatic relations system",
+      "Custom GUI interfaces",
+      "Multiplayer compatibility"
     ]
   },
+
   {
     id: 4,
-    title: "Task Management App",
-    description: "Collaborative project management tool with real-time updates",
-    longDescription: "A Trello-inspired task management application with drag-and-drop functionality, real-time collaboration, and team analytics.",
-    tech: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS"],
-    image: "/img/portrait2.png",
-    images: ["/img/portrait2.png", "/img/portrait1.png"],
-    url: "https://github.com/paulm/task-manager",
+    title: "Rank Restriction Mod",
+    description: "Administrative mod for item/block restrictions based on player ranks",
+    longDescription: "A server administration mod that allows admins to set specific item and block restrictions based on player ranks. Fully integrated with FTBRanks for seamless permission management in modded Minecraft servers.",
+    tech: ["Java", "Minecraft Forge", "FTBRanks API", "Gradle"],
+    image: "/in-development.svg",
+    images: [],
+    url: "https://github.com/paulm/rank-restriction-mod",
+    category: ProjectCategory.MINECRAFT_MODS,
+    status: 'coming-soon',
     features: [
-      "Drag-and-drop interface",
-      "Real-time collaboration",
-      "Team analytics",
-      "Custom workflows"
+      "Rank-based item restrictions",
+      "FTBRanks integration",
+      "Custom permission rules",
+      "Admin configuration GUI",
+      "Real-time restriction updates",
+      "Whitelist/blacklist system",
+      "Multi-server compatibility",
+      "Detailed logging system"
+    ]
+  },
+
+  // Data Analysis & Tools
+  {
+    id: 8,
+    title: "Advanced Excel Household Budget",
+    description: "Comprehensive financial tracking system with intuitive statistics",
+    longDescription: "A sophisticated Excel-based household budget tracker that provides comprehensive income and expense monitoring with an intuitive user interface and detailed statistical analysis. Features advanced formulas and beautiful data visualizations.",
+    tech: ["Excel VBA", "Advanced Formulas", "Pivot Tables", "Data Visualization", "Macros"],
+    image: "/Excel1.png",
+    images: ["/Excel1.png", "/Excel2.png"],
+    url: "https://github.com/paulm/excel-budget-tracker",
+    category: ProjectCategory.DATA_ANALYSIS,
+    status: 'completed',
+    features: [
+      "Automated expense categorization",
+      "Income vs expense analysis",
+      "Monthly/yearly comparisons",
+      "Interactive charts and graphs",
+      "Budget forecasting",
+      "Custom category creation",
+      "Export functionality",
+      "Multi-currency support"
     ]
   },
   {
     id: 5,
-    title: "Microservices Weather API",
-    description: "Scalable microservices architecture for weather data aggregation and ML-powered forecasting",
-    longDescription: "A robust, scalable weather API service built with microservices architecture. Aggregates data from multiple sources, provides machine learning-powered forecasting, and features intelligent caching, rate limiting, and comprehensive monitoring.",
-    tech: ["Node.js", "Express", "Redis", "Docker", "Kubernetes", "Python", "scikit-learn", "PostgreSQL", "Grafana"],
-    image: "/img/portrait1.png",
-    images: ["/img/portrait1.png", "/img/portrait2.png", "/img/portrait1.png"],
-    url: "https://github.com/paulm/microservices-weather-api",
-    liveUrl: "https://weather-api.paulm.dev",
+    title: "Blackjack Card Counter",
+    description: "Advanced card counting system with Monte Carlo simulation",
+    longDescription: "A sophisticated blackjack card counting application that tracks cards and suggests optimal plays based on various counting systems. Utilizes Monte Carlo simulation for probability calculations and supports multiple counting strategies.",
+    tech: ["Python", "NumPy", "Pandas", "Matplotlib", "Monte Carlo", "Tkinter"],
+    image: "/in-development.svg",
+    images: [],
+    url: "https://github.com/paulm/blackjack-counter",
+    category: ProjectCategory.DATA_ANALYSIS,
+    status: 'coming-soon',
     features: [
-      "Microservices architecture",
-      "ML-powered weather forecasting",
-      "Multiple data source aggregation",
-      "Intelligent caching with Redis",
-      "Advanced rate limiting",
-      "Comprehensive API documentation",
-      "Real-time monitoring and alerts",
-      "Auto-scaling capabilities"
+      "Multiple counting systems (Hi-Lo, KO, etc.)",
+      "Monte Carlo probability simulation",
+      "Real-time betting suggestions",
+      "Card tracking and statistics",
+      "Strategy optimization",
+      "Historical analysis",
+      "Risk assessment calculations",
+      "Custom rule configurations"
     ]
   },
+
+  // IoT & Smart Home
   {
     id: 6,
-    title: "Blockchain DeFi Platform",
-    description: "Decentralized finance platform with yield farming, staking, and portfolio management",
-    longDescription: "A comprehensive DeFi platform built on Ethereum, featuring yield farming protocols, staking mechanisms, and advanced portfolio management tools. Includes smart contracts, web3 integration, and real-time market data.",
-    tech: ["Solidity", "React", "Web3.js", "Hardhat", "Node.js", "PostgreSQL", "Tailwind CSS", "Ethereum"],
-    image: "/img/portrait2.png",
-    images: ["/img/portrait2.png", "/img/portrait1.png"],
-    url: "https://github.com/paulm/defi-platform",
-    liveUrl: "https://defi.paulm.dev",
+    title: "Smart Home Assistant (IoT)",
+    description: "Local LLM-powered Home Assistant integration for enhanced productivity",
+    longDescription: "An intelligent IoT system that integrates with Home Assistant using local LLM technology. Designed to increase productivity and provide a superior home AI experience through natural language processing and automation.",
+    tech: ["Python", "Home Assistant", "Local LLM", "MQTT", "Docker", "REST API", "IoT Sensors"],
+    image: "/coming-soon.svg",
+    images: [],
+    url: "https://github.com/paulm/smart-home-assistant",
+    category: ProjectCategory.AUTOMATION,
+    status: 'coming-soon',
     features: [
-      "Smart contract development",
-      "Yield farming protocols",
-      "Staking and rewards system",
-      "Portfolio tracking and analytics",
-      "Multi-wallet integration",
-      "Real-time market data",
-      "Liquidity pool management",
-      "Security audited contracts"
+      "Local LLM integration",
+      "Natural language commands",
+      "Automated task scheduling",
+      "Device state monitoring",
+      "Energy usage optimization",
+      "Custom automation scripts",
+      "Voice command recognition",
+      "Privacy-focused processing"
+    ]
+  },
+
+  // Game Development
+  {
+    id: 7,
+    title: "AquaClash - Mobile Naval Game",
+    description: "Unity-based mobile naval battle game with strategic combat",
+    longDescription: "A mobile naval warfare game developed in Unity featuring strategic ship-to-ship combat, fleet management, and multiplayer battles. Currently in development with focus on engaging gameplay mechanics and stunning maritime visuals.",
+    tech: ["Unity", "C#", "Mobile SDK", "Multiplayer Networking", "2D/3D Graphics"],
+    image: "/in-development.svg",
+    images: [],
+    url: "https://github.com/paulm/aquaclash",
+    category: ProjectCategory.GAME_DEVELOPMENT,
+    status: 'coming-soon',
+    features: [
+      "Real-time naval combat",
+      "Fleet customization system",
+      "Multiplayer battle modes",
+      "Strategic positioning mechanics",
+      "Ship upgrade systems",
+      "Maritime campaign mode",
+      "Touch-optimized controls",
+      "Cross-platform compatibility"
     ]
   }
 ];

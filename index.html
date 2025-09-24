@@ -4,12 +4,65 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Paul M. - Full Stack Developer Portfolio. Experience a unique terminal-themed portfolio showcasing modern web development projects." />
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Inline critical font CSS to prevent render blocking -->
+    <style>
+      /* JetBrains Mono font-face declarations */
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Fallback font stack */
+      body { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+      
+      /* Critical CSS for faster rendering */
+      * { box-sizing: border-box; }
+      body { margin: 0; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+      .min-h-screen { min-height: 100vh; }
+      .flex { display: flex; }
+      .items-center { align-items: center; }
+      .justify-center { justify-content: center; }
+      .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+      .text-primary-blue { color: #3b82f6; }
+      .bg-black { background-color: #000; }
+    </style>
+    <!-- Load full Google Fonts asynchronously -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/portrait2.webp" as="image" type="image/webp">
+    <link rel="modulepreload" href="/src/main.tsx">
+    <link rel="modulepreload" href="/src/App.tsx">
+    <meta name="description" content="Paul Wallner - Full Stack Developer Portfolio. Experience a unique terminal-themed portfolio showcasing modern web development projects." />
     <meta name="keywords" content="portfolio, web developer, full stack, React, Node.js, terminal, CLI" />
-    <meta property="og:title" content="Paul M. - Terminal Portfolio" />
+    <meta property="og:title" content="Paul Wallner - Terminal Portfolio" />
     <meta property="og:description" content="Experience a unique terminal-themed portfolio showcasing modern web development projects." />
     <meta property="og:type" content="website" />
-    <title>Paul M. - Terminal Portfolio</title>
+    <title>Paul Wallner - Terminal Portfolio</title>
   </head>
   <body>
     <div id="root"></div>

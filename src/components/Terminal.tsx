@@ -1,5 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import type { FileSystemNode } from '../utils/terminalFileSystem';
+import { 
+  getNodeAtPath, 
+  getPathString, 
+  resolvePath, 
+  getAvailableCommands,
+  getSuggestedCommands
+} from '../utils/terminalFileSystem';
 
 interface TerminalProps {
   onPreviewUpdate?: (data: any) => void;
@@ -15,47 +23,38 @@ interface TerminalProps {
 }
 
 export const Terminal: React.FC<TerminalProps> = ({
-  onPreviewUpdate 
+  onPreviewUpdate
 }) => {
-  // Core state - keep minimal to avoid re-render issues
+  // Core state
   const [currentCommand, setCurrentCommand] = useState('');
   const [output, setOutput] = useState<Array<{ id: string; content: React.ReactNode; timestamp: Date }>>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [currentPath, setCurrentPath] = useState<string[]>([]);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [tabCompletionIndex, setTabCompletionIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Available commands
-  const availableCommands = [
-    'help', 'about', 'projects', 'projects view 1', 'projects view 2', 'projects view 3',
-    'skills', 'contact', 'clear', 'ls', 'pwd'
-  ];
+  // Get dynamic commands and suggestions based on current path
+  const availableCommands = getAvailableCommands(currentPath);
+  const quickCommands = getSuggestedCommands(currentPath);
 
-  // Quick command buttons
-  const quickCommands = [
-    { cmd: 'projects', desc: 'View projects', icon: '▲' },
-    { cmd: 'projects view 1', desc: 'Admin Dashboard', icon: '■' },
-    { cmd: 'projects view 2', desc: 'E-commerce App', icon: '◈' },
-    { cmd: 'projects view 3', desc: 'Task Manager', icon: '✓' },
-    { cmd: 'skills', desc: 'Technical skills', icon: '◆' },
-    { cmd: 'contact', desc: 'Contact info', icon: '@' },
-    { cmd: 'help', desc: 'Show help', icon: '?' },
-    { cmd: 'clear', desc: 'Clear terminal', icon: '◀' }
-  ];
-
-  // Update suggestions with debounce to prevent input interference
+  // Update suggestions based on current input
   useEffect(() => {
     const timer = setTimeout(() => {
       if (currentCommand.trim().length > 0) {
-      const filtered = availableCommands.filter(cmd => 
+        const filtered = availableCommands.filter(cmd => 
           cmd.toLowerCase().startsWith(currentCommand.toLowerCase().trim())
-      );
-        setSuggestions(filtered.slice(0, 4));
-    } else {
-      setSuggestions([]);
-    }
-    }, 200);
+        );
+        setSuggestions(filtered.slice(0, 5));
+        setTabCompletionIndex(0);
+      } else {
+        setSuggestions([]);
+      }
+    }, 100);
 
     return () => clearTimeout(timer);
-  }, [currentCommand]);
+  }, [currentCommand, availableCommands]);
 
   // Add to output function
   const addToOutput = (content: React.ReactNode) => {
@@ -252,7 +251,7 @@ export const Terminal: React.FC<TerminalProps> = ({
       <div className="flex-1 p-4 overflow-y-auto">
         {output.length === 0 ? (
           <div className="text-terminal-cyan/70">
-            <div className="text-terminal-cyan font-bold mb-2">Welcome to Paul M.'s Interactive Portfolio Terminal</div>
+            <div className="text-terminal-cyan font-bold mb-2">{t('terminal.welcome')}</div>
             <div className="text-sm space-y-1">
               <div>Type <span className="text-terminal-yellow">help</span> to see available commands</div>
               <div>Try <span className="text-terminal-yellow">projects</span> to view my work</div>

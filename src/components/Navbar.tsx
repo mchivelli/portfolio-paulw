@@ -1,5 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
+import { Home } from 'lucide-react';
 
 interface NavbarProps {
   activeSection: string;
@@ -8,82 +13,98 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, onTerminalFocus }) => {
+  const { t } = useTranslation();
+  const { isDark } = useTheme();
+  
   const navItems = [
-    { key: 'about', label: 'About', icon: '◆' },
-    { key: 'projects', label: 'Projects', icon: '▲' },
-    { key: 'skills', label: 'Skills', icon: '⚡' },
-    { key: 'contact', label: 'Contact', icon: '●' },
-    { key: 'terminal', label: 'Terminal', icon: '❯' }
+    { key: 'about', label: t('nav.about'), icon: Home },
+    { key: 'projects', label: t('nav.projects') },
+    { key: 'skills', label: t('nav.skills') },
+    { key: 'contact', label: t('nav.contact') },
+    { key: 'terminal', label: t('nav.terminal') }
   ];
 
   return (
     <motion.nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black/95 via-gray-900/95 to-black/95 backdrop-blur-md border-b border-terminal-border/30"
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-all duration-300 navbar-bg ${
+        isDark 
+          ? 'bg-gradient-to-r from-black/95 via-gray-900/95 to-black/95 border-terminal-border/30' 
+          : 'bg-white/95 border-light-border/50'
+      }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo/Brand */}
-          <motion.div 
-            className="flex items-center gap-3"
+      <div className="max-w-7xl mx-auto px-3 sm:px-6">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+          {/* Logo/Brand - Clickable Home Button */}
+          <motion.button 
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
             whileHover={{ scale: 1.05 }}
+            onClick={() => onSectionChange('about')}
+            title="Portfolio Paul Wallner"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-terminal-cyan to-blue-500 rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-sm">PM</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-blue to-primary-purple rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xs sm:text-sm">PW</span>
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-terminal-cyan glow-text">Paul M.</h1>
-              <p className="text-xs text-terminal-cyan/60 font-mono">Full Stack Developer</p>
+            <div className="hidden sm:block">
+              <h1 className={`text-lg font-bold glow-text ${
+                isDark ? 'text-primary-blue' : 'text-primary-blue'
+              }`}>{t('nav.brand.name')}</h1>
+              <p className={`text-xs font-mono ${
+                isDark ? 'text-primary-blue/60' : 'text-light-text-muted'
+              }`}>{t('nav.brand.title')}</p>
             </div>
-          </motion.div>
+          </motion.button>
 
           {/* Navigation Items */}
           <div className="flex items-center gap-1">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.key}
-                onClick={() => {
-                  if (item.key === 'terminal') {
-                    onTerminalFocus();
-                  } else {
-                    onSectionChange(item.key);
-                  }
-                }}
-                className={`
-                  px-4 py-2 rounded-lg font-mono text-sm transition-all duration-300 flex items-center gap-2
-                  ${activeSection === item.key || (item.key === 'terminal' && activeSection === 'terminal')
-                    ? 'bg-terminal-cyan/20 text-terminal-cyan border border-terminal-cyan/50 glow-text'
-                    : 'text-terminal-cyan/70 hover:text-terminal-cyan hover:bg-terminal-cyan/10 border border-transparent hover:border-terminal-cyan/30'
-                  }
-                `}
-                whileHover={{ scale: 1.05, y: -1 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span className="hidden sm:inline">{item.label}</span>
-              </motion.button>
-            ))}
+            {navItems.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.button
+                  key={item.key}
+                  onClick={() => {
+                    if (item.key === 'terminal') {
+                      onTerminalFocus();
+                    } else {
+                      onSectionChange(item.key);
+                    }
+                  }}
+                  className={`
+                    px-2 sm:px-4 py-2 rounded-lg font-mono text-xs sm:text-sm transition-all duration-300 border flex items-center gap-1 sm:gap-2
+                    ${activeSection === item.key || (item.key === 'terminal' && activeSection === 'terminal')
+                      ? isDark 
+                        ? 'bg-primary-blue/20 text-primary-blue border-primary-blue/50 glow-text'
+                        : 'bg-primary-blue/10 text-primary-blue border-primary-blue/40 glow-text'
+                      : isDark
+                        ? 'text-primary-blue/70 hover:text-primary-blue hover:bg-primary-blue/10 border-transparent hover:border-primary-blue/30'
+                        : 'text-light-text-secondary hover:text-primary-blue hover:bg-primary-blue/5 border-transparent hover:border-primary-blue/20'
+                    }
+                  `}
+                  whileHover={{ scale: 1.05, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  {IconComponent && <IconComponent size={14} className="sm:w-4 sm:h-4" />}
+                  <span className="hidden sm:inline">{item.label}</span>
+                  <span className="sm:hidden">{IconComponent ? '' : item.label.slice(0, 3)}</span>
+                </motion.button>
+              );
+            })}
           </div>
 
-          {/* Status Indicator */}
+          {/* Theme and Language Controls */}
           <motion.div 
-            className="flex items-center gap-3 text-xs text-terminal-cyan/60 font-mono"
+            className="flex items-center gap-2 sm:gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span>Online</span>
-            </div>
-            <div className="hidden md:block">
-              {new Date().toLocaleTimeString()}
-            </div>
+            <ThemeToggle />
+            <LanguageSwitcher />
           </motion.div>
         </div>
       </div>
