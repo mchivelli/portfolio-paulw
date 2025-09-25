@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "setup-email": "node setup-email.js",
+    "test-email": "node test-email.js",
+    "check-domain": "node check-domain.js",
+    "production": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -13,7 +17,10 @@
     "express-rate-limit": "^7.1.5",
     "node-cache": "^5.1.2",
     "axios": "^1.6.2",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "mailgun.js": "^9.4.1",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
