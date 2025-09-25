@@ -17,85 +17,258 @@ export const fileSystem: FileSystemNode = {
       type: 'directory',
       description: 'My portfolio projects',
       children: {
-        'admin-dashboard': {
-          name: 'admin-dashboard',
+        'epicwars-cvc': {
+          name: 'epicwars-cvc',
           type: 'file',
-          preview: 'Full-stack admin dashboard with React + Node.js',
-          description: 'A comprehensive admin dashboard with user management, analytics, and real-time data visualization.',
-          link: 'https://admin-dashboard-demo.netlify.app',
-          content: `# Admin Dashboard
+          preview: 'Complete ecosystem for modded Minecraft SMP with 300+ members',
+          description: 'A comprehensive web platform and game server infrastructure for a modded Minecraft Survival Multiplayer community.',
+          link: 'https://epicwarscvc.com',
+          content: `# EpicWars CvC - Minecraft SMP Platform
 
-A modern, responsive admin dashboard built with React and Node.js.
+Complete ecosystem for modded Minecraft SMP with 300+ members.
 
 ## Features:
-- User management system
-- Real-time analytics
-- Data visualization with charts
-- Role-based access control
-- Dark/Light theme support
+- Community forums and wiki
+- Advanced user/admin management
+- Server statistics and monitoring
+- Player progression tracking
+- Event management system
+- Integrated mod support
+- Real-time server status
+- Custom authentication system
 
 ## Tech Stack:
-- Frontend: React, TypeScript, Tailwind CSS
-- Backend: Node.js, Express, MongoDB
-- Authentication: JWT tokens
-- Charts: Chart.js, D3.js
+- Node.js, React, PostgreSQL
+- Ubuntu Server, Minecraft Server
+- PHP, JavaScript, HTML/CSS
 
-## Live Demo:
-Visit the live application to explore all features.`
+## Live Site:
+[Visit EpicWars CvC](https://epicwarscvc.com)
+
+*Note: Source code is private*`
         },
-        'e-commerce': {
-          name: 'e-commerce',
+        'discord-bot': {
+          name: 'discord-bot',
           type: 'file',
-          preview: 'Modern e-commerce platform with payment integration',
-          description: 'Full-featured e-commerce site with shopping cart, payments, and inventory management.',
-          link: 'https://ecommerce-demo.netlify.app',
-          content: `# E-commerce Platform
+          preview: 'Administrative assistant bot for server management and community engagement',
+          description: 'A sophisticated Discord bot designed specifically for Minecraft SMP server administration.',
+          link: 'https://github.com/mchivelli/discordhelper',
+          content: `# Minecraft SMP Discord Bot
 
-A fully functional e-commerce platform with modern features.
+Administrative assistant bot for server management and community engagement.
 
 ## Features:
-- Product catalog with search and filters
-- Shopping cart and checkout
-- Payment processing (Stripe integration)
-- User accounts and order history
-- Inventory management
-- Responsive design
+- Task assignment and tracking
+- Automated changelog generation
+- Community announcements
+- Server status monitoring
+- Player statistics integration
+- Moderation tools
+- Custom command system
+- Admin permission management
 
 ## Tech Stack:
-- Frontend: React, Redux, Styled Components
-- Backend: Node.js, Express, PostgreSQL
-- Payments: Stripe API
-- Deployment: Vercel + Heroku
+- Node.js, Discord.js, SQLite
+- JavaScript, REST API
 
-## Live Demo:
-Experience the full shopping workflow.`
+## Source Code:
+[View on GitHub](https://github.com/mchivelli/discordhelper)`
         },
-        'task-manager': {
-          name: 'task-manager',
+        'war-n-taxes': {
+          name: 'war-n-taxes',
           type: 'file',
-          preview: 'Collaborative task management application',
-          description: 'Team collaboration tool with real-time updates and project management features.',
-          link: 'https://taskmanager-demo.netlify.app',
-          content: `# Task Manager
+          preview: 'Popular Minecolonies addon with 150,000+ downloads on CurseForge',
+          description: 'A comprehensive addon mod for Minecolonies that introduces tax generation systems and war mechanics.',
+          link: 'https://www.curseforge.com/minecraft/mc-mods/minecolonies-war-n-taxes',
+          content: `# War 'N Taxes - Minecraft Mod
 
-A collaborative task management application for teams.
+Popular Minecolonies addon with 150,000+ downloads on CurseForge.
 
 ## Features:
-- Create and organize tasks
-- Team collaboration
-- Real-time updates
-- Project timelines
-- File attachments
-- Progress tracking
+- Tax collection system
+- War mechanics and combat
+- Colony economic management
+- Resource taxation algorithms
+- Military unit recruitment
+- Diplomatic relations system
+- Custom GUI interfaces
+- Multiplayer compatibility
 
 ## Tech Stack:
-- Frontend: React, Material-UI
-- Backend: Node.js, Socket.io
-- Database: MongoDB
-- Real-time: WebSockets
+- Java, Minecraft Forge, Gradle
+- JSON, Minecolonies API
 
-## Live Demo:
-Try the collaborative features with multiple users.`
+## Links:
+- [Download on CurseForge](https://www.curseforge.com/minecraft/mc-mods/minecolonies-war-n-taxes)
+- [Source Code](https://github.com/mchivelli/War-N-Taxes-Mod---Minecolonies-Addon)`
+        },
+        'rank-restrictions': {
+          name: 'rank-restrictions',
+          type: 'file',
+          preview: 'Administrative mod for item/block restrictions based on player ranks',
+          description: 'A server administration mod that allows admins to set specific item and block restrictions based on player ranks.',
+          link: 'https://github.com/mchivelli/rankrestrictions',
+          content: `# Rank Restriction Mod
+
+Administrative mod for item/block restrictions based on player ranks.
+
+## Features:
+- Rank-based item restrictions
+- FTBRanks integration
+- Custom permission rules
+- Admin configuration GUI
+- Real-time restriction updates
+- Whitelist/blacklist system
+- Multi-server compatibility
+- Detailed logging system
+
+## Tech Stack:
+- Java, Minecraft Forge
+- FTBRanks API, Gradle
+
+## Source Code:
+[View on GitHub](https://github.com/mchivelli/rankrestrictions)
+
+*Status: Coming Soon*`
+        },
+        'excel-budget': {
+          name: 'excel-budget',
+          type: 'file',
+          preview: 'Comprehensive financial tracking system with intuitive statistics',
+          description: 'A sophisticated Excel-based household budget tracker with comprehensive income and expense monitoring.',
+          content: `# Advanced Excel Household Budget
+
+Comprehensive financial tracking system with intuitive statistics.
+
+## Features:
+- Automated expense categorization
+- Income vs expense analysis
+- Monthly/yearly comparisons
+- Interactive charts and graphs
+- Budget forecasting
+- Custom category creation
+- Export functionality
+- Multi-currency support
+
+## Tech Stack:
+- Excel VBA, Advanced Formulas
+- Pivot Tables, Data Visualization, Macros
+
+## Download:
+*Coming soon - will be available for download*`
+        },
+        'blackjack-bot': {
+          name: 'blackjack-bot',
+          type: 'file',
+          preview: 'Advanced card counting system with Monte Carlo simulation',
+          description: 'A sophisticated blackjack card counting application that tracks cards and suggests optimal plays.',
+          link: 'https://github.com/mchivelli/bjbot',
+          content: `# Blackjack Card Counter
+
+Advanced card counting system with Monte Carlo simulation.
+
+## Features:
+- Multiple counting systems (Hi-Lo, KO, etc.)
+- Monte Carlo probability simulation
+- Real-time betting suggestions
+- Card tracking and statistics
+- Strategy optimization
+- Historical analysis
+- Risk assessment calculations
+- Custom rule configurations
+
+## Tech Stack:
+- Python, NumPy, Pandas
+- Matplotlib, Monte Carlo, Tkinter
+
+## Source Code:
+[View on GitHub](https://github.com/mchivelli/bjbot)
+
+*Status: Coming Soon*`
+        },
+        'smart-home': {
+          name: 'smart-home',
+          type: 'file',
+          preview: 'Local LLM-powered Home Assistant integration for enhanced productivity',
+          description: 'An intelligent IoT system that integrates with Home Assistant using local LLM technology.',
+          link: 'https://github.com/mchivelli/smarter-echo-bot',
+          content: `# Smart Home Assistant (IoT)
+
+Local LLM-powered Home Assistant integration for enhanced productivity.
+
+## Features:
+- Local LLM integration
+- Natural language commands
+- Automated task scheduling
+- Device state monitoring
+- Energy usage optimization
+- Custom automation scripts
+- Voice command recognition
+- Privacy-focused processing
+
+## Tech Stack:
+- Python, Home Assistant, Local LLM
+- MQTT, Docker, REST API, IoT Sensors
+
+## Source Code:
+[View on GitHub](https://github.com/mchivelli/smarter-echo-bot)
+
+*Status: Coming Soon*`
+        },
+        'aquaclash': {
+          name: 'aquaclash',
+          type: 'file',
+          preview: 'Unity-based mobile naval battle game with strategic combat',
+          description: 'A mobile naval warfare game developed in Unity featuring strategic ship-to-ship combat.',
+          link: 'https://github.com/mchivelli/AquaClash',
+          content: `# AquaClash - Mobile Naval Game
+
+Unity-based mobile naval battle game with strategic combat.
+
+## Features:
+- Real-time naval combat
+- Fleet customization system
+- Multiplayer battle modes
+- Strategic positioning mechanics
+- Ship upgrade systems
+- Maritime campaign mode
+- Touch-optimized controls
+- Cross-platform compatibility
+
+## Tech Stack:
+- Unity, C#, Mobile SDK
+- Multiplayer Networking, 2D/3D Graphics
+
+## Source Code:
+[View on GitHub](https://github.com/mchivelli/AquaClash)
+
+*Status: Coming Soon*`
+        },
+        'zivildienst': {
+          name: 'zivildienst',
+          type: 'file',
+          preview: 'Community service organization platform with ticket tracking',
+          description: 'A web-based management system for community service (Zivildienst) operations.',
+          content: `# Zivildienst Management Platform
+
+Community service organization platform with ticket tracking.
+
+## Features:
+- Ticket tracking system
+- Weekly duty assignments
+- Discussion forums
+- User role management
+- Task scheduling
+- Document management
+- Real-time notifications
+- Reporting dashboard
+
+## Tech Stack:
+- React, Node.js, Express
+- PostgreSQL, Socket.io, JWT
+
+*Note: Source code is private*
+*Status: Coming Soon*`
         }
       }
     },
@@ -216,8 +389,8 @@ Try the collaborative features with multiple users.`
           type: 'file',
           preview: 'Open source contributions and repositories',
           description: 'Check out my code on GitHub',
-          link: 'https://github.com/paul-m-developer',
-          content: 'GitHub: https://github.com/paul-m-developer\n\nExplore my:\n- Open source projects\n- Code samples\n- Contributions to repositories\n- Technical experiments'
+          link: 'https://github.com/mchivelli',
+          content: 'GitHub: https://github.com/mchivelli\n\nExplore my:\n- Open source projects\n- Code samples\n- Contributions to repositories\n- Technical experiments'
         }
       }
     }
@@ -273,7 +446,7 @@ export function getAvailableCommands(currentPath: string[]): string[] {
   const node = getNodeAtPath(currentPath);
   
   if (!node || !node.children) {
-    return [...baseCommands, ...sectionCommands];
+    return [...baseCommands, ...sectionCommands, 'cd ..', 'cd ~'];
   }
   
   // Add cd commands for subdirectories

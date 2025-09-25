@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from '../contexts/ThemeContext';
-import { Home } from 'lucide-react';
+import { Home, FolderOpen, Zap, Mail, Terminal } from 'lucide-react';
 
 interface NavbarProps {
   activeSection: string;
@@ -18,10 +18,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
   
   const navItems = [
     { key: 'about', label: t('nav.about'), icon: Home },
-    { key: 'projects', label: t('nav.projects') },
-    { key: 'skills', label: t('nav.skills') },
-    { key: 'contact', label: t('nav.contact') },
-    { key: 'terminal', label: t('nav.terminal') }
+    { key: 'projects', label: t('nav.projects'), icon: FolderOpen },
+    { key: 'skills', label: t('nav.skills'), icon: Zap },
+    { key: 'contact', label: t('nav.contact'), icon: Mail },
+    { key: 'terminal', label: t('nav.terminal'), icon: Terminal }
   ];
 
   return (
@@ -88,9 +88,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                  {IconComponent && <IconComponent size={14} className="sm:w-4 sm:h-4" />}
+                  {IconComponent && <IconComponent size={16} className="sm:w-4 sm:h-4" />}
                   <span className="hidden sm:inline">{item.label}</span>
-                  <span className="sm:hidden">{IconComponent ? '' : item.label.slice(0, 3)}</span>
                 </motion.button>
               );
             })}

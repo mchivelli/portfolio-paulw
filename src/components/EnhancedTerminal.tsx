@@ -56,10 +56,57 @@ export const EnhancedTerminal: React.FC<TerminalProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (currentCommand.trim().length > 0) {
-        const filtered = availableCommands.filter(cmd => 
-          cmd.toLowerCase().startsWith(currentCommand.toLowerCase().trim())
-        );
-        setSuggestions(filtered.slice(0, 5));
+        const trimmedInput = currentCommand.toLowerCase().trim();
+        let filtered: string[] = [];
+        
+        // Handle cd command with directory suggestions
+        if (trimmedInput.startsWith('cd ')) {
+          const cdArg = trimmedInput.substring(3);
+          const currentNode = getNodeAtPath(currentPath);
+          
+          if (currentNode && currentNode.children) {
+            // Get directories in current path
+            const directories = Object.keys(currentNode.children)
+              .filter(name => currentNode.children![name].type === 'directory')
+              .filter(name => name.toLowerCase().startsWith(cdArg))
+              .map(name => `cd ${name}`);
+            
+            // Add special cd commands
+            const specialCdCommands = ['cd ..', 'cd ~'].filter(cmd => 
+              cmd.toLowerCase().startsWith(trimmedInput)
+            );
+            
+            filtered = [...directories, ...specialCdCommands];
+          } else {
+            // If not in a directory, just show special cd commands
+            filtered = ['cd ..', 'cd ~'].filter(cmd => 
+              cmd.toLowerCase().startsWith(trimmedInput)
+            );
+          }
+        } 
+        // Handle cat/open commands with file suggestions
+        else if (trimmedInput.startsWith('cat ') || trimmedInput.startsWith('open ')) {
+          const cmdType = trimmedInput.startsWith('cat ') ? 'cat' : 'open';
+          const fileArg = trimmedInput.substring(cmdType.length + 1);
+          const currentNode = getNodeAtPath(currentPath);
+          
+          if (currentNode && currentNode.children) {
+            const files = Object.keys(currentNode.children)
+              .filter(name => currentNode.children![name].type === 'file')
+              .filter(name => name.toLowerCase().startsWith(fileArg))
+              .map(name => `${cmdType} ${name}`);
+            
+            filtered = files;
+          }
+        }
+        // Default command matching
+        else {
+          filtered = availableCommands.filter(cmd => 
+            cmd.toLowerCase().startsWith(trimmedInput)
+          );
+        }
+        
+        setSuggestions(filtered.slice(0, 8));
         setTabCompletionIndex(0);
       } else {
         setSuggestions([]);
@@ -67,7 +114,7 @@ export const EnhancedTerminal: React.FC<TerminalProps> = ({
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [currentCommand, availableCommands]);
+  }, [currentCommand, availableCommands, currentPath]);
 
   // Add to output function
   const addToOutput = useCallback((content: React.ReactNode, command?: string) => {
@@ -394,6 +441,13 @@ export const EnhancedTerminal: React.FC<TerminalProps> = ({
         const suggestion = suggestions[tabCompletionIndex % suggestions.length];
         setCurrentCommand(suggestion);
         setTabCompletionIndex(prev => (prev + 1) % suggestions.length);
+        
+        // Clear suggestions after completion to avoid confusion
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }, 50);
       }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();

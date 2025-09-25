@@ -11,6 +11,8 @@ export interface Project {
   features?: string[];
   category?: ProjectCategoryType;
   status?: 'completed' | 'coming-soon';
+  showViewCode?: boolean;
+  downloadUrl?: string;
 }
 
 // Project categories for better organization
@@ -35,10 +37,11 @@ export const projects: Project[] = [
     tech: ["Node.js", "React", "PostgreSQL", "Ubuntu Server", "Minecraft Server", "PHP", "JavaScript", "HTML/CSS"],
     image: "/EWWebsite1.png",
     images: ["/EWWebsite1.png", "/EWWebsite2.png"],
-    url: "https://github.com/paulm/epicwars-cvc",
+    url: "#",
     liveUrl: "https://epicwarscvc.com",
     category: ProjectCategory.WEB_DEVELOPMENT,
     status: 'completed',
+    showViewCode: false,
     features: [
       "Community forums and wiki",
       "Advanced user/admin management", 
@@ -58,9 +61,10 @@ export const projects: Project[] = [
     tech: ["React", "Node.js", "Express", "PostgreSQL", "Socket.io", "JWT"],
     image: "/ZiviDienst1.png",
     images: ["/ZiviDienst1.png", "/ZiviDienst2.png"],
-    url: "https://github.com/paulm/zivildienst-platform",
+    url: "#",
     category: ProjectCategory.WEB_DEVELOPMENT,
     status: 'coming-soon',
+    showViewCode: false,
     features: [
       "Ticket tracking system",
       "Weekly duty assignments", 
@@ -82,9 +86,10 @@ export const projects: Project[] = [
     tech: ["Node.js", "Discord.js", "SQLite", "JavaScript", "REST API"],
     image: "/DiscordBot.png",
     images: ["/DiscordBot.png", "/DiscordBot2.png"],
-    url: "https://github.com/paulm/smp-discord-bot",
+    url: "https://github.com/mchivelli/discordhelper",
     category: ProjectCategory.AUTOMATION,
     status: 'completed',
+    showViewCode: true,
     features: [
       "Task assignment and tracking",
       "Automated changelog generation",
@@ -106,10 +111,11 @@ export const projects: Project[] = [
     tech: ["Java", "Minecraft Forge", "Gradle", "JSON", "Minecolonies API"],
     image: "/WnTMod.png",
     images: ["/WnTMod.png"],
-    url: "https://github.com/paulm/war-n-taxes",
-    liveUrl: "https://www.curseforge.com/minecraft/mc-mods/war-n-taxes",
+    url: "https://github.com/mchivelli/War-N-Taxes-Mod---Minecolonies-Addon",
+    liveUrl: "https://www.curseforge.com/minecraft/mc-mods/minecolonies-war-n-taxes",
     category: ProjectCategory.MINECRAFT_MODS,
     status: 'completed',
+    showViewCode: true,
     features: [
       "Tax collection system",
       "War mechanics and combat",
@@ -130,9 +136,10 @@ export const projects: Project[] = [
     tech: ["Java", "Minecraft Forge", "FTBRanks API", "Gradle"],
     image: "/in-development.svg",
     images: [],
-    url: "https://github.com/paulm/rank-restriction-mod",
+    url: "https://github.com/mchivelli/rankrestrictions",
     category: ProjectCategory.MINECRAFT_MODS,
     status: 'coming-soon',
+    showViewCode: true,
     features: [
       "Rank-based item restrictions",
       "FTBRanks integration",
@@ -154,9 +161,11 @@ export const projects: Project[] = [
     tech: ["Excel VBA", "Advanced Formulas", "Pivot Tables", "Data Visualization", "Macros"],
     image: "/Excel1.png",
     images: ["/Excel1.png", "/Excel2.png"],
-    url: "https://github.com/paulm/excel-budget-tracker",
+    url: "#",
     category: ProjectCategory.DATA_ANALYSIS,
     status: 'completed',
+    showViewCode: false,
+    downloadUrl: "coming-soon",
     features: [
       "Automated expense categorization",
       "Income vs expense analysis",
@@ -176,9 +185,10 @@ export const projects: Project[] = [
     tech: ["Python", "NumPy", "Pandas", "Matplotlib", "Monte Carlo", "Tkinter"],
     image: "/in-development.svg",
     images: [],
-    url: "https://github.com/paulm/blackjack-counter",
+    url: "https://github.com/mchivelli/bjbot",
     category: ProjectCategory.DATA_ANALYSIS,
     status: 'coming-soon',
+    showViewCode: true,
     features: [
       "Multiple counting systems (Hi-Lo, KO, etc.)",
       "Monte Carlo probability simulation",
@@ -200,9 +210,10 @@ export const projects: Project[] = [
     tech: ["Python", "Home Assistant", "Local LLM", "MQTT", "Docker", "REST API", "IoT Sensors"],
     image: "/coming-soon.svg",
     images: [],
-    url: "https://github.com/paulm/smart-home-assistant",
+    url: "https://github.com/mchivelli/smarter-echo-bot",
     category: ProjectCategory.AUTOMATION,
     status: 'coming-soon',
+    showViewCode: true,
     features: [
       "Local LLM integration",
       "Natural language commands",
@@ -224,9 +235,10 @@ export const projects: Project[] = [
     tech: ["Unity", "C#", "Mobile SDK", "Multiplayer Networking", "2D/3D Graphics"],
     image: "/in-development.svg",
     images: [],
-    url: "https://github.com/paulm/aquaclash",
+    url: "https://github.com/mchivelli/AquaClash",
     category: ProjectCategory.GAME_DEVELOPMENT,
     status: 'coming-soon',
+    showViewCode: true,
     features: [
       "Real-time naval combat",
       "Fleet customization system",

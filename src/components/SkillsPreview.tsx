@@ -229,7 +229,9 @@ export const SkillsPreview: React.FC<SkillsPreviewProps> = ({ compact = false })
                             </span>
                           )}
                         </div>
-                        <span className="font-mono font-medium text-white">{skill.name}</span>
+                        <span className={`font-mono font-medium ${
+                          isDark ? 'text-white' : 'text-light-text'
+                        }`}>{skill.name}</span>
                         <span className={`text-xs ${skill.level >= 70 ? 'text-primary-yellow' : skill.level >= 50 ? 'text-primary-purple' : 'text-primary-blue'}`}>
                           ■
                         </span>

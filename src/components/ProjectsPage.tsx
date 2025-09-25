@@ -85,18 +85,29 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ compact = false }) =
                   )}
                 </div>
                 <div className="flex gap-3 text-xs">
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`transition-colors ${
+                  {project.showViewCode !== false && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`transition-colors ${
+                        isDark 
+                          ? 'text-terminal-cyan hover:text-terminal-green' 
+                          : 'text-primary-blue hover:text-primary-purple'
+                      }`}
+                    >
+                      [view code]
+                    </a>
+                  )}
+                  {project.downloadUrl && (
+                    <span className={`transition-colors ${
                       isDark 
-                        ? 'text-terminal-cyan hover:text-terminal-green' 
-                        : 'text-primary-blue hover:text-primary-purple'
-                    }`}
-                  >
-                    [view code]
-                  </a>
+                        ? 'text-yellow-400' 
+                        : 'text-yellow-600'
+                    }`}>
+                      [download: {project.downloadUrl}]
+                    </span>
+                  )}
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
@@ -321,24 +332,44 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ compact = false }) =
                   </CardItem>
 
                   {/* Action Buttons */}
-                  <div className="flex justify-between items-center mt-auto">
-                    <CardItem
-                      translateZ={20}
-                      as={LinkPreview}
-                      url={project.url}
-                      className={`px-4 py-2 rounded-xl text-sm font-normal hover:glow-text transition-all duration-300 border hover:border-primary-blue/50 ${
-                        isDark 
-                          ? 'text-primary-blue border-terminal-border/50' 
-                          : 'text-primary-blue border-light-border/50'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                        {t('projects.buttons.viewCode')}
-                      </div>
-                    </CardItem>
+                  <div className="flex justify-between items-center mt-auto gap-2">
+                    {project.showViewCode !== false && (
+                      <CardItem
+                        translateZ={20}
+                        as={LinkPreview}
+                        url={project.url}
+                        className={`px-4 py-2 rounded-xl text-sm font-normal hover:glow-text transition-all duration-300 border hover:border-primary-blue/50 ${
+                          isDark 
+                            ? 'text-primary-blue border-terminal-border/50' 
+                            : 'text-primary-blue border-light-border/50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                          {t('projects.buttons.viewCode')}
+                        </div>
+                      </CardItem>
+                    )}
+
+                    {project.downloadUrl && (
+                      <CardItem
+                        translateZ={20}
+                        className={`px-4 py-2 rounded-xl text-sm font-normal transition-all duration-300 border ${
+                          isDark 
+                            ? 'text-yellow-400 border-yellow-400/50' 
+                            : 'text-yellow-600 border-yellow-600/50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                          Download: {project.downloadUrl}
+                        </div>
+                      </CardItem>
+                    )}
                     
                     {project.liveUrl && (
                       <CardItem
