@@ -30,7 +30,7 @@ export const TerminalImagePreview: React.FC<TerminalImagePreviewProps> = ({
   const displayImages = images && images.length > 0 ? images : (image ? [image] : []);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setTimeout>;
     if (isHovered && displayImages.length > 1) {
       interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);

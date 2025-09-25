@@ -1,10 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import type { FileSystemNode } from '../utils/terminalFileSystem';
+import { useTranslation } from 'react-i18next';
 import { 
-  getNodeAtPath, 
-  getPathString, 
-  resolvePath, 
   getAvailableCommands,
   getSuggestedCommands
 } from '../utils/terminalFileSystem';
@@ -25,17 +22,16 @@ interface TerminalProps {
 export const Terminal: React.FC<TerminalProps> = ({
   onPreviewUpdate
 }) => {
+  const { t } = useTranslation();
   // Core state
   const [currentCommand, setCurrentCommand] = useState('');
   const [output, setOutput] = useState<Array<{ id: string; content: React.ReactNode; timestamp: Date }>>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [currentPath, setCurrentPath] = useState<string[]>([]);
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
-  const [tabCompletionIndex, setTabCompletionIndex] = useState(0);
+  // Removed unused state variables
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Get dynamic commands and suggestions based on current path
+  const currentPath: string[] = []; // Default to root path
   const availableCommands = getAvailableCommands(currentPath);
   const quickCommands = getSuggestedCommands(currentPath);
 
@@ -47,7 +43,7 @@ export const Terminal: React.FC<TerminalProps> = ({
           cmd.toLowerCase().startsWith(currentCommand.toLowerCase().trim())
         );
         setSuggestions(filtered.slice(0, 5));
-        setTabCompletionIndex(0);
+        // setTabCompletionIndex(0); // Removed unused function
       } else {
         setSuggestions([]);
       }

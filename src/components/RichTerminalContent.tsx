@@ -123,7 +123,6 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
   };
 
   const parseInlineContent = (text: string): React.ReactNode => {
-    const elements: React.ReactNode[] = [];
     let currentText = text;
     let key = 0;
 
@@ -132,40 +131,40 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
       // Color codes
       {
         regex: /\{cyan\}([^{]+)\{\/cyan\}/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <span key={key++} className="text-terminal-cyan glow-text">{content}</span>
       },
       {
         regex: /\{green\}([^{]+)\{\/green\}/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <span key={key++} className="text-terminal-green glow-text">{content}</span>
       },
       {
         regex: /\{yellow\}([^{]+)\{\/yellow\}/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <span key={key++} className="text-yellow-400 glow-text">{content}</span>
       },
       {
         regex: /\{red\}([^{]+)\{\/red\}/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <span key={key++} className="text-red-400 glow-text">{content}</span>
       },
       // Bold text
       {
         regex: /\*\*([^*]+)\*\*/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <strong key={key++} className="text-terminal-green font-bold glow-text">{content}</strong>
       },
       // Italic text
       {
         regex: /\*([^*]+)\*/g,
-        render: (match: string, content: string) => 
+        render: (_match: string, content: string) => 
           <em key={key++} className="text-terminal-cyan/80 italic">{content}</em>
       },
       // Image tags first (before regular links)
       {
         regex: /\[IMG:([^\]]*)\]\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^)]+)\)/g,
-        render: (match: string, alt: string, url: string, image: string, title: string, desc: string) => 
+        render: (_match: string, alt: string, url: string, image: string, title: string, desc: string) => 
           <TerminalImagePreview 
             key={key++}
             text={alt}
@@ -179,7 +178,7 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
       // CD command links (special handling)
       {
         regex: /\[([^\]]+)\]\(cd-([^)]+)\)/g,
-        render: (match: string, text: string, destination: string) => 
+        render: (_match: string, text: string, destination: string) => 
           <button 
             key={key++} 
             onClick={() => {
@@ -195,7 +194,7 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
       // Regular Links
       {
         regex: /\[([^\]]+)\]\(([^)]+)\)/g,
-        render: (match: string, text: string, url: string) => 
+        render: (_match: string, text: string, url: string) => 
           <a key={key++} href={url} className="text-terminal-cyan hover:text-terminal-green underline transition-colors cursor-pointer glow-text" target="_blank" rel="noopener noreferrer">
             {text}
           </a>
@@ -203,7 +202,7 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
       // Progress bars
       {
         regex: /\[PROGRESS:(\d+)\]/g,
-        render: (match: string, percentage: string) => {
+        render: (_match: string, percentage: string) => {
           const percent = parseInt(percentage);
           const color = percent >= 80 ? 'bg-terminal-green' : percent >= 60 ? 'bg-yellow-400' : 'bg-red-400';
           return (
@@ -219,13 +218,13 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
       // Inline code
       {
         regex: /`([^`]+)`/g,
-        render: (match: string, code: string) => 
+        render: (_match: string, code: string) => 
           <code key={key++} className="bg-black/50 text-terminal-cyan px-1 rounded text-sm border border-terminal-cyan/30">{code}</code>
       }
     ];
 
     // Apply patterns sequentially
-    let parts = [currentText];
+    let parts: (string | React.ReactNode)[] = [currentText];
     
     patterns.forEach(pattern => {
       const newParts: (string | React.ReactNode)[] = [];
@@ -242,8 +241,19 @@ export const RichTerminalContent: React.FC<RichTerminalContentProps> = ({ conten
               newParts.push(part.substring(lastIndex, match.index));
             }
             
-            // Add rendered component
-            newParts.push(pattern.render(match[0], ...match.slice(1)));
+            // Add rendered component - simplified approach
+            const args = match.slice(1);
+            if (args.length >= 6) {
+              newParts.push(pattern.render(match[0], args[0], args[1], args[2], args[3], args[4], args[5]));
+            } else if (args.length >= 3) {
+              newParts.push(pattern.render(match[0], args[0], args[1], args[2], '', '', ''));
+            } else if (args.length >= 2) {
+              newParts.push(pattern.render(match[0], args[0], args[1], '', '', '', ''));
+            } else if (args.length >= 1) {
+              newParts.push(pattern.render(match[0], args[0], '', '', '', '', ''));
+            } else {
+              newParts.push(pattern.render(match[0], '', '', '', '', '', ''));
+            }
             
             lastIndex = regex.lastIndex;
           }

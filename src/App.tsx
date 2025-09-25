@@ -338,7 +338,7 @@ function App() {
                           height={320}
                           loading="eager"
                           decoding="async"
-                          fetchpriority="high"
+                          fetchPriority="high"
                           className={`${
                             isDark 
                               ? 'filter brightness-75 contrast-90' 

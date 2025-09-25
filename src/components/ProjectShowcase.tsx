@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Project } from '../data/projects';
+import type { Project } from '../data/projects';
 
 interface ProjectShowcaseProps {
   project: Project;

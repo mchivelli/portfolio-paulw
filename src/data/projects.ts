@@ -9,19 +9,21 @@ export interface Project {
   url: string;
   liveUrl?: string;
   features?: string[];
-  category?: ProjectCategory;
+  category?: ProjectCategoryType;
   status?: 'completed' | 'coming-soon';
 }
 
 // Project categories for better organization
-export enum ProjectCategory {
-  WEB_DEVELOPMENT = "Web Development",
-  GAME_DEVELOPMENT = "Game Development", 
-  MINECRAFT_MODS = "Minecraft Mods",
-  AUTOMATION = "Automation & Tools",
-  MOBILE_APPS = "Mobile Apps",
-  DATA_ANALYSIS = "Data Analysis"
-}
+export const ProjectCategory = {
+  WEB_DEVELOPMENT: "Web Development",
+  GAME_DEVELOPMENT: "Game Development", 
+  MINECRAFT_MODS: "Minecraft Mods",
+  AUTOMATION: "Automation & Tools",
+  MOBILE_APPS: "Mobile Apps",
+  DATA_ANALYSIS: "Data Analysis"
+} as const;
+
+export type ProjectCategoryType = typeof ProjectCategory[keyof typeof ProjectCategory];
 
 export const projects: Project[] = [
   // Web Development Projects
