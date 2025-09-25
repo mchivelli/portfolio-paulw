@@ -236,18 +236,28 @@ User-Agent: ${req.get('User-Agent') || 'unknown'}
         html: confirmationHtml
       };
 
-      try {
-        await mailgunClient.messages.create(mailgunDomain, confirmationData);
-      } catch (confirmError) {
-        console.error('Failed to send confirmation email:', confirmError.message);
-        // Don't fail the main request if confirmation fails
+      // Send confirmation email (only if not using sandbox domain)
+      let confirmationSent = false;
+      if (mailgunDomain.includes('sandbox')) {
+        console.log('ℹ️ Skipping confirmation email (sandbox domain - recipient not authorized)');
+      } else {
+        try {
+          await mailgunClient.messages.create(mailgunDomain, confirmationData);
+          confirmationSent = true;
+          console.log('✅ Confirmation email sent to sender');
+        } catch (confirmError) {
+          console.error('Failed to send confirmation email:', confirmError.message);
+          // Don't fail the main request if confirmation fails
+        }
       }
       
       res.json({ 
         success: true, 
-        message: 'Message sent successfully! I will get back to you soon. Check your email for confirmation.',
+        message: confirmationSent 
+          ? 'Message sent successfully! I will get back to you soon. Check your email for confirmation.'
+          : 'Message sent successfully! I will get back to you soon.',
         method: 'mailgun',
-        confirmationSent: true
+        confirmationSent: confirmationSent
       });
       
     } else {
