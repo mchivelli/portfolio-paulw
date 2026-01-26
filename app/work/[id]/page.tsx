@@ -5,6 +5,12 @@ import { BitmapChevron } from "@/components/bitmap-chevron"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+export async function generateStaticParams() {
+    return projects.map((project) => ({
+        id: project.id.toString(),
+    }))
+}
+
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
     const projectId = parseInt(id)
@@ -13,6 +19,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     if (!project) {
         notFound()
     }
+
+    // Default to English for the static export
+    // Since this is a static export, we can't dynamically switch languages on the server side in the same way
+    // Check if we need a client component wrapper to handle language switching for this detail page
+    // For now, let's fix the type errors by accessing the 'en' property
+    const lang = "en"
 
     return (
         <main className="relative min-h-screen">
@@ -32,10 +44,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                     </Link>
 
                     <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-accent mb-4">
-                        {project.medium || "Project"}
+                        {project.medium[lang] || "Project"}
                     </span>
                     <h1 className="font-[var(--font-bebas)] text-6xl md:text-8xl tracking-tight leading-none mb-6">
-                        {project.title}
+                        {project.title[lang]}
                     </h1>
 
                     {/* Tech Stack */}
@@ -51,7 +63,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                     </div>
 
                     <p className="font-mono text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl border-l-2 border-accent/50 pl-6">
-                        {project.longDescription || project.description}
+                        {project.longDescription[lang] || project.description[lang]}
                     </p>
                 </div>
 
@@ -80,14 +92,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* Features */}
-                {project.features && project.features.length > 0 && (
+                {project.features && project.features[lang] && project.features[lang].length > 0 && (
                     <div className="grid md:grid-cols-2 gap-12">
                         <div>
                             <h2 className="font-[var(--font-bebas)] text-3xl md:text-4xl tracking-tight mb-8 text-foreground/90">
                                 Key Features
                             </h2>
                             <ul className="grid gap-4">
-                                {project.features.map((feature, i) => (
+                                {project.features[lang].map((feature, i) => (
                                     <li key={i} className="flex items-start gap-3 group">
                                         <span className="mt-1.5 w-1.5 h-1.5 bg-accent/50 group-hover:bg-accent transition-colors" />
                                         <span className="font-mono text-sm text-muted-foreground group-hover:text-foreground transition-colors">
@@ -99,16 +111,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                         </div>
 
                         {/* Image Placeholder or Preview */}
-                        <div className="relative aspect-video border border-border/40 bg-black/20 overflow-hidden group">
-                            {project.image && (
+                        {project.image && (
+                            <div className="relative aspect-video border border-border/40 bg-black/20 overflow-hidden group">
                                 <img
                                     src={project.image}
-                                    alt={project.title}
+                                    alt={project.title[lang]}
                                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 grayscale group-hover:grayscale-0"
                                 />
-                            )}
-                            <div className="absolute inset-0 border border-accent/20 m-2" />
-                        </div>
+                                <div className="absolute inset-0 border border-accent/20 m-2" />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
