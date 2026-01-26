@@ -1,0 +1,344 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects", 
+    "skills": "Skills",
+    "contact": "Contact",
+    "terminal": "Terminal",
+    "online": "Online",
+    "brand": {
+      "name": "Portfolio",
+      "title": "Paul Wallner"
+    }
+  },
+  "hero": {
+    "name": "Paul Wallner",
+    "title": "Full Stack",
+    "subtitle": "Developer",
+    "description": "Creating innovative solutions with cutting-edge technologies. I love building projects, crafting exceptional user experiences, and bringing creative ideas to life.",
+    "buttons": {
+      "terminal": "Launch Terminal",
+      "projects": "View Projects"
+    },
+    "skills": ["Programming", "Frontend", "Backend", "Cloud", "Networking", "UI & Mediadesign", "IoT", "Data-Analysis"]
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "description": "Explore my portfolio of innovative solutions, from Minecraft mods and Discord bots to AI-powered platforms and full-stack websites. Each project showcases cutting-edge technology and modern development practices.",
+    "buttons": {
+      "viewCode": "View Code",
+      "liveDemo": "Live Demo"
+    },
+    "moreComing": {
+      "title": "More Projects Coming Soon",
+      "description": "I'm constantly working on new and exciting projects. Follow my GitHub for the latest updates, or get in touch if you'd like to collaborate on something amazing!",
+      "buttons": {
+        "github": "Follow on GitHub",
+        "collaborate": "Let's Collaborate"
+      }
+    }
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "description": "Explore my technical expertise through an interactive experience",
+    "overview": {
+      "title": "Skills Overview",
+      "description": "Junior Developer Journey"
+    },
+    "summary": {
+      "title": "Skills Summary"
+    },
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend", 
+      "cloud": "Cloud",
+      "design": "Design",
+      "coreLanguages": "Core Languages",
+      "webDevelopment": "Web Development",
+      "specializedSkills": "Specialized Skills",
+      "learningFocus": "Learning Focus",
+      "creativeTools": "Creative Tools"
+    },
+    "technicalSkills": "Skills Overview",
+    "proficiencyLevels": "Junior Developer Journey",
+    "levels": {
+      "beginner": "Beginner (<50%)",
+      "learning": "Learning (50-69%)",
+      "comfortable": "Comfortable (70%+)"
+    },
+    "status": {
+      "learningFundamentals": "Currently learning fundamentals",
+      "developingExperience": "Developing practical experience"
+    },
+    "juniorDeveloper": "Junior Developer - Focused on continuous learning and growth",
+    "quote": "\"The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.\" - Brian Herbert",
+    "continuousLearning": "Continuously learning and improving",
+    "navigation": {
+      "explore": "Explore more"
+    },
+    "hint": "Try typing commands like",
+    "commands": ["skills", "about", "projects"],
+    "terminal": "Navigate to Terminal to explore skills interactively"
+  },
+  "navigation": {
+    "about": "about",
+    "projects": "projects",
+    "contact": "contact"
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "description": "Ready to collaborate on your next project? I'd love to hear from you.",
+    "info": {
+      "title": "Contact Information",
+      "descriptions": {
+        "email": "Direct email for professional inquiries",
+        "linkedin": "Professional networking and career updates", 
+        "github": "Code repositories and open source contributions",
+        "twitter": "Tech insights and industry discussions"
+      }
+    },
+    "availability": {
+      "title": "Availability",
+      "status": {
+        "available": "Available for new opportunities",
+        "response": "Usually responds within 24 hours",
+        "remote": "Open to remote work worldwide"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "subject": "Subject",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "your.email@example.com",
+        "subject": "Project collaboration, job opportunity, etc.",
+        "message": "Tell me about your project, requirements, or any questions you have..."
+      },
+      "button": "Send Message",
+      "sending": "Sending Message...",
+      "success": {
+        "title": "Message sent successfully!",
+        "description": "Thanks for reaching out. I'll get back to you soon!"
+      },
+      "directContact": "Prefer direct contact? Feel free to reach out via",
+      "or": "or"
+    },
+    "cta": {
+      "title": "Ready to Build Something Amazing?",
+      "description": "Whether you have a project in mind, need technical expertise, or just want to connect, I'm always excited to discuss new opportunities and collaborations.",
+      "services": ["Full Stack Development", "Technical Consulting", "Code Review", "Mentoring"]
+    }
+  },
+  "timeline": {
+    "download": "Download CV",
+    "work": "Work",
+    "education": "Education",
+    "entries": {
+      "civilServices": {
+        "title": "Civil Services",
+        "company": "BMI - Bundesministerium für Inneres",
+        "description": "Administration, handling business-critical IT"
+      },
+      "htlWienWest": {
+        "title": "HTL Wien West (Evening School)",
+        "focus": "Focus: Computer Science",
+        "location": "Location: Vienna"
+      },
+      "cashierXXXLutz2024": {
+        "title": "Cashier (Minor Employment)",
+        "company": "XXXLutz KG",
+        "description": "Part-time cashier work, customer service, geringfügige Stelle"
+      },
+      "adminAssistantHodlmayr": {
+        "title": "Administrative Assistant",
+        "company": "Hödlmayr Urban Logistics GmbH",
+        "description": "Implemented automation; handled authority inquiries and insurance documents; supported purchasing; optimized workflows; coordinated organizational tasks"
+      },
+      "cashierXXXLutz2023": {
+        "title": "Cashier Assistant (fixed-term)",
+        "company": "XXXLutz KG",
+        "description": "Checkout, customer service, returns and complaints, sales floor support"
+      },
+      "eventStaff": {
+        "title": "Event Staff",
+        "company": "Eventiv GmbH",
+        "description": "Service, cashier operations, cloakroom, stage setup, front desk"
+      },
+      "contactTracing": {
+        "title": "Contact Tracing Associate",
+        "company": "Stadtservice Wien",
+        "description": "Recorded and analyzed customer/patient data; managed calls; handled complaints"
+      },
+      "realEstateAgent": {
+        "title": "Apprentice Real Estate Agent",
+        "company": "Paul & Partner Immobilien Investment",
+        "description": "Email handling, mail in/out, client acquisition, administrative tasks"
+      },
+      "laborsIntake": {
+        "title": "Order & Sample Intake",
+        "company": "Gruppenpraxis Labors.at",
+        "description": "Data entry, order registration, sample processing, administrative support"
+      },
+      "financialConsultant": {
+        "title": "Trainee Financial/Wealth Consultant",
+        "company": "Euro Finanz Service AG",
+        "description": "Client acquisition, sales of insurance products, asset management, customer advisory"
+      },
+      "vocationalConstruction": {
+        "title": "Vocational School for Construction",
+        "focus": "Focus: Construction basics",
+        "location": "Location: Vienna"
+      },
+      "apprenticeDrywall": {
+        "title": "Apprentice Drywall Installer/Plasterer",
+        "company": "STRABAG AG",
+        "description": "Construction assistance, drywall work, foundations of plastering"
+      },
+      "internOVB": {
+        "title": "Intern",
+        "company": "OVB Allfinanzvermittlung GmbH / Euro Finanz Service AG",
+        "description": "Administrative support, lead acquisition, data entry/maintenance"
+      },
+      "vocationalOffice": {
+        "title": "Vocational School for Office Clerks",
+        "focus": "Focus: Office Clerk / Sports Administration (Dual Apprenticeship)",
+        "company": "ibis acam Bildungs GmbH",
+        "location": "Location: Vienna"
+      },
+      "youthWorkshop": {
+        "title": "Youth Workshop",
+        "company": "BFI Vienna",
+        "location": "Location: Vienna"
+      },
+      "compulsorySchool": {
+        "title": "Compulsory School Completion Course",
+        "company": "VHS Meidling",
+        "focus": "Recognition: Austrian 9th grade equivalent for Philippine 10th grade",
+        "location": "Location: Vienna"
+      },
+      "highSchool": {
+        "title": "High School",
+        "location": "Location: Palawan, Philippines"
+      },
+      "bernoulligymnasium": {
+        "title": "Bernoulligymnasium",
+        "location": "Location: Vienna"
+      }
+    }
+  },
+  "common": {
+    "required": "*",
+    "live": "LIVE"
+  },
+  "skillsVisualization": {
+    "title": "Technical Skills",
+    "subtitle": "Interactive overview of my technical expertise and experience",
+    "categories": {
+      "frontend": "Frontend Development",
+      "backend": "Backend Development",
+      "devops": "DevOps & Cloud",
+      "automation": "Automation & Bots",
+      "tools": "Tools & Others"
+    },
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "learning": "Learning"
+    },
+    "experience": "exp",
+    "projects": "projects",
+    "about": "About",
+    "usedIn": "Used in Projects"
+  },
+  "projectsVisualization": {
+    "title": "Portfolio Projects",
+    "subtitle": "Interactive showcase of my development projects and achievements",
+    "buttons": {
+      "code": "Code",
+      "live": "Live",
+      "viewSource": "View Source Code",
+      "viewDemo": "View Live Demo"
+    },
+    "about": "About",
+    "techStack": "Tech Stack",
+    "keyFeatures": "Key Features",
+    "more": "more"
+  },
+  "contactVisualization": {
+    "title": "Get In Touch",
+    "subtitle": "Let's discuss your next project or collaboration opportunity",
+    "descriptions": {
+      "email": "Get in touch via email for collaborations",
+      "linkedin": "Connect with me professionally",
+      "github": "Check out my open source projects",
+      "location": "Open to remote opportunities worldwide",
+      "calendar": "Let's discuss your project needs",
+      "cv": "Get my detailed resume"
+    },
+    "actions": {
+      "email": "Email",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "location": "Location",
+      "calendar": "Schedule Meeting",
+      "cv": "Download CV"
+    },
+    "values": {
+      "email": "paul@example.com",
+      "linkedin": "linkedin.com/in/paulm",
+      "github": "github.com/paulm",
+      "location": "Available for remote work",
+      "calendar": "Book a 30min call",
+      "cv": "Paul_Mchivelli_CV.pdf"
+    },
+    "clickTo": "Click to",
+    "open": "open",
+    "view": "view",
+    "form": {
+      "title": "Send a Message",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Tell me about your project...",
+      "send": "Send Message"
+    }
+  },
+  "terminal": {
+    "welcome": "Welcome to Paul Wallner's Interactive Portfolio Terminal",
+    "help": {
+      "title": "Available Commands:",
+      "commands": {
+        "projects": "Interactive project gallery",
+        "projectsView": "Specific project details",
+        "skills": "Interactive skills visualization",
+        "contact": "Interactive contact hub",
+        "help": "Show this help message",
+        "clear": "Clear terminal output"
+      },
+      "tip": "Commands show text here + interactive GUI in Live Output panel →"
+    },
+    "hints": {
+      "skills": "Check the Live Output panel for interactive skills visualization →",
+      "projects": "Check the Live Output panel for interactive project gallery →",
+      "contact": "Check the Live Output panel for interactive contact hub →",
+      "projectView": "View interactive project gallery in Live Output →"
+    },
+    "liveOutput": "Live Output",
+    "terminalOutput": "Terminal Output",
+    "cleared": "Terminal cleared",
+    "waiting": "Waiting for command output...",
+    "tryCommands": "Try typing: projects, skills, contact, ls, help",
+    "visualCleared": "Visual Output Cleared",
+    "readyForCommands": "Ready for new commands",
+    "interactiveOutput": "Interactive Visual Output",
+    "executeCommands": "Execute commands in the terminal to see beautiful interactive visualizations here"
+  }
+}

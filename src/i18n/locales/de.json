@@ -1,0 +1,344 @@
+{
+  "nav": {
+    "about": "Über mich",
+    "projects": "Projekte", 
+    "skills": "Fähigkeiten",
+    "contact": "Kontakt",
+    "terminal": "Terminal",
+    "online": "Online",
+    "brand": {
+      "name": "Portfolio",
+      "title": "Paul Wallner"
+    }
+  },
+  "hero": {
+    "name": "Paul Wallner",
+    "title": "Full Stack",
+    "subtitle": "Entwickler",
+    "description": "Entwicklung innovativer Lösungen mit modernsten Technologien. Ich liebe es, Projekte zu erstellen, außergewöhnliche Benutzererfahrungen zu schaffen und kreative Ideen zum Leben zu erwecken.",
+    "buttons": {
+      "terminal": "Terminal starten",
+      "projects": "Projekte ansehen"
+    },
+    "skills": ["Programmierung", "Frontend", "Backend", "Cloud", "Netzwerke", "UI & Mediendesign", "IoT", "Datenanalyse"]
+  },
+  "projects": {
+    "title": "Ausgewählte Projekte",
+    "description": "Entdecken Sie mein Portfolio innovativer Lösungen, von Minecraft-Mods und Discord-Bots bis hin zu KI-gestützten Plattformen und Full-Stack-Websites. Jedes Projekt zeigt moderne Technologie und Entwicklungspraktiken.",
+    "buttons": {
+      "viewCode": "Code ansehen",
+      "liveDemo": "Live Demo"
+    },
+    "moreComing": {
+      "title": "Weitere Projekte folgen bald",
+      "description": "Ich arbeite ständig an neuen und aufregenden Projekten. Folgen Sie meinem GitHub für die neuesten Updates oder kontaktieren Sie mich, wenn Sie an etwas Fantastischem zusammenarbeiten möchten!",
+      "buttons": {
+        "github": "Auf GitHub folgen",
+        "collaborate": "Lass uns zusammenarbeiten"
+      }
+    }
+  },
+  "skills": {
+    "title": "Technische Fähigkeiten",
+    "description": "Entdecken Sie meine technische Expertise durch eine interaktive Erfahrung",
+    "overview": {
+      "title": "Fähigkeiten Übersicht",
+      "description": "Junior Entwickler Reise"
+    },
+    "summary": {
+      "title": "Fähigkeiten Zusammenfassung"
+    },
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend", 
+      "cloud": "Cloud",
+      "design": "Design",
+      "coreLanguages": "Kernsprachen",
+      "webDevelopment": "Webentwicklung",
+      "specializedSkills": "Spezialisierte Fähigkeiten",
+      "learningFocus": "Lernfokus",
+      "creativeTools": "Kreative Tools"
+    },
+    "technicalSkills": "Fähigkeiten Übersicht",
+    "proficiencyLevels": "Junior Entwickler Reise",
+    "levels": {
+      "beginner": "Anfänger (<50%)",
+      "learning": "Lernend (50-69%)",
+      "comfortable": "Komfortabel (70%+)"
+    },
+    "status": {
+      "learningFundamentals": "Lerne derzeit Grundlagen",
+      "developingExperience": "Entwickle praktische Erfahrung"
+    },
+    "juniorDeveloper": "Junior Entwickler - Fokussiert auf kontinuierliches Lernen und Wachstum",
+    "quote": "\"Die Fähigkeit zu lernen ist ein Geschenk; die Fertigkeit zu lernen ist eine Fähigkeit; die Bereitschaft zu lernen ist eine Wahl.\" - Brian Herbert",
+    "continuousLearning": "Kontinuierlich lernen und verbessern",
+    "navigation": {
+      "explore": "Mehr erkunden"
+    },
+    "hint": "Versuchen Sie Befehle wie",
+    "commands": ["skills", "about", "projects"],
+    "terminal": "Navigieren Sie zum Terminal, um Fähigkeiten interaktiv zu erkunden"
+  },
+  "navigation": {
+    "about": "über",
+    "projects": "projekte",
+    "contact": "kontakt"
+  },
+  "contact": {
+    "title": "Bereit, durchzustarten?",
+    "description": "Schreiben Sie mir – ich freue mich auf eine Zusammenarbeit.",
+    "info": {
+      "title": "Kontaktinformationen",
+      "descriptions": {
+        "email": "Direkte E-Mail für professionelle Anfragen",
+        "linkedin": "Professionelles Networking und Karriere-Updates", 
+        "github": "Code-Repositories und Open-Source-Beiträge",
+        "twitter": "Tech-Einblicke und Branchendiskussionen"
+      }
+    },
+    "availability": {
+      "title": "Verfügbarkeit",
+      "status": {
+        "available": "Verfügbar für neue Möglichkeiten",
+        "response": "Antwortet normalerweise innerhalb von 24 Stunden",
+        "remote": "Offen für Remote-Arbeit weltweit"
+      }
+    },
+    "form": {
+      "title": "Nachricht senden",
+      "fields": {
+        "name": "Name",
+        "email": "E-Mail",
+        "subject": "Betreff",
+        "message": "Nachricht"
+      },
+      "placeholders": {
+        "name": "Ihr Name",
+        "email": "ihre.email@beispiel.com",
+        "subject": "Projektzusammenarbeit, Stellenangebot, etc.",
+        "message": "Erzählen Sie mir von Ihrem Projekt, Ihren Anforderungen oder Fragen, die Sie haben..."
+      },
+      "button": "Nachricht senden",
+      "sending": "Nachricht wird gesendet...",
+      "success": {
+        "title": "Nachricht erfolgreich gesendet!",
+        "description": "Danke, dass Sie sich gemeldet haben. Ich werde mich bald bei Ihnen melden!"
+      },
+      "directContact": "Bevorzugen Sie direkten Kontakt? Kontaktieren Sie mich gerne über",
+      "or": "oder"
+    },
+    "cta": {
+      "title": "Bereit, etwas Fantastisches zu bauen?",
+      "description": "Ob Sie ein Projekt im Kopf haben, technische Expertise benötigen oder sich einfach nur vernetzen möchten, ich bin immer begeistert, neue Möglichkeiten und Kooperationen zu besprechen.",
+      "services": ["Full Stack Entwicklung", "Technische Beratung", "Code Review", "Mentoring"]
+    }
+  },
+  "timeline": {
+    "download": "Lebenslauf herunterladen",
+    "work": "Arbeit",
+    "education": "Bildung",
+    "entries": {
+      "civilServices": {
+        "title": "Zivildienst",
+        "company": "BMI - Bundesministerium für Inneres",
+        "description": "Verwaltung, Umgang mit betriebskritischer IT"
+      },
+      "htlWienWest": {
+        "title": "HTL Wien West (Abendschule)",
+        "focus": "Schwerpunkt: Informatik",
+        "location": "Ort: Wien"
+      },
+      "cashierXXXLutz2024": {
+        "title": "Kassier (Geringfügige Beschäftigung)",
+        "company": "XXXLutz KG",
+        "description": "Teilzeit-Kassierarbeit, Kundenservice, geringfügige Stelle"
+      },
+      "adminAssistantHodlmayr": {
+        "title": "Verwaltungsassistent",
+        "company": "Hödlmayr Urban Logistics GmbH",
+        "description": "Automatisierung implementiert; Behördenanfragen und Versicherungsdokumente bearbeitet; Einkauf unterstützt; Arbeitsabläufe optimiert; organisatorische Aufgaben koordiniert"
+      },
+      "cashierXXXLutz2023": {
+        "title": "Kassierassistent (befristet)",
+        "company": "XXXLutz KG",
+        "description": "Kasse, Kundenservice, Rückgaben und Beschwerden, Verkaufsflächenunterstützung"
+      },
+      "eventStaff": {
+        "title": "Veranstaltungspersonal",
+        "company": "Eventiv GmbH",
+        "description": "Service, Kassenbetrieb, Garderobe, Bühnenaufbau, Rezeption"
+      },
+      "contactTracing": {
+        "title": "Contact Tracing Mitarbeiter",
+        "company": "Stadtservice Wien",
+        "description": "Kunden-/Patientendaten erfasst und analysiert; Anrufe verwaltet; Beschwerden bearbeitet"
+      },
+      "realEstateAgent": {
+        "title": "Lehrling Immobilienmakler",
+        "company": "Paul & Partner Immobilien Investment",
+        "description": "E-Mail-Bearbeitung, Post ein/aus, Kundenakquise, administrative Aufgaben"
+      },
+      "laborsIntake": {
+        "title": "Auftrags- und Probeneingang",
+        "company": "Gruppenpraxis Labors.at",
+        "description": "Dateneingabe, Auftragsregistrierung, Probenverarbeitung, administrative Unterstützung"
+      },
+      "financialConsultant": {
+        "title": "Trainee Finanz-/Vermögensberater",
+        "company": "Euro Finanz Service AG",
+        "description": "Kundenakquise, Verkauf von Versicherungsprodukten, Vermögensverwaltung, Kundenberatung"
+      },
+      "vocationalConstruction": {
+        "title": "Berufsschule für Bau",
+        "focus": "Schwerpunkt: Bau-Grundlagen",
+        "location": "Ort: Wien"
+      },
+      "apprenticeDrywall": {
+        "title": "Lehrling Trockenbaumonteur/Verputzer",
+        "company": "STRABAG AG",
+        "description": "Bauhilfe, Trockenbauarbeiten, Grundlagen des Verputzens"
+      },
+      "internOVB": {
+        "title": "Praktikant",
+        "company": "OVB Allfinanzvermittlung GmbH / Euro Finanz Service AG",
+        "description": "Administrative Unterstützung, Lead-Akquise, Dateneingabe/Wartung"
+      },
+      "vocationalOffice": {
+        "title": "Berufsschule für Bürokaufleute",
+        "focus": "Schwerpunkt: Bürokaufmann / Sportverwaltung (Duale Lehre)",
+        "company": "ibis acam Bildungs GmbH",
+        "location": "Ort: Wien"
+      },
+      "youthWorkshop": {
+        "title": "Jugendwerkstatt",
+        "company": "BFI Wien",
+        "location": "Ort: Wien"
+      },
+      "compulsorySchool": {
+        "title": "Pflichtschulabschlusskurs",
+        "company": "VHS Meidling",
+        "focus": "Anerkennung: Österreichische 9. Klasse entspricht philippinischer 10. Klasse",
+        "location": "Ort: Wien"
+      },
+      "highSchool": {
+        "title": "Gymnasium",
+        "location": "Ort: Palawan, Philippinen"
+      },
+      "bernoulligymnasium": {
+        "title": "Bernoulligymnasium",
+        "location": "Ort: Wien"
+      }
+    }
+  },
+  "common": {
+    "required": "*",
+    "live": "LIVE"
+  },
+  "skillsVisualization": {
+    "title": "Technische Fähigkeiten",
+    "subtitle": "Interaktive Übersicht meiner technischen Expertise und Erfahrung",
+    "categories": {
+      "frontend": "Frontend-Entwicklung",
+      "backend": "Backend-Entwicklung",
+      "devops": "DevOps & Cloud",
+      "automation": "Automatisierung & Bots",
+      "tools": "Tools & Andere"
+    },
+    "levels": {
+      "expert": "Experte",
+      "advanced": "Fortgeschritten",
+      "intermediate": "Fortgeschritten",
+      "learning": "Lernend"
+    },
+    "experience": "Jahre",
+    "projects": "Projekte",
+    "about": "Über",
+    "usedIn": "Verwendet in Projekten"
+  },
+  "projectsVisualization": {
+    "title": "Portfolio Projekte",
+    "subtitle": "Interaktive Präsentation meiner Entwicklungsprojekte und Erfolge",
+    "buttons": {
+      "code": "Code",
+      "live": "Live",
+      "viewSource": "Quellcode ansehen",
+      "viewDemo": "Live Demo ansehen"
+    },
+    "about": "Über",
+    "techStack": "Tech Stack",
+    "keyFeatures": "Hauptfunktionen",
+    "more": "weitere"
+  },
+  "contactVisualization": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Lassen Sie uns über Ihr nächstes Projekt oder Zusammenarbeitsmöglichkeiten sprechen",
+    "descriptions": {
+      "email": "Kontaktieren Sie mich per E-Mail für Kooperationen",
+      "linkedin": "Vernetzen Sie sich beruflich mit mir",
+      "github": "Schauen Sie sich meine Open-Source-Projekte an",
+      "location": "Offen für Remote-Möglichkeiten weltweit",
+      "calendar": "Lassen Sie uns über Ihre Projektanforderungen sprechen",
+      "cv": "Holen Sie sich meinen detaillierten Lebenslauf"
+    },
+    "actions": {
+      "email": "E-Mail",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "location": "Standort",
+      "calendar": "Termin vereinbaren",
+      "cv": "Lebenslauf herunterladen"
+    },
+    "values": {
+      "email": "paul@example.com",
+      "linkedin": "linkedin.com/in/paulm",
+      "github": "github.com/paulm",
+      "location": "Verfügbar für Remote-Arbeit",
+      "calendar": "30-Minuten-Gespräch buchen",
+      "cv": "Paul_Mchivelli_CV.pdf"
+    },
+    "clickTo": "Klicken Sie zum",
+    "open": "öffnen",
+    "view": "anzeigen",
+    "form": {
+      "title": "Nachricht senden",
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "namePlaceholder": "Ihr Name",
+      "emailPlaceholder": "ihre.email@beispiel.com",
+      "messagePlaceholder": "Erzählen Sie mir von Ihrem Projekt...",
+      "send": "Nachricht senden"
+    }
+  },
+  "terminal": {
+    "welcome": "Willkommen zu Paul Wallner's Interaktivem Portfolio Terminal",
+    "help": {
+      "title": "Verfügbare Befehle:",
+      "commands": {
+        "projects": "Interaktive Projektgalerie",
+        "projectsView": "Spezifische Projektdetails",
+        "skills": "Interaktive Fähigkeiten-Visualisierung",
+        "contact": "Interaktiver Kontakt-Hub",
+        "help": "Diese Hilfe anzeigen",
+        "clear": "Terminal-Ausgabe löschen"
+      },
+      "tip": "Befehle zeigen Text hier + interaktive GUI im Live-Ausgabe-Panel →"
+    },
+    "hints": {
+      "skills": "Schauen Sie im Live-Ausgabe-Panel für interaktive Fähigkeiten-Visualisierung →",
+      "projects": "Schauen Sie im Live-Ausgabe-Panel für interaktive Projektgalerie →",
+      "contact": "Schauen Sie im Live-Ausgabe-Panel für interaktiven Kontakt-Hub →",
+      "projectView": "Interaktive Projektgalerie im Live-Ausgabe anzeigen →"
+    },
+    "liveOutput": "Live-Ausgabe",
+    "terminalOutput": "Terminal-Ausgabe",
+    "cleared": "Terminal gelöscht",
+    "waiting": "Warten auf Befehlsausgabe...",
+    "tryCommands": "Versuchen Sie: projects, skills, contact, ls, help",
+    "visualCleared": "Visuelle Ausgabe gelöscht",
+    "readyForCommands": "Bereit für neue Befehle",
+    "interactiveOutput": "Interaktive Visuelle Ausgabe",
+    "executeCommands": "Führen Sie Befehle im Terminal aus, um schöne interaktive Visualisierungen hier zu sehen"
+  }
+}
