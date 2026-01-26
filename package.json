@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "next build && rm -rf dist && mv out dist",
     "dev": "next dev",
     "lint": "eslint .",
     "start": "pm2 start ecosystem.config.js",
