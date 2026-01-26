@@ -56,6 +56,40 @@ This guide covers deploying your portfolio website with the contact form functio
 3. Configure environment variables
 4. Deploy from GitHub or CLI
 
+### Option 4: Dedicated Server / VPS (Manual)
+
+#### 1. Frontend Application
+The frontend is a Next.js application.
+
+**Start:**
+```bash
+# 1. Build the application
+npm run build
+
+# 2. Start the production server (default port 3000)
+npm start
+```
+*To run in background (recommended):* use PM2: `pm2 start npm --name "frontend" -- start`
+
+**Stop:**
+- If running in terminal: Press `Ctrl+C`
+- If using PM2: `pm2 stop frontend`
+
+#### 2. Backend Server
+The backend is a separate Express server in the `server/` directory.
+
+**Start:**
+```bash
+cd server
+npm install
+npm run production
+```
+*To run in background (recommended):* use PM2: `pm2 start npm --name "backend" -- run production`
+
+**Stop:**
+- If running in terminal: Press `Ctrl+C`
+- If using PM2: `pm2 stop backend`
+
 ## ⚙️ Configuration
 
 ### 1. Update API URLs for Production
