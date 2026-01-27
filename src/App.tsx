@@ -26,7 +26,7 @@ function App() {
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
     setIsTerminalFocused(false);
-    
+
     if (section === 'projects') {
       setShowFullProjectsPage(true);
       setShowSkillsPage(false);
@@ -48,7 +48,7 @@ function App() {
       setShowContactPage(false);
       setShowHero(true);
     }
-    
+
     // Scroll to top when changing sections with better timing
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -62,7 +62,7 @@ function App() {
     setShowContactPage(false);
     setShowHero(false);
     setActiveSection('terminal');
-    
+
     // Smooth scroll to top on initial load and when hero is shown
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -88,8 +88,8 @@ function App() {
   if (showFullProjectsPage) {
     return (
       <>
-        <Navbar 
-          activeSection={activeSection} 
+        <Navbar
+          activeSection={activeSection}
           onSectionChange={handleSectionChange}
           onTerminalFocus={handleTerminalFocus}
         />
@@ -104,8 +104,8 @@ function App() {
   if (showSkillsPage) {
     return (
       <>
-        <Navbar 
-          activeSection={activeSection} 
+        <Navbar
+          activeSection={activeSection}
           onSectionChange={handleSectionChange}
           onTerminalFocus={handleTerminalFocus}
         />
@@ -120,8 +120,8 @@ function App() {
   if (showContactPage) {
     return (
       <>
-        <Navbar 
-          activeSection={activeSection} 
+        <Navbar
+          activeSection={activeSection}
           onSectionChange={handleSectionChange}
           onTerminalFocus={handleTerminalFocus}
         />
@@ -135,14 +135,13 @@ function App() {
   // Show terminal-focused page when terminal is active
   if (isTerminalFocused) {
     return (
-      <div className={`min-h-screen font-mono overflow-hidden transition-all duration-300 ${
-        isDark 
-          ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan' 
-          : 'gradient-bg text-light-text'
-      }`}>
+      <div className={`min-h-screen font-mono overflow-hidden transition-all duration-300 ${isDark
+        ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan'
+        : 'gradient-bg text-light-text'
+        }`}>
         {/* Navbar */}
-        <Navbar 
-          activeSection={activeSection} 
+        <Navbar
+          activeSection={activeSection}
           onSectionChange={handleSectionChange}
           onTerminalFocus={handleTerminalFocus}
         />
@@ -152,14 +151,13 @@ function App() {
           {[...Array(60)].map((_, i) => (
             <motion.div
               key={i}
-              className={`absolute font-mono text-xs select-none matrix-rain ${
-                isDark ? 'text-terminal-green/40' : 'text-primary-blue/20'
-              }`}
-              style={{ 
-                left: `${Math.random() * 100}%`, 
+              className={`absolute font-mono text-xs select-none matrix-rain ${isDark ? 'text-terminal-green/40' : 'text-primary-blue/20'
+                }`}
+              style={{
+                left: `${Math.random() * 100}%`,
                 top: '-50px',
               }}
-              animate={{ 
+              animate={{
                 y: ['0vh', '110vh'],
                 opacity: [0, isDark ? Math.random() * 0.8 + 0.3 : Math.random() * 0.3 + 0.1, 0],
               }}
@@ -174,24 +172,23 @@ function App() {
             </motion.div>
           ))}
         </div>
-        
+
         {/* Terminal Focused Layout - Enhanced Full Screen With Preview Section */}
         <div className="absolute inset-0 pt-16 overflow-hidden">
           <div className="h-full flex gap-4 p-4">
             {/* Terminal Panel - Left Side - Bigger */}
-            <motion.div 
+            <motion.div
               className="w-[60%] relative"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className={`h-full backdrop-blur-md rounded-lg shadow-2xl card-bg ${
-                isDark 
-                  ? 'bg-gradient-to-br from-black/60 via-black/40 to-black/60 border border-terminal-border shadow-terminal-cyan/10' 
-                  : 'bg-white/90 border border-light-border shadow-primary-blue/10'
-              }`}>
-                <EnhancedTerminal 
-                  onPreviewUpdate={handlePreviewUpdate} 
+              <div className={`h-full backdrop-blur-md rounded-lg shadow-2xl card-bg ${isDark
+                ? 'bg-gradient-to-br from-black/60 via-black/40 to-black/60 border border-terminal-border shadow-terminal-cyan/10'
+                : 'bg-white/90 border border-light-border shadow-primary-blue/10'
+                }`}>
+                <EnhancedTerminal
+                  onPreviewUpdate={handlePreviewUpdate}
                   command=""
                   isFullScreen={true}
                   onTerminalInteraction={handleTerminalInteraction}
@@ -210,13 +207,12 @@ function App() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 50, opacity: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className={`w-[40%] backdrop-blur-md rounded-lg shadow-2xl overflow-hidden card-bg ${
-                isDark 
-                  ? 'bg-gradient-to-br from-black/60 via-black/40 to-black/60 border border-terminal-border shadow-terminal-cyan/10' 
-                  : 'bg-white/90 border border-light-border shadow-primary-blue/10'
-              }`}
+              className={`w-[40%] backdrop-blur-md rounded-lg shadow-2xl overflow-hidden card-bg ${isDark
+                ? 'bg-gradient-to-br from-black/60 via-black/40 to-black/60 border border-terminal-border shadow-terminal-cyan/10'
+                : 'bg-white/90 border border-light-border shadow-primary-blue/10'
+                }`}
             >
-              <CommandCenter 
+              <CommandCenter
                 previewData={previewData}
                 currentPath={currentTerminalPath}
               />
@@ -228,15 +224,14 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen font-mono overflow-hidden transition-all duration-300 ${
-      isDark 
-        ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan' 
-        : 'gradient-bg text-light-text'
-    }`}>
+    <div className={`min-h-screen font-sans overflow-hidden transition-all duration-300 ${isDark
+      ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan'
+      : 'gradient-bg text-light-text'
+      }`}>
       {/* Navbar */}
-      <Navbar 
-        activeSection={activeSection} 
-        onSectionChange={handleSectionChange} 
+      <Navbar
+        activeSection={activeSection}
+        onSectionChange={handleSectionChange}
         onTerminalFocus={handleTerminalFocus}
       />
 
@@ -245,16 +240,15 @@ function App() {
         {[...Array(60)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute font-mono text-xs select-none matrix-rain ${
-              isDark ? 'text-primary-purple/25' : 'text-primary-blue/15'
-            }`}
-            style={{ 
-              left: `${Math.random() * 100}%`, 
+            className={`absolute font-mono text-xs select-none matrix-rain ${isDark ? 'text-primary-purple/25' : 'text-primary-blue/15'
+              }`}
+            style={{
+              left: `${Math.random() * 100}%`,
               top: '-50px',
             }}
-            animate={{ 
+            animate={{
               y: ['0vh', '110vh'],
-              opacity: [0, isDark ? Math.random() * 0.6 + 0.2 : Math.random() * 0.3 + 0.1, 0],
+              opacity: [0, isDark ? Math.random() * 0.4 + 0.1 : Math.random() * 0.2 + 0.05, 0],
             }}
             transition={{
               duration: Math.random() * 6 + 4,
@@ -273,14 +267,13 @@ function App() {
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute font-mono text-sm select-none whitespace-pre ${
-              isDark ? 'text-primary-blue/8' : 'text-primary-blue/4'
-            }`}
-            style={{ 
-              left: `${Math.random() * 100}%`, 
+            className={`absolute font-mono text-sm select-none whitespace-pre ${isDark ? 'text-primary-blue/8' : 'text-primary-blue/4'
+              }`}
+            style={{
+              left: `${Math.random() * 100}%`,
               top: '-50px',
             }}
-            animate={{ 
+            animate={{
               y: ['0vh', '120vh'],
               opacity: [0, isDark ? 0.4 : 0.2, 0]
             }}
@@ -298,7 +291,7 @@ function App() {
 
       {/* CRT Effect Overlay */}
       <div className="fixed inset-0 pointer-events-none crt z-40" />
-      
+
       {/* Main Container */}
       <div className="relative min-h-screen flex flex-col pt-16">
 
@@ -306,47 +299,45 @@ function App() {
         <AnimatePresence>
           {showHero && activeSection === 'about' && (
             <motion.section
-              className={`relative py-20 px-4 ${
-                isDark 
-                  ? 'bg-gradient-to-r from-black/50 via-transparent to-black/50' 
-                  : 'bg-gradient-to-r from-white/30 via-transparent to-white/30'
-              }`}
+              className={`relative py-20 px-4 ${isDark
+                ? 'bg-gradient-to-r from-black/50 via-transparent to-black/50'
+                : 'bg-gradient-to-r from-white/30 via-transparent to-white/30'
+                }`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
             >
               <div className="max-w-6xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                   {/* Portrait Side */}
-                  <motion.div 
+                  <motion.div
                     className="relative"
                     initial={{ opacity: 0, x: -100 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, delay: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
                   >
                     <div className="relative mx-auto w-80 h-80 lg:w-96 lg:h-96 portrait-container">
                       {/* Layer 1: Gradient Ring */}
                       <div className="gradient-ring"></div>
-                      
+
                       {/* Layer 2: Portrait with bottom curvature crop */}
                       <div className="portrait-with-curve">
-                        <img 
-                          src="/portrait2.webp" 
+                        <img
+                          src="/portrait2.webp"
                           alt="Paul Wallner - Full Stack Developer"
                           width={320}
                           height={320}
                           loading="eager"
                           decoding="async"
                           fetchPriority="high"
-                          className={`${
-                            isDark 
-                              ? 'filter brightness-75 contrast-90' 
-                              : 'filter brightness-100 contrast-100'
-                          }`}
+                          className={`${isDark
+                            ? 'filter brightness-75 contrast-90'
+                            : 'filter brightness-100 contrast-100'
+                            }`}
                         />
                       </div>
-                      
+
                       {/* Floating particles - positioned behind the portrait */}
                       {[...Array(8)].map((_, i) => (
                         <motion.div
@@ -372,18 +363,18 @@ function App() {
                   </motion.div>
 
                   {/* Content Side */}
-                  <motion.div 
+                  <motion.div
                     className="space-y-8"
                     initial={{ opacity: 0, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, delay: 0.5 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
                   >
                     <div className="space-y-4">
-                      <motion.h1 
+                      <motion.h1
                         className="text-5xl lg:text-7xl font-bold leading-tight"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.7 }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
                       >
                         <span className="animate-gradient-text glow-text">{t('hero.name')}</span>
                         <br />
@@ -391,28 +382,27 @@ function App() {
                           {t('hero.title')} {t('hero.subtitle')}
                         </span>
                       </motion.h1>
-                      
-                      <motion.p 
-                        className={`text-xl leading-relaxed max-w-2xl ${
-                          isDark ? 'text-primary-blue/80' : 'text-light-text-secondary'
-                        }`}
+
+                      <motion.p
+                        className={`text-xl leading-relaxed max-w-2xl ${isDark ? 'text-primary-blue/80' : 'text-light-text-secondary'
+                          }`}
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.9 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
                       >
                         {t('hero.description')}
                       </motion.p>
                     </div>
 
-                    <motion.div 
+                    <motion.div
                       className="flex flex-wrap gap-4"
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 1.1 }}
+                      transition={{ duration: 0.4, delay: 0.6 }}
                     >
                       <motion.button
                         onClick={handleTerminalFocus}
-                        className="px-8 py-4 bg-gradient-to-r from-primary-blue to-primary-purple text-white font-bold rounded-lg hover:shadow-lg hover:shadow-primary-blue/30 transition-all duration-300"
+                        className="px-8 py-4 bg-gradient-to-r from-primary-blue to-primary-purple text-white font-bold rounded-lg hover:shadow-lg hover:shadow-primary-blue/30 transition-all duration-200"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -423,10 +413,10 @@ function App() {
                           {t('hero.buttons.terminal')}
                         </span>
                       </motion.button>
-                      
+
                       <motion.button
                         onClick={() => handleSectionChange('projects')}
-                        className="px-8 py-4 border-2 border-primary-blue text-primary-blue font-bold rounded-lg hover:bg-primary-blue hover:text-white transition-all duration-300"
+                        className="px-8 py-4 border-2 border-primary-blue text-primary-blue font-bold rounded-lg hover:bg-primary-blue hover:text-white transition-all duration-200"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -435,20 +425,19 @@ function App() {
                     </motion.div>
 
                     {/* Skills Preview */}
-                    <motion.div 
+                    <motion.div
                       className="flex flex-wrap gap-3 pt-4"
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 1.3 }}
+                      transition={{ duration: 0.5, delay: 0.7 }}
                     >
                       {(t('hero.skills', { returnObjects: true }) as string[]).map((skill: string, index: number) => (
-                        <motion.span 
+                        <motion.span
                           key={skill}
-                          className={`px-3 py-1 text-xs font-medium rounded-md ${
-                            isDark 
-                              ? 'bg-primary-blue/10 text-primary-blue border border-primary-blue/20' 
-                              : 'bg-primary-blue/5 text-primary-blue border border-primary-blue/15'
-                          } hover:${isDark ? 'bg-primary-blue/15' : 'bg-primary-blue/10'} transition-colors duration-200`}
+                          className={`px-3 py-1 text-xs font-medium rounded-md ${isDark
+                            ? 'bg-primary-blue/10 text-primary-blue border border-primary-blue/20'
+                            : 'bg-primary-blue/5 text-primary-blue border border-primary-blue/15'
+                            } hover:${isDark ? 'bg-primary-blue/15' : 'bg-primary-blue/10'} transition-colors duration-200`}
                           initial={{ opacity: 0, scale: 0 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.5, delay: 1.5 + index * 0.1 }}
@@ -466,11 +455,11 @@ function App() {
 
         {/* Main Content - Timeline */}
         <main className="flex-1 relative">
-          <motion.div 
+          <motion.div
             className="w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
             <Timeline data={createTimelineData(t)} />
           </motion.div>

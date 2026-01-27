@@ -5,6 +5,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from '../contexts/ThemeContext';
 import { Home, FolderOpen, Zap, Mail, Terminal } from 'lucide-react';
+import logo from '../assets/logoPaulWallner.png';
 
 interface NavbarProps {
   activeSection: string;
@@ -15,7 +16,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, onTerminalFocus }) => {
   const { t } = useTranslation();
   const { isDark } = useTheme();
-  
+
   const navItems = [
     { key: 'about', label: t('nav.about'), icon: Home },
     { key: 'projects', label: t('nav.projects'), icon: FolderOpen },
@@ -25,12 +26,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
   ];
 
   return (
-    <motion.nav 
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-all duration-300 navbar-bg ${
-        isDark 
-          ? 'bg-gradient-to-r from-black/95 via-gray-900/95 to-black/95 border-terminal-border/30' 
-          : 'bg-white/95 border-light-border/50'
-      }`}
+    <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-all duration-200 navbar-bg ${isDark
+        ? 'bg-gradient-to-r from-black/95 via-gray-900/95 to-black/95 border-terminal-border/30'
+        : 'bg-white/95 border-light-border/50'
+        }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -38,22 +38,20 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo/Brand - Clickable Home Button */}
-          <motion.button 
+          <motion.button
             className="flex items-center gap-2 sm:gap-3 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             onClick={() => onSectionChange('about')}
             title="Portfolio Paul Wallner"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-blue to-primary-purple rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xs sm:text-sm">PW</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center overflow-hidden">
+              <img src={logo} alt="PW" className="w-full h-full object-cover" />
             </div>
             <div className="hidden sm:block">
-              <h1 className={`text-lg font-bold glow-text ${
-                isDark ? 'text-primary-blue' : 'text-primary-blue'
-              }`}>{t('nav.brand.name')}</h1>
-              <p className={`text-xs font-mono ${
-                isDark ? 'text-primary-blue/60' : 'text-light-text-muted'
-              }`}>{t('nav.brand.title')}</p>
+              <h1 className={`text-lg font-bold glow-text ${isDark ? 'text-primary-blue' : 'text-primary-blue'
+                }`}>{t('nav.brand.name')}</h1>
+              <p className={`text-xs font-mono ${isDark ? 'text-primary-blue/60' : 'text-light-text-muted'
+                }`}>{t('nav.brand.title')}</p>
             </div>
           </motion.button>
 
@@ -72,9 +70,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
                     }
                   }}
                   className={`
-                    px-2 sm:px-4 py-2 rounded-lg font-mono text-xs sm:text-sm transition-all duration-300 border flex items-center gap-1 sm:gap-2
+                    px-2 sm:px-4 py-2 rounded-lg font-sans text-xs sm:text-sm transition-all duration-200 border flex items-center gap-1 sm:gap-2
                     ${activeSection === item.key || (item.key === 'terminal' && activeSection === 'terminal')
-                      ? isDark 
+                      ? isDark
                         ? 'bg-primary-blue/20 text-primary-blue border-primary-blue/50 glow-text'
                         : 'bg-primary-blue/10 text-primary-blue border-primary-blue/40 glow-text'
                       : isDark
@@ -96,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
           </div>
 
           {/* Theme and Language Controls */}
-          <motion.div 
+          <motion.div
             className="flex items-center gap-2 sm:gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

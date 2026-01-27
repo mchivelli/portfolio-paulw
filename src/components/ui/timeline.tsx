@@ -31,9 +31,9 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           });
         }
       });
-      
+
       resizeObserver.observe(ref.current);
-      
+
       return () => {
         resizeObserver.disconnect();
       };
@@ -62,7 +62,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     const hasPresent = /present/i.test(title);
     const nums = (title.match(/\d{4}/g) || []).map((n) => parseInt(n, 10));
 
-      if (hasPresent) {
+    if (hasPresent) {
       // Only show in PRESENT to avoid duplicating into numeric years
       addToGroup("PRESENT", d.content);
     } else if (nums.length >= 2) {
@@ -87,19 +87,19 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const groupedData: TimelineEntry[] = [
     ...(byYearMap.has("PRESENT")
       ? [
-          {
-            title: "PRESENT",
-            content: (
-              <div className="space-y-12">
-                {(byYearMap.get("PRESENT") || []).map((c, i) => (
-                  <div key={`present-${i}`} className="space-y-4">
-                    {c}
-                  </div>
-                ))}
-              </div>
-            ),
-          },
-        ]
+        {
+          title: "PRESENT",
+          content: (
+            <div className="space-y-12">
+              {(byYearMap.get("PRESENT") || []).map((c, i) => (
+                <div key={`present-${i}`} className="space-y-4">
+                  {c}
+                </div>
+              ))}
+            </div>
+          ),
+        },
+      ]
       : []),
     ...numericYears.map((y) => ({
       title: String(y),
@@ -117,33 +117,29 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className={`relative w-full font-mono md:px-10 text-[15px] md:text-base leading-relaxed transition-all duration-300 ${
-        isDark 
-          ? 'bg-gradient-to-br from-black via-gray-900 to-black' 
-          : 'gradient-bg'
-      }`}
+      className={`relative w-full font-mono md:px-10 text-[15px] md:text-base leading-relaxed transition-all duration-300 ${isDark
+        ? 'bg-gradient-to-br from-black via-gray-900 to-black'
+        : 'gradient-bg'
+        }`}
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className={`text-lg md:text-4xl mb-4 glow-text max-w-4xl font-bold ${
-          isDark ? 'text-primary-blue' : 'text-primary-blue'
-        }`}>
+        <h2 className={`text-lg md:text-4xl mb-4 glow-text max-w-4xl font-bold ${isDark ? 'text-primary-blue' : 'text-primary-blue'
+          }`}>
           Education & Work Experience
         </h2>
-        <p className={`text-sm md:text-base max-w-sm ${
-          isDark ? 'text-primary-blue/70' : 'text-light-text-secondary'
-        }`}>
+        <p className={`text-sm md:text-base max-w-sm ${isDark ? 'text-primary-blue/70' : 'text-light-text-secondary'
+          }`}>
           A comprehensive timeline of my education and professional experience.
         </p>
         <div className="mt-4">
           <a
             href="/Paul_Mchivelli_CV.pdf"
             download
-            className={`inline-flex items-center gap-2 border rounded-md px-3 py-2 transition-colors ${
-              isDark 
-                ? 'text-primary-blue border-primary-blue/40 hover:bg-primary-blue/10' 
-                : 'text-primary-blue border-primary-blue/40 hover:bg-primary-blue/5'
-            }`}
+            className={`inline-flex items-center gap-2 border rounded-md px-3 py-2 transition-colors ${isDark
+              ? 'text-primary-blue border-primary-blue/40 hover:bg-primary-blue/10'
+              : 'text-primary-blue border-primary-blue/40 hover:bg-primary-blue/5'
+              }`}
           >
             <span>{t('timeline.download')}</span>
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -163,25 +159,19 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               <div className="h-12 absolute left-3 md:left-3 w-12 rounded-full bg-gradient-to-br from-primary-blue/20 to-primary-yellow/20 border border-primary-blue/50 shadow-[0_0_24px_rgba(59,130,246,0.15)] flex items-center justify-center">
                 <div className="h-3 w-3 md:h-4 md:w-4 rounded-full bg-primary-blue shadow-lg shadow-primary-blue/50" />
               </div>
-              <h3 className={`hidden md:block text-xl md:pl-20 md:text-5xl font-bold glow-text ${
-                isDark ? 'text-primary-blue' : 'text-primary-blue'
-              }`}>
+              <h3 className={`hidden md:block text-xl md:pl-20 md:text-5xl font-bold glow-text ${isDark ? 'text-primary-blue' : 'text-primary-blue'
+                }`}>
                 {item.title} -
               </h3>
             </div>
 
             <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <h3 className={`md:hidden block text-2xl mb-4 text-left font-bold glow-text ${
-                isDark ? 'text-primary-blue' : 'text-primary-blue'
-              }`}>
+              <h3 className={`md:hidden block text-2xl mb-4 text-left font-bold glow-text ${isDark ? 'text-primary-blue' : 'text-primary-blue'
+                }`}>
                 {item.title} -
               </h3>
-              <motion.div 
-                className={`timeline-card timeline-content rounded-xl p-6 md:p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 card-bg ${
-                  isDark 
-                    ? 'bg-gradient-to-br from-black/60 to-gray-900/60 border border-terminal-border/30 shadow-[0_0_24px_rgba(34,42,53,0.08)] hover:shadow-primary-blue/20' 
-                    : 'bg-white/90 border border-light-border/30 shadow-[0_0_24px_rgba(59,130,246,0.08)] hover:shadow-primary-blue/15'
-                }`}
+              <motion.div
+                className="relative transition-all duration-200"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}

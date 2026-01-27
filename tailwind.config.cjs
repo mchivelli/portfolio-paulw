@@ -43,7 +43,9 @@ module.exports = {
         }
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
         'flicker': 'flicker 0.15s infinite',

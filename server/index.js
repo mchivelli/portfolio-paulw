@@ -39,11 +39,11 @@ app.use('/api/', limiter);
 const createMailgunClient = () => {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
-  
+
   if (!apiKey || !domain) {
     return null;
   }
-  
+
   try {
     const mailgun = new Mailgun(formData);
     return mailgun.client({
@@ -59,12 +59,12 @@ const createMailgunClient = () => {
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   console.log(`📧 Contact form submission from ${req.ip} at ${new Date().toISOString()}`);
-  
+
   const { name, email, subject, message } = req.body;
 
   // Validate required fields
   if (!name || !email || !subject || !message) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       error: 'All fields are required',
       required: ['name', 'email', 'subject', 'message']
     });
@@ -98,13 +98,13 @@ User-Agent: ${req.get('User-Agent') || 'unknown'}
     // Try to send email via Mailgun if credentials are configured
     const mailgunClient = createMailgunClient();
     const mailgunDomain = process.env.MAILGUN_DOMAIN;
-    
+
     if (mailgunClient && mailgunDomain) {
       // Determine sender email based on domain type
-      const senderEmail = mailgunDomain.includes('sandbox') 
+      const senderEmail = mailgunDomain.includes('sandbox')
         ? `noreply@${mailgunDomain}`
         : `contact@${mailgunDomain}`;
-      
+
       const senderName = mailgunDomain.includes('sandbox')
         ? 'Portfolio Contact (Sandbox)'
         : 'Paul Wallner - Portfolio';
@@ -176,7 +176,7 @@ User-Agent: ${req.get('User-Agent') || 'unknown'}
 
       // Send the main email to you
       const mainEmailResult = await mailgunClient.messages.create(mailgunDomain, messageData);
-      
+
       // Send confirmation email to the sender
       const confirmationHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
@@ -250,22 +250,22 @@ User-Agent: ${req.get('User-Agent') || 'unknown'}
           // Don't fail the main request if confirmation fails
         }
       }
-      
-      res.json({ 
-        success: true, 
-        message: confirmationSent 
+
+      res.json({
+        success: true,
+        message: confirmationSent
           ? 'Message sent successfully! I will get back to you soon. Check your email for confirmation.'
           : 'Message sent successfully! I will get back to you soon.',
         method: 'mailgun',
         confirmationSent: confirmationSent
       });
-      
+
     } else {
       // Fallback to mailto approach
       const mailtoLink = `mailto:paulmallner@gmail.com?subject=${encodeURIComponent(`Portfolio Contact: ${subject}`)}&body=${encodeURIComponent(emailContent)}`;
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: 'Email client will open with your message pre-filled',
         mailtoLink: mailtoLink,
         method: 'mailto',
@@ -283,7 +283,7 @@ User-Agent: ${req.get('User-Agent') || 'unknown'}
 
   } catch (error) {
     console.error('❌ Error processing contact form:', error);
-    
+
     // Fallback to mailto on any error
     const emailContent = `
 New contact form submission from Portfolio:
@@ -299,11 +299,11 @@ ${message}
 Sent from Portfolio Contact Form
 Timestamp: ${new Date().toISOString()}
     `;
-    
+
     const mailtoLink = `mailto:paulmallner@gmail.com?subject=${encodeURIComponent(`Portfolio Contact: ${subject}`)}&body=${encodeURIComponent(emailContent)}`;
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: 'Email client will open with your message pre-filled',
       mailtoLink: mailtoLink,
       method: 'mailto-fallback',
@@ -341,17 +341,17 @@ app.get('/api/preview', async (req, res) => {
     // Extract metadata
     const preview = {
       url,
-      title: $('meta[property="og:title"]').attr('content') || 
-             $('title').text() || 
-             'No title',
-      description: $('meta[property="og:description"]').attr('content') || 
-                   $('meta[name="description"]').attr('content') || 
-                   'No description available',
-      image: $('meta[property="og:image"]').attr('content') || 
-             $('meta[name="twitter:image"]').attr('content') || 
-             null,
-      siteName: $('meta[property="og:site_name"]').attr('content') || 
-                new URL(url).hostname
+      title: $('meta[property="og:title"]').attr('content') ||
+        $('title').text() ||
+        'No title',
+      description: $('meta[property="og:description"]').attr('content') ||
+        $('meta[name="description"]').attr('content') ||
+        'No description available',
+      image: $('meta[property="og:image"]').attr('content') ||
+        $('meta[name="twitter:image"]').attr('content') ||
+        null,
+      siteName: $('meta[property="og:site_name"]').attr('content') ||
+        new URL(url).hostname
     };
 
     // Cache the result
@@ -360,7 +360,7 @@ app.get('/api/preview', async (req, res) => {
     res.json(preview);
   } catch (error) {
     console.error('Error fetching preview:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Failed to fetch preview',
       url,
       fallback: {
@@ -379,8 +379,8 @@ app.get('/api/health', (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
+  res.json({
+    status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });

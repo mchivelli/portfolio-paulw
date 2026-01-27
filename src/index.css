@@ -50,7 +50,7 @@
     2px 2px 4px #0a0a0a,
     -2px -2px 4px #1f1f1f,
     inset 0 0 0 1px rgba(59, 130, 246, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
   transform: translateZ(0);
   overflow: hidden;
 }
@@ -405,7 +405,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -574,7 +574,7 @@ Mode Specific Styles */
 .light .card-bg {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(59, 130, 246, 0.2);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .light .card-bg:hover {
