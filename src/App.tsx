@@ -8,6 +8,7 @@ import { SkillsPage } from './components/SkillsPage';
 import { ContactPage } from './components/ContactPage';
 import { Navbar } from './components/Navbar';
 import { Timeline } from './components/ui/timeline';
+import ProfileCard from './components/ui/ProfileCard';
 import { createTimelineData } from './data/timeline';
 import { useTheme } from './contexts/ThemeContext';
 
@@ -317,50 +318,24 @@ function App() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <div className="relative mx-auto w-80 h-80 lg:w-96 lg:h-96 portrait-container">
-                      {/* Layer 1: Gradient Ring */}
-                      <div className="gradient-ring"></div>
-
-                      {/* Layer 2: Portrait with bottom curvature crop */}
-                      <div className="portrait-with-curve">
-                        <img
-                          src="/portrait2.webp"
-                          alt="Paul Wallner - Full Stack Developer"
-                          width={320}
-                          height={320}
-                          loading="eager"
-                          decoding="async"
-                          fetchPriority="high"
-                          className={`${isDark
-                            ? 'filter brightness-75 contrast-90'
-                            : 'filter brightness-100 contrast-100'
-                            }`}
-                        />
-                      </div>
-
-                      {/* Floating particles - positioned behind the portrait */}
-                      {[...Array(8)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-2 h-2 bg-gradient-to-r from-primary-blue to-primary-purple rounded-full -z-10"
-                          style={{
-                            top: `${20 + Math.random() * 60}%`,
-                            left: `${20 + Math.random() * 60}%`,
-                          }}
-                          animate={{
-                            y: [0, -15, 0],
-                            opacity: [0.2, 0.8, 0.2],
-                            scale: [1, 1.3, 1],
-                          }}
-                          transition={{
-                            duration: 3 + Math.random() * 2,
-                            repeat: Infinity,
-                            delay: Math.random() * 3,
-                          }}
-                        />
-                      ))}
+                    <div className="relative mx-auto w-full max-w-[320px] lg:max-w-[380px]">
+                      <ProfileCard
+                        name={t('hero.name') || "Paul Wallner"}
+                        title={t('hero.title') || "Software Engineer"}
+                        handle="paulwallner"
+                        avatarUrl="/portrait2.webp"
+                        showUserInfo={false}
+                        enableTilt={true}
+                        enableMobileTilt={false}
+                        showBehindGlow={true}
+                        behindGlowColor="rgba(125, 190, 255, 0.67)"
+                        customInnerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                        onContactClick={() => handleSectionChange('contact')}
+                      />
                     </div>
+
                   </motion.div>
+
 
                   {/* Content Side */}
                   <motion.div
@@ -450,11 +425,12 @@ function App() {
                 </div>
               </div>
             </motion.section>
-          )}
-        </AnimatePresence>
+          )
+          }
+        </AnimatePresence >
 
         {/* Main Content - Timeline */}
-        <main className="flex-1 relative">
+        < main className="flex-1 relative" >
           <motion.div
             className="w-full"
             initial={{ opacity: 0 }}
@@ -463,13 +439,13 @@ function App() {
           >
             <Timeline data={createTimelineData(t)} />
           </motion.div>
-        </main>
-      </div>
+        </main >
+      </div >
 
 
 
 
-    </div>
+    </div >
   );
 }
 

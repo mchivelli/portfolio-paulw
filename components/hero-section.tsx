@@ -6,6 +6,7 @@ import { ScrambleTextOnHover } from "@/components/scramble-text"
 import { SplitFlapText, SplitFlapMuteToggle, SplitFlapAudioProvider } from "@/components/split-flap-text"
 import { AnimatedNoise } from "@/components/animated-noise"
 import { BitmapChevron } from "@/components/bitmap-chevron"
+import ProfileCard from "@/components/ui/ProfileCard"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -92,20 +93,24 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Portrait Image (Corner Position) */}
-      <div className="hidden lg:block absolute bottom-12 right-12 w-96 h-96 z-20">
-        <div className="absolute inset-0 border border-accent/40" />
-        <div className="absolute inset-0 border border-border/40 translate-x-3 translate-y-3" />
-        <img
-          src="/img/portrait1.png"
-          alt="Paul Wallner"
-          className="relative w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+      {/* Portrait Card (Corner Position) */}
+      <div className="hidden lg:block absolute bottom-12 right-12 w-80 z-20">
+        <ProfileCard
+          name="Paul M. Wallner"
+          title="Jr. Entwickler / IT Solutionist"
+          handle="paulwallner.me"
+          status="Online"
+          contactText="Contact me"
+          avatarUrl="/portrait2.webp"
+          iconUrl="/icon.svg"
+          showUserInfo={false}
+          enableTilt={true}
+          enableMobileTilt={false}
+          onContactClick={() => window.location.href = 'mailto:paul@paulwallner.me'}
+          behindGlowEnabled={true}
+          behindGlowColor="hsla(54, 100%, 70%, 0.6)"
+          innerGradient="linear-gradient(145deg,hsla(54, 40%, 45%, 0.55) 0%,hsla(276, 60%, 70%, 0.27) 100%)"
         />
-        <div className="absolute -bottom-4 -right-4 bg-background border border-border px-4 py-2">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            {t("hero.available")}
-          </span>
-        </div>
       </div>
     </section >
   )

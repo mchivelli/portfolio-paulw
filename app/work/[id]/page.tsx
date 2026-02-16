@@ -2,6 +2,7 @@ import { projects } from "@/app/data/projects"
 import { SideNav } from "@/components/side-nav"
 import { AnimatedNoise } from "@/components/animated-noise"
 import { BitmapChevron } from "@/components/bitmap-chevron"
+import { ProjectGallery } from "@/components/project-gallery"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -123,6 +124,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                         )}
                     </div>
                 )}
+
+                {/* Project Gallery */}
+                <ProjectGallery
+                    images={project.images || []}
+                    mainImage={project.image}
+                />
             </div>
         </main>
     )

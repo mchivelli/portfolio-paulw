@@ -77,7 +77,7 @@ export function WorkSection() {
         ref={gridRef}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[180px] md:auto-rows-[200px]"
       >
-        {projects.map((project, index) => (
+        {projects.filter(p => p.featured).slice(0, 4).map((project, index) => (
           <WorkCard key={index} project={project} index={index} persistHover={index === 0} language={language} />
         ))}
       </div>

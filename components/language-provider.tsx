@@ -22,6 +22,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         "nav.recent": { en: "Recent", de: "Aktuell" },
         "nav.projects": { en: "Projects", de: "Projekte" },
         "nav.philosophy": { en: "Philosophy", de: "Philosophie" },
+        "nav.productivity": { en: "Productivity", de: "Produktivität" },
         "nav.timeline": { en: "Timeline", de: "Zeitlinie" },
         "nav.contact": { en: "Contact", de: "Kontakt" }, // Added for completeness if needed in mobile menu
 
