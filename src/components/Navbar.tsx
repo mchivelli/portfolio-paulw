@@ -17,13 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
   const { t } = useTranslation();
   const { isDark } = useTheme();
 
-  const navItems = [
-    { key: 'about', label: t('nav.about'), icon: Home },
-    { key: 'projects', label: t('nav.projects'), icon: FolderOpen },
-    { key: 'skills', label: t('nav.skills'), icon: Zap },
-    { key: 'contact', label: t('nav.contact'), icon: Mail },
-    { key: 'terminal', label: t('nav.terminal'), icon: Terminal }
-  ];
+  // Navigation is now handled by StaggeredMenu
 
   return (
     <motion.nav
@@ -39,13 +33,13 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo/Brand - Clickable Home Button */}
           <motion.button
-            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer pl-10 sm:pl-14"
             whileHover={{ scale: 1.05 }}
             onClick={() => onSectionChange('about')}
             title="Portfolio Paul Wallner"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center overflow-hidden">
-              <img src={logo} alt="PW" className="w-full h-full object-cover" />
+              <img src={typeof logo === 'string' ? logo : (logo as any).src} alt="PW" className="w-full h-full object-cover" />
             </div>
             <div className="hidden sm:block">
               <h1 className={`text-lg font-bold glow-text ${isDark ? 'text-primary-blue' : 'text-primary-blue'
@@ -55,42 +49,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange, 
             </div>
           </motion.button>
 
-          {/* Navigation Items */}
-          <div className="flex items-center gap-1">
-            {navItems.map((item, index) => {
-              const IconComponent = item.icon;
-              return (
-                <motion.button
-                  key={item.key}
-                  onClick={() => {
-                    if (item.key === 'terminal') {
-                      onTerminalFocus();
-                    } else {
-                      onSectionChange(item.key);
-                    }
-                  }}
-                  className={`
-                    px-2 sm:px-4 py-2 rounded-lg font-sans text-xs sm:text-sm transition-all duration-200 border flex items-center gap-1 sm:gap-2
-                    ${activeSection === item.key || (item.key === 'terminal' && activeSection === 'terminal')
-                      ? isDark
-                        ? 'bg-primary-blue/20 text-primary-blue border-primary-blue/50 glow-text'
-                        : 'bg-primary-blue/10 text-primary-blue border-primary-blue/40 glow-text'
-                      : isDark
-                        ? 'text-primary-blue/70 hover:text-primary-blue hover:bg-primary-blue/10 border-transparent hover:border-primary-blue/30'
-                        : 'text-light-text-secondary hover:text-primary-blue hover:bg-primary-blue/5 border-transparent hover:border-primary-blue/20'
-                    }
-                  `}
-                  whileHover={{ scale: 1.05, y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  {IconComponent && <IconComponent size={16} className="sm:w-4 sm:h-4" />}
-                  <span className="hidden sm:inline">{item.label}</span>
-                </motion.button>
-              );
-            })}
+          {/* Navigation Items are now in StaggeredMenu */}
+          <div className="flex items-center gap-1 hidden">
           </div>
 
           {/* Theme and Language Controls */}

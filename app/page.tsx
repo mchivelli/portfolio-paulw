@@ -6,6 +6,7 @@ import { ProductivitySection } from "@/components/productivity-section"
 import { ContactSection } from "@/components/contact-section"
 import { ColophonSection } from "@/components/colophon-section"
 import { SideNav } from "@/components/side-nav"
+import { SkillsSection } from "@/components/skills-section"
 
 export default function Page() {
   return (
@@ -15,6 +16,7 @@ export default function Page() {
 
       <div className="relative z-10">
         <HeroSection />
+        <SkillsSection />
         <SignalsSection />
         <WorkSection />
         <PrinciplesSection />

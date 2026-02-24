@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { LanguageProvider } from "@/components/language-provider"
 import "./globals.css"
+import ElasticCursor from "@/src/components/ui/ElasticCursor"
 
 const ibmPlexSans = IBM_Plex_Sans({
   weight: ["400", "500", "600", "700"],
@@ -51,7 +52,10 @@ export default function RootLayout({
       >
         <div className="noise-overlay" aria-hidden="true" />
         <LanguageProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SmoothScroll>
+            <ElasticCursor />
+            {children}
+          </SmoothScroll>
         </LanguageProvider>
         <Analytics />
       </body>

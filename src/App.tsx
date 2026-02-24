@@ -11,6 +11,8 @@ import { Timeline } from './components/ui/timeline';
 import ProfileCard from './components/ui/ProfileCard';
 import { createTimelineData } from './data/timeline';
 import { useTheme } from './contexts/ThemeContext';
+import ElasticCursor from './components/ui/ElasticCursor';
+import { StaggeredMenu, StaggeredMenuItem } from './components/ui/StaggeredMenu';
 
 function App() {
   const { t } = useTranslation();
@@ -23,6 +25,37 @@ function App() {
   const [showSkillsPage, setShowSkillsPage] = useState(false);
   const [showContactPage, setShowContactPage] = useState(false);
   const [isTerminalFocused, setIsTerminalFocused] = useState(false);
+
+  const menuItems: StaggeredMenuItem[] = [
+    { id: 'about', label: t('nav.about') as string, ariaLabel: 'About' },
+    { id: 'projects', label: t('nav.projects') as string, ariaLabel: 'Projects' },
+    { id: 'skills', label: t('nav.skills') as string, ariaLabel: 'Skills' },
+    { id: 'contact', label: t('nav.contact') as string, ariaLabel: 'Contact' },
+    { id: 'terminal', label: t('nav.terminal') as string, ariaLabel: 'Terminal' }
+  ];
+
+  const handleMenuClick = (id: string) => {
+    if (id === 'terminal') {
+      handleTerminalFocus();
+    } else {
+      handleSectionChange(id);
+    }
+  };
+
+  const renderStaggeredMenu = () => (
+    <StaggeredMenu
+      position="left"
+      items={menuItems}
+      displaySocials={false}
+      colors={isDark ? ['#1e1e24', '#2a2a35'] : ['#f0f0f5', '#e0e0e5']}
+      menuButtonColor={isDark ? '#71C4FF' : '#333333'}
+      openMenuButtonColor="#000"
+      changeMenuColorOnOpen={true}
+      accentColor="#71C4FF"
+      isFixed={true}
+      onItemClick={handleMenuClick}
+    />
+  );
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
@@ -89,6 +122,8 @@ function App() {
   if (showFullProjectsPage) {
     return (
       <>
+        <ElasticCursor />
+        {renderStaggeredMenu()}
         <Navbar
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
@@ -105,6 +140,8 @@ function App() {
   if (showSkillsPage) {
     return (
       <>
+        <ElasticCursor />
+        {renderStaggeredMenu()}
         <Navbar
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
@@ -121,6 +158,8 @@ function App() {
   if (showContactPage) {
     return (
       <>
+        <ElasticCursor />
+        {renderStaggeredMenu()}
         <Navbar
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
@@ -140,6 +179,8 @@ function App() {
         ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan'
         : 'gradient-bg text-light-text'
         }`}>
+        <ElasticCursor />
+        {renderStaggeredMenu()}
         {/* Navbar */}
         <Navbar
           activeSection={activeSection}
@@ -229,6 +270,8 @@ function App() {
       ? 'bg-gradient-to-br from-terminal-bg via-gray-900 to-black text-terminal-cyan'
       : 'gradient-bg text-light-text'
       }`}>
+      <ElasticCursor />
+      {renderStaggeredMenu()}
       {/* Navbar */}
       <Navbar
         activeSection={activeSection}

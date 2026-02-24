@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 // Removed old Terminal import to prevent conflicts
 import { SkillsPreview } from './SkillsPreview';
+import { TechStack3D } from './TechStack3D';
 import { useTheme } from '../contexts/ThemeContext';
 import { techStackData } from '../data/techStack';
 
@@ -68,6 +69,34 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ compact = false, onNavig
 
           <div className="p-6">
             <SkillsPreview compact={false} />
+          </div>
+        </motion.div>
+
+        {/* 3D Interactive TechStack Keyboard */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className={`mt-8 backdrop-blur-md border rounded-lg overflow-hidden shadow-2xl ${isDark
+              ? 'bg-gradient-to-br from-black/60 via-black/40 to-black/60 border-terminal-border shadow-terminal-cyan/10'
+              : 'bg-white/90 border-light-border shadow-primary-blue/10'
+            }`}
+        >
+          <div className={`p-4 border-b ${isDark
+              ? 'bg-gradient-to-r from-primary-blue/20 to-primary-purple/20 border-terminal-border'
+              : 'bg-gradient-to-r from-primary-blue/10 to-primary-purple/10 border-light-border'
+            }`}>
+            <h2 className={`text-xl font-bold glow-text ${isDark ? 'text-primary-purple' : 'text-primary-blue'
+              }`}>
+              Interactive 3D Workspace
+            </h2>
+            <p className={`text-sm mt-1 ${isDark ? 'text-primary-blue/70' : 'text-light-text-secondary'
+              }`}>
+              Click or hover the keycaps to explore my technology stack!
+            </p>
+          </div>
+          <div className="p-0 sm:p-2 w-full relative">
+            <TechStack3D />
           </div>
         </motion.div>
 
