@@ -31,14 +31,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
     container_name: portfolio-frontend
     ports:
-      - "3000:3000"
+      - "3030:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
       - GITHUB_USERNAME=${GITHUB_USERNAME}
       - CLICKUP_API_KEY=${CLICKUP_API_KEY}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
     depends_on:
       backend:
         condition: service_healthy
