@@ -56,7 +56,7 @@ export default function AdminPage() {
     }
   }, [isAuthenticated]);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
   async function checkAuth() {
     try {
@@ -505,7 +505,7 @@ function ImageUploader({ currentPath, onImageSet, label }: { currentPath: string
   const [showPicker, setShowPicker] = useState(false);
   const [existingImages, setExistingImages] = useState<{ name: string; path: string; size: number }[]>([]);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

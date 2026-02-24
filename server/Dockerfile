@@ -11,8 +11,8 @@ RUN npm install --omit=dev
 # Copy server files
 COPY . .
 
-# Create data directory for caching
-RUN mkdir -p /app/data
+# Create data and public directories
+RUN mkdir -p /app/data /app/public
 
 # Expose port
 EXPOSE 3001

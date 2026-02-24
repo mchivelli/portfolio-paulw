@@ -14,6 +14,8 @@ services:
       - PORT=3001
       - MAILGUN_API_KEY=${MAILGUN_API_KEY}
       - MAILGUN_DOMAIN=${MAILGUN_DOMAIN}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
     volumes:
       - backend-data:/app/data
     restart: unless-stopped
@@ -32,7 +34,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+        - BACKEND_URL=http://backend:3001
     container_name: portfolio-frontend
     ports:
       - "3030:3000"
@@ -41,7 +43,7 @@ services:
       - PORT=3000
       - GITHUB_USERNAME=${GITHUB_USERNAME}
       - CLICKUP_API_KEY=${CLICKUP_API_KEY}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+      - BACKEND_URL=http://backend:3001
     depends_on:
       backend:
         condition: service_healthy

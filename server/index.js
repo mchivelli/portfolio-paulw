@@ -20,9 +20,31 @@ const cache = new NodeCache({ stdTTL: 3600 }); // Cache for 1 hour
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
-// Data directory paths
-const DATA_DIR = path.join(__dirname, '..', 'app', 'api', 'admin', 'data');
-const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+// Data directory paths - use /app/data in Docker, local paths in development
+const DATA_DIR = process.env.NODE_ENV === 'production'
+  ? path.join(__dirname, 'data')
+  : path.join(__dirname, '..', 'app', 'api', 'admin', 'data');
+const PUBLIC_DIR = process.env.NODE_ENV === 'production'
+  ? path.join(__dirname, 'public')
+  : path.join(__dirname, '..', 'public');
+
+// Ensure directories exist
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+if (!fs.existsSync(PUBLIC_DIR)) fs.mkdirSync(PUBLIC_DIR, { recursive: true });
+
+// Create default JSON files if they don't exist
+const defaults = {
+  'projects.json': [],
+  'timeline.json': [],
+  'settings.json': { clickup: {}, github: { selectedRepos: [] } }
+};
+for (const [file, defaultData] of Object.entries(defaults)) {
+  const filepath = path.join(DATA_DIR, file);
+  if (!fs.existsSync(filepath)) {
+    fs.writeFileSync(filepath, JSON.stringify(defaultData, null, 2));
+    console.log(`Created default ${file}`);
+  }
+}
 
 // Multer storage configuration
 const storage = multer.diskStorage({

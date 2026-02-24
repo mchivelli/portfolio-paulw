@@ -16,9 +16,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Accept build argument for API URL
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+# Accept build argument for backend proxy URL
+ARG BACKEND_URL=http://backend:3001
+ENV BACKEND_URL=${BACKEND_URL}
 
 # Set environment variables for build
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -33,6 +33,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV BACKEND_URL=http://backend:3001
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
