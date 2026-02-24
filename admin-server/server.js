@@ -246,6 +246,26 @@ app.delete('/api/images/:filename', requireAuth, (req, res) => {
   }
 });
 
+// Settings CRUD
+app.get('/api/settings', requireAuth, (req, res) => {
+  try {
+    const settings = readJSON('settings.json');
+    res.json(settings);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to read settings' });
+  }
+});
+
+app.put('/api/settings', requireAuth, (req, res) => {
+  try {
+    const settings = req.body;
+    writeJSON('settings.json', settings);
+    res.json({ success: true, settings });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update settings' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Admin server running at http://localhost:${PORT}`);
   console.log(`Login with username: ${ADMIN_USERNAME}`);

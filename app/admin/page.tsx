@@ -32,10 +32,13 @@ export default function AdminPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [activeTab, setActiveTab] = useState<'projects' | 'timeline'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'timeline' | 'settings'>('projects');
   
   const [projects, setProjects] = useState<Project[]>([]);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
+  const [settings, setSettings] = useState<any>({ clickup: {}, github: { selectedRepos: [] } });
+  const [workspaces, setWorkspaces] = useState<any[]>([]);
+  const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [editingTimeline, setEditingTimeline] = useState<TimelineItem | null>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
@@ -49,6 +52,7 @@ export default function AdminPage() {
     if (isAuthenticated) {
       fetchProjects();
       fetchTimeline();
+      fetchSettings();
     }
   }, [isAuthenticated]);
 
@@ -106,6 +110,34 @@ export default function AdminPage() {
     const res = await fetch(`${API_BASE}/api/timeline`, { credentials: 'include' });
     const data = await res.json();
     setTimeline(data);
+  }
+
+  async function fetchSettings() {
+    const res = await fetch(`${API_BASE}/api/settings`, { credentials: 'include' });
+    const data = await res.json();
+    setSettings(data);
+  }
+
+  async function fetchWorkspaces() {
+    const res = await fetch('/api/clickup?list=true');
+    const data = await res.json();
+    setWorkspaces(data.workspaces || []);
+  }
+
+  async function fetchGithubRepos() {
+    const res = await fetch('/api/github?list=true');
+    const data = await res.json();
+    setGithubRepos(data.repos || []);
+  }
+
+  async function saveSettings(updatedSettings: any) {
+    await fetch(`${API_BASE}/api/settings`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(updatedSettings),
+    });
+    setSettings(updatedSettings);
   }
 
   async function saveProject(project: Partial<Project>) {
@@ -215,9 +247,15 @@ export default function AdminPage() {
         </button>
         <button
           onClick={() => setActiveTab('timeline')}
-          style={{ padding: '0.5rem 1rem', background: activeTab === 'timeline' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+          style={{ padding: '0.5rem 1rem', marginRight: '0.5rem', background: activeTab === 'timeline' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
         >
           Timeline ({timeline.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('settings')}
+          style={{ padding: '0.5rem 1rem', background: activeTab === 'settings' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+        >
+          ⚙️ Settings
         </button>
       </div>
 
@@ -328,6 +366,136 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+
+      {activeTab === 'settings' && (
+        <SettingsPanel
+          settings={settings}
+          workspaces={workspaces}
+          githubRepos={githubRepos}
+          onSaveSettings={saveSettings}
+          onLoadWorkspaces={fetchWorkspaces}
+          onLoadGithubRepos={fetchGithubRepos}
+        />
+      )}
+    </div>
+  );
+}
+
+function SettingsPanel({ settings, workspaces, githubRepos, onSaveSettings, onLoadWorkspaces, onLoadGithubRepos }: any) {
+  const [localSettings, setLocalSettings] = useState(settings);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setLocalSettings(settings);
+  }, [settings]);
+
+  function handleSave() {
+    onSaveSettings(localSettings);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }
+
+  function toggleRepo(repoName: string) {
+    const current = localSettings.github?.selectedRepos || [];
+    const updated = current.includes(repoName)
+      ? current.filter((r: string) => r !== repoName)
+      : [...current, repoName];
+    setLocalSettings({
+      ...localSettings,
+      github: { ...localSettings.github, selectedRepos: updated }
+    });
+  }
+
+  return (
+    <div>
+      <h2 style={{ marginTop: 0 }}>Integration Settings</h2>
+
+      {/* ClickUp Workspace Selection */}
+      <div style={{ background: '#222', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
+        <h3 style={{ marginTop: 0, color: '#0070f3' }}>🔵 ClickUp Workspace</h3>
+        <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
+          Select which ClickUp workspace to display data from
+        </p>
+        
+        <button
+          onClick={onLoadWorkspaces}
+          style={{ padding: '0.5rem 1rem', marginBottom: '1rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+        >
+          {workspaces.length > 0 ? 'Refresh Workspaces' : 'Load Workspaces'}
+        </button>
+
+        {workspaces.length > 0 && (
+          <div>
+            {workspaces.map((ws: any) => (
+              <label key={ws.id} style={{ display: 'block', padding: '0.75rem', background: localSettings.clickup?.workspaceId === ws.id ? '#0070f3' : '#333', marginBottom: '0.5rem', borderRadius: '4px', cursor: 'pointer' }}>
+                <input
+                  type="radio"
+                  name="workspace"
+                  checked={localSettings.clickup?.workspaceId === ws.id}
+                  onChange={() => setLocalSettings({
+                    ...localSettings,
+                    clickup: { workspaceId: ws.id, workspaceName: ws.name }
+                  })}
+                  style={{ marginRight: '0.5rem' }}
+                />
+                {ws.name}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* GitHub Repo Selection */}
+      <div style={{ background: '#222', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
+        <h3 style={{ marginTop: 0, color: '#0070f3' }}>📦 GitHub Repositories</h3>
+        <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
+          Select which repositories to show in Latest Projects section (leave empty to show all)
+        </p>
+
+        <button
+          onClick={onLoadGithubRepos}
+          style={{ padding: '0.5rem 1rem', marginBottom: '1rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+        >
+          {githubRepos.length > 0 ? 'Refresh Repositories' : 'Load Repositories'}
+        </button>
+
+        {githubRepos.length > 0 && (
+          <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+            <div style={{ marginBottom: '0.5rem', color: '#aaa', fontSize: '0.85rem' }}>
+              Selected: {localSettings.github?.selectedRepos?.length || 0} repos
+            </div>
+            {githubRepos.map((repo: any) => (
+              <label key={repo.name} style={{ display: 'flex', alignItems: 'flex-start', padding: '0.75rem', background: localSettings.github?.selectedRepos?.includes(repo.name) ? '#0070f3' : '#333', marginBottom: '0.5rem', borderRadius: '4px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={localSettings.github?.selectedRepos?.includes(repo.name) || false}
+                  onChange={() => toggleRepo(repo.name)}
+                  style={{ marginRight: '0.75rem', marginTop: '0.25rem' }}
+                />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 'bold' }}>{repo.name}</div>
+                  {repo.description && <div style={{ color: '#aaa', fontSize: '0.85rem', marginTop: '0.25rem' }}>{repo.description}</div>}
+                  <div style={{ color: '#666', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                    {repo.language && <span>🔹 {repo.language}</span>}
+                    {repo.stars > 0 && <span style={{ marginLeft: '1rem' }}>⭐ {repo.stars}</span>}
+                  </div>
+                </div>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Save Button */}
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <button
+          onClick={handleSave}
+          style={{ padding: '0.75rem 1.5rem', background: '#0a0', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold' }}
+        >
+          💾 Save Settings
+        </button>
+        {saved && <span style={{ color: '#0a0' }}>✓ Saved successfully!</span>}
+      </div>
     </div>
   );
 }

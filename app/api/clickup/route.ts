@@ -11,7 +11,7 @@ async function clickupFetch(endpoint: string, token: string) {
     return res.json();
 }
 
-export async function GET() {
+export async function GET(request: Request) {
     const token = process.env.CLICKUP_API_KEY;
 
     if (!token) {
@@ -22,6 +22,9 @@ export async function GET() {
     }
 
     try {
+        const { searchParams } = new URL(request.url);
+        const listWorkspaces = searchParams.get('list') === 'true';
+
         // Step 1: Get workspaces (teams)
         const teamsData = await clickupFetch('/team', token);
         const teams = teamsData.teams || [];
@@ -30,7 +33,31 @@ export async function GET() {
             return NextResponse.json({ workspaces: [], tasks: [], stats: {} });
         }
 
-        const teamId = teams[0].id;
+        // If just listing workspaces, return them
+        if (listWorkspaces) {
+            return NextResponse.json({
+                workspaces: teams.map((t: any) => ({
+                    id: t.id,
+                    name: t.name,
+                }))
+            });
+        }
+
+        // Get selected workspace from settings or use first one
+        const fs = await import('fs');
+        const path = await import('path');
+        const settingsPath = path.join(process.cwd(), 'app', 'api', 'admin', 'data', 'settings.json');
+        let selectedWorkspaceId = null;
+
+        try {
+            const settingsData = fs.readFileSync(settingsPath, 'utf-8');
+            const settings = JSON.parse(settingsData);
+            selectedWorkspaceId = settings.clickup?.workspaceId;
+        } catch {
+            // Settings not found, use first workspace
+        }
+
+        const teamId = selectedWorkspaceId || teams[0].id;
 
         // Step 2: Get spaces in the first workspace
         const spacesData = await clickupFetch(`/team/${teamId}/space?archived=false`, token);
