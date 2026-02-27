@@ -16,6 +16,8 @@ services:
       - MAILGUN_DOMAIN=${MAILGUN_DOMAIN}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - GITHUB_USERNAME=${GITHUB_USERNAME}
+      - CLICKUP_API_KEY=${CLICKUP_API_KEY}
     volumes:
       - backend-data:/app/data
     restart: unless-stopped

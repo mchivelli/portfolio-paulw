@@ -670,6 +670,215 @@ app.delete('/api/images/:filename', requireAuth, (req, res) => {
   }
 });
 
+// ==================== CLICKUP & GITHUB API ROUTES ====================
+
+const CLICKUP_API = 'https://api.clickup.com/api/v2';
+
+async function clickupFetch(endpoint, token) {
+  const res = await axios.get(`${CLICKUP_API}${endpoint}`, {
+    headers: { Authorization: token },
+    timeout: 10000,
+  });
+  return res.data;
+}
+
+app.get('/api/clickup', async (req, res) => {
+  const token = process.env.CLICKUP_API_KEY;
+
+  if (!token) {
+    return res.status(500).json({ error: 'CLICKUP_API_KEY not configured' });
+  }
+
+  try {
+    const listWorkspaces = req.query.list === 'true';
+
+    // Get workspaces (teams)
+    const teamsData = await clickupFetch('/team', token);
+    const teams = teamsData.teams || [];
+
+    if (teams.length === 0) {
+      return res.json({ workspaces: [], tasks: [], stats: {} });
+    }
+
+    // If just listing workspaces, return them
+    if (listWorkspaces) {
+      return res.json({
+        workspaces: teams.map(t => ({ id: t.id, name: t.name }))
+      });
+    }
+
+    // Get selected workspace from settings or use first one
+    const settings = readJSON('settings.json');
+    const teamId = settings.clickup?.workspaceId || teams[0].id;
+
+    // Get spaces
+    const spacesData = await clickupFetch(`/team/${teamId}/space?archived=false`, token);
+    const spaces = spacesData.spaces || [];
+
+    // Gather tasks from all lists across all spaces
+    let allTasks = [];
+
+    for (const space of spaces.slice(0, 5)) {
+      try {
+        const foldersData = await clickupFetch(`/space/${space.id}/folder?archived=false`, token);
+        const folders = foldersData.folders || [];
+        const folderlessData = await clickupFetch(`/space/${space.id}/list?archived=false`, token);
+        const folderlessLists = folderlessData.lists || [];
+        const allLists = [...folderlessLists, ...folders.flatMap(f => f.lists || [])];
+
+        for (const list of allLists.slice(0, 10)) {
+          try {
+            const tasksData = await clickupFetch(
+              `/list/${list.id}/task?archived=false&page=0&order_by=updated&reverse=true&subtasks=false&include_closed=true`,
+              token
+            );
+            allTasks.push(
+              ...(tasksData.tasks || []).map(t => ({
+                id: t.id,
+                name: t.name,
+                status: t.status?.status || 'unknown',
+                statusColor: t.status?.color,
+                priority: t.priority?.priority || null,
+                dueDate: t.due_date,
+                dateCreated: t.date_created,
+                dateUpdated: t.date_updated,
+                dateClosed: t.date_closed,
+                timeSpent: t.time_spent || 0,
+                list: list.name,
+                space: space.name,
+                tags: (t.tags || []).map(tag => tag.name),
+              }))
+            );
+          } catch { /* skip inaccessible lists */ }
+        }
+      } catch { /* skip inaccessible spaces */ }
+    }
+
+    // Compute productivity stats
+    const now = Date.now();
+    const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000;
+
+    const closedTasks = allTasks.filter(t =>
+      t.status?.toLowerCase() === 'closed' || t.status?.toLowerCase() === 'complete' || t.status?.toLowerCase() === 'done'
+    );
+    const closedThisWeek = closedTasks.filter(t => t.dateClosed && parseInt(t.dateClosed) > oneWeekAgo);
+    const closedThisMonth = closedTasks.filter(t => t.dateClosed && parseInt(t.dateClosed) > oneMonthAgo);
+    const inProgress = allTasks.filter(t =>
+      t.status?.toLowerCase() === 'in progress' || t.status?.toLowerCase() === 'in review'
+    );
+    const totalTimeSpent = allTasks.reduce((sum, t) => sum + (t.timeSpent || 0), 0);
+
+    const stats = {
+      totalTasks: allTasks.length,
+      completedTotal: closedTasks.length,
+      completedThisWeek: closedThisWeek.length,
+      completedThisMonth: closedThisMonth.length,
+      inProgress: inProgress.length,
+      totalTimeTrackedMs: totalTimeSpent,
+      totalTimeTrackedHours: Math.round(totalTimeSpent / 3600000 * 10) / 10,
+      spaces: spaces.map(s => s.name),
+    };
+
+    const recentTasks = allTasks
+      .sort((a, b) => parseInt(b.dateUpdated || '0') - parseInt(a.dateUpdated || '0'))
+      .slice(0, 20);
+
+    res.json({ stats, recentTasks, workspaceName: teams[0].name });
+  } catch (error) {
+    console.error('ClickUp API error:', error.message);
+    res.status(500).json({ error: error.message || 'Failed to fetch ClickUp data' });
+  }
+});
+
+app.get('/api/github', async (req, res) => {
+  const username = process.env.GITHUB_USERNAME || 'mchivelli';
+  const listAll = req.query.list === 'true';
+
+  try {
+    const perPage = listAll ? 100 : 50;
+    const reposRes = await axios.get(
+      `https://api.github.com/users/${username}/repos?sort=updated&per_page=${perPage}&type=owner`,
+      {
+        headers: { Accept: 'application/vnd.github+json' },
+        timeout: 10000,
+      }
+    );
+    const allRepos = reposRes.data;
+
+    // If just listing repos for selection, return them
+    if (listAll) {
+      return res.json({
+        repos: allRepos.map(repo => ({
+          name: repo.name,
+          description: repo.description,
+          language: repo.language,
+          stars: repo.stargazers_count,
+          url: repo.html_url,
+          updatedAt: repo.updated_at,
+        }))
+      });
+    }
+
+    // Get selected repos from settings
+    const settings = readJSON('settings.json');
+    const selectedRepoNames = settings.github?.selectedRepos || [];
+
+    let repos = allRepos;
+    if (selectedRepoNames.length > 0) {
+      repos = allRepos.filter(repo => selectedRepoNames.includes(repo.name));
+    } else {
+      repos = allRepos.slice(0, 6);
+    }
+
+    // Fetch recent public events
+    let events = [];
+    try {
+      const eventsRes = await axios.get(
+        `https://api.github.com/users/${username}/events/public?per_page=15`,
+        {
+          headers: { Accept: 'application/vnd.github+json' },
+          timeout: 10000,
+        }
+      );
+      events = eventsRes.data;
+    } catch { /* silent */ }
+
+    const repoData = repos.map(repo => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      url: repo.html_url,
+      updatedAt: repo.updated_at,
+      pushedAt: repo.pushed_at,
+    }));
+
+    const eventData = events
+      .filter(e => ['PushEvent', 'CreateEvent', 'PullRequestEvent', 'IssuesEvent'].includes(e.type))
+      .slice(0, 10)
+      .map(e => ({
+        type: e.type,
+        repo: e.repo?.name?.split('/')[1] || e.repo?.name,
+        createdAt: e.created_at,
+        payload: {
+          commits: e.type === 'PushEvent' ? e.payload?.commits?.length || 0 : undefined,
+          action: e.payload?.action,
+          ref: e.payload?.ref,
+          refType: e.payload?.ref_type,
+        },
+      }));
+
+    res.json({ repos: repoData, events: eventData, username });
+  } catch (error) {
+    console.error('GitHub API error:', error.message);
+    res.status(500).json({ error: error.message || 'Failed to fetch GitHub data' });
+  }
+});
+
+// ==================== END CLICKUP & GITHUB API ROUTES ====================
+
 // ==================== END ADMIN PANEL ROUTES ====================
 
 // Health check endpoint
@@ -677,7 +886,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
