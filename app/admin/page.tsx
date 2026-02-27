@@ -61,18 +61,15 @@ export default function AdminPage() {
   async function checkAuth() {
     try {
       const res = await fetch(`${API_BASE}/api/auth/check`, { credentials: 'include' });
-      if (res.ok) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error('Auth check failed - make sure admin server is running on port 3001');
+      if (res.ok) setIsAuthenticated(true);
+    } catch {
+      // Silent fail - admin server may not be running
     }
   }
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoginError('');
-    
     try {
       const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
@@ -80,9 +77,8 @@ export default function AdminPage() {
         credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
-      
+      if (!res.ok) { setLoginError('Login failed'); return; }
       const data = await res.json();
-      
       if (data.success) {
         setIsAuthenticated(true);
         setUsername('');
@@ -90,8 +86,8 @@ export default function AdminPage() {
       } else {
         setLoginError(data.message || 'Login failed');
       }
-    } catch (error) {
-      setLoginError('Login failed - make sure admin server is running on port 3001');
+    } catch {
+      setLoginError('Login failed - make sure admin server is running');
     }
   }
 
@@ -101,33 +97,48 @@ export default function AdminPage() {
   }
 
   async function fetchProjects() {
-    const res = await fetch(`${API_BASE}/api/projects`, { credentials: 'include' });
-    const data = await res.json();
-    setProjects(data);
+    try {
+      const res = await fetch(`${API_BASE}/api/projects`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      setProjects(data);
+    } catch { /* silent */ }
   }
 
   async function fetchTimeline() {
-    const res = await fetch(`${API_BASE}/api/timeline`, { credentials: 'include' });
-    const data = await res.json();
-    setTimeline(data);
+    try {
+      const res = await fetch(`${API_BASE}/api/timeline`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      setTimeline(data);
+    } catch { /* silent */ }
   }
 
   async function fetchSettings() {
-    const res = await fetch(`${API_BASE}/api/settings`, { credentials: 'include' });
-    const data = await res.json();
-    setSettings(data);
+    try {
+      const res = await fetch(`${API_BASE}/api/settings`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      setSettings(data);
+    } catch { /* silent */ }
   }
 
   async function fetchWorkspaces() {
-    const res = await fetch('/api/clickup?list=true');
-    const data = await res.json();
-    setWorkspaces(data.workspaces || []);
+    try {
+      const res = await fetch(`${API_BASE}/api/clickup?list=true`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      setWorkspaces(data.workspaces || []);
+    } catch { /* silent */ }
   }
 
   async function fetchGithubRepos() {
-    const res = await fetch('/api/github?list=true');
-    const data = await res.json();
-    setGithubRepos(data.repos || []);
+    try {
+      const res = await fetch(`${API_BASE}/api/github?list=true`, { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json();
+      setGithubRepos(data.repos || []);
+    } catch { /* silent */ }
   }
 
   async function saveSettings(updatedSettings: any) {
@@ -199,30 +210,32 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111' }}>
-        <form onSubmit={handleLogin} style={{ background: '#222', padding: '2rem', borderRadius: '8px', width: '300px' }}>
-          <h1 style={{ color: '#fff', marginBottom: '1.5rem', textAlign: 'center' }}>Admin Login</h1>
-          {loginError && <p style={{ color: '#f66', marginBottom: '1rem' }}>{loginError}</p>}
-          <div style={{ marginBottom: '1rem' }}>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <form onSubmit={handleLogin} className="bg-card border border-border p-8 w-[340px]">
+          <h1 className="text-foreground text-lg font-semibold mb-6 text-center tracking-wide uppercase font-mono">
+            Admin
+          </h1>
+          {loginError && <p className="text-destructive text-sm mb-4">{loginError}</p>}
+          <div className="mb-3">
             <input
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #444', background: '#333', color: '#fff' }}
+              className="w-full px-3 py-2.5 border border-border bg-input text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors"
             />
           </div>
-          <div style={{ marginBottom: '1rem' }}>
+          <div className="mb-4">
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #444', background: '#333', color: '#fff' }}
+              className="w-full px-3 py-2.5 border border-border bg-input text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors"
             />
           </div>
-          <button type="submit" style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', background: '#0070f3', color: '#fff', border: 'none', cursor: 'pointer' }}>
-            Login
+          <button type="submit" className="w-full py-2.5 bg-foreground text-background text-sm font-medium uppercase tracking-wider hover:bg-accent hover:text-accent-foreground transition-colors">
+            Sign In
           </button>
         </form>
       </div>
@@ -230,153 +243,148 @@ export default function AdminPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#111', color: '#fff', padding: '1rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1>Portfolio Admin</h1>
-        <button onClick={handleLogout} style={{ padding: '0.5rem 1rem', background: '#f44', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b border-border px-6 py-4 flex items-center justify-between">
+        <h1 className="text-lg font-semibold tracking-wide uppercase font-mono">Portfolio Admin</h1>
+        <button onClick={handleLogout} className="px-4 py-1.5 text-sm border border-border text-muted-foreground hover:text-destructive hover:border-destructive transition-colors">
           Logout
         </button>
-      </div>
+      </header>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <button
-          onClick={() => setActiveTab('projects')}
-          style={{ padding: '0.5rem 1rem', marginRight: '0.5rem', background: activeTab === 'projects' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
-        >
-          Projects ({projects.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('timeline')}
-          style={{ padding: '0.5rem 1rem', marginRight: '0.5rem', background: activeTab === 'timeline' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
-        >
-          Timeline ({timeline.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('settings')}
-          style={{ padding: '0.5rem 1rem', background: activeTab === 'settings' ? '#0070f3' : '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
-        >
-          ⚙️ Settings
-        </button>
-      </div>
+      <nav className="border-b border-border px-6 flex gap-0">
+        {(['projects', 'timeline', 'settings'] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-5 py-3 text-sm font-medium uppercase tracking-wider border-b-2 transition-colors ${
+              activeTab === tab
+                ? 'border-accent text-foreground'
+                : 'border-transparent text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {tab === 'projects' && `Projects (${projects.length})`}
+            {tab === 'timeline' && `Timeline (${timeline.length})`}
+            {tab === 'settings' && 'Settings'}
+          </button>
+        ))}
+      </nav>
 
-      {activeTab === 'projects' && (
-        <div>
-          <div style={{ marginBottom: '1rem' }}>
-            <button
-              onClick={() => { setEditingProject(null); setShowProjectForm(true); }}
-              style={{ padding: '0.5rem 1rem', background: '#0a0', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
-            >
-              + Add Project
-            </button>
-          </div>
+      <main className="p-6 max-w-6xl">
+        {activeTab === 'projects' && (
+          <div>
+            <div className="mb-4">
+              <button
+                onClick={() => { setEditingProject(null); setShowProjectForm(true); }}
+                className="px-4 py-2 text-sm bg-accent text-accent-foreground font-medium uppercase tracking-wider hover:opacity-90 transition-opacity"
+              >
+                + Add Project
+              </button>
+            </div>
 
-          {showProjectForm && (
-            <ProjectForm
-              project={editingProject}
-              onSave={saveProject}
-              onCancel={() => { setShowProjectForm(false); setEditingProject(null); }}
-            />
-          )}
+            {showProjectForm && (
+              <ProjectForm
+                project={editingProject}
+                onSave={saveProject}
+                onCancel={() => { setShowProjectForm(false); setEditingProject(null); }}
+              />
+            )}
 
-          <div style={{ display: 'grid', gap: '1rem' }}>
-            {projects.map((project) => (
-              <div key={project.id} style={{ background: '#222', padding: '1rem', borderRadius: '8px', borderLeft: project.featured ? '3px solid #0a0' : '3px solid transparent' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h3 style={{ margin: 0 }}>
-                      {project.featured && <span style={{ color: '#0a0', marginRight: '0.5rem', fontSize: '0.75rem' }}>★ FEATURED</span>}
+            <div className="grid gap-3">
+              {projects.map((project) => (
+                <div key={project.id} className={`bg-card border border-border p-4 flex justify-between items-start gap-4 ${project.featured ? 'border-l-2 border-l-accent' : ''}`}>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-sm font-semibold flex items-center gap-2">
+                      {project.featured && <span className="text-accent text-xs font-mono uppercase tracking-wider">Featured</span>}
                       {project.title.en}
                     </h3>
-                    <p style={{ color: '#888', margin: '0.5rem 0' }}>{project.description.en}</p>
-                    <p style={{ color: '#666', fontSize: '0.85rem' }}>Tech: {project.tech.join(', ')}</p>
+                    <p className="text-muted-foreground text-sm mt-1 line-clamp-1">{project.description.en}</p>
+                    <p className="text-muted-foreground/60 text-xs mt-1 font-mono">{project.tech.join(' / ')}</p>
                   </div>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div className="flex gap-2 shrink-0">
                     <button
                       onClick={() => toggleFeatured(project.id, !project.featured)}
-                      style={{ padding: '0.25rem 0.5rem', background: project.featured ? '#555' : '#0a0', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.75rem' }}
+                      className={`px-3 py-1 text-xs border transition-colors ${project.featured ? 'border-border text-muted-foreground hover:text-foreground' : 'border-accent text-accent hover:bg-accent hover:text-accent-foreground'}`}
                     >
                       {project.featured ? 'Unfeature' : 'Feature'}
                     </button>
                     <button
                       onClick={() => { setEditingProject(project); setShowProjectForm(true); }}
-                      style={{ padding: '0.25rem 0.5rem', background: '#0070f3', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+                      className="px-3 py-1 text-xs border border-border text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => deleteProject(project.id)}
-                      style={{ padding: '0.25rem 0.5rem', background: '#f44', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+                      className="px-3 py-1 text-xs border border-border text-muted-foreground hover:text-destructive hover:border-destructive transition-colors"
                     >
                       Delete
                     </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {activeTab === 'timeline' && (
-        <div>
-          <div style={{ marginBottom: '1rem' }}>
-            <button
-              onClick={() => { setEditingTimeline(null); setShowTimelineForm(true); }}
-              style={{ padding: '0.5rem 1rem', background: '#0a0', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
-            >
-              + Add Timeline Entry
-            </button>
-          </div>
+        {activeTab === 'timeline' && (
+          <div>
+            <div className="mb-4">
+              <button
+                onClick={() => { setEditingTimeline(null); setShowTimelineForm(true); }}
+                className="px-4 py-2 text-sm bg-accent text-accent-foreground font-medium uppercase tracking-wider hover:opacity-90 transition-opacity"
+              >
+                + Add Entry
+              </button>
+            </div>
 
-          {showTimelineForm && (
-            <TimelineForm
-              item={editingTimeline}
-              onSave={saveTimeline}
-              onCancel={() => { setShowTimelineForm(false); setEditingTimeline(null); }}
-            />
-          )}
+            {showTimelineForm && (
+              <TimelineForm
+                item={editingTimeline}
+                onSave={saveTimeline}
+                onCancel={() => { setShowTimelineForm(false); setEditingTimeline(null); }}
+              />
+            )}
 
-          <div style={{ display: 'grid', gap: '1rem' }}>
-            {timeline.map((item) => (
-              <div key={item.id} style={{ background: '#222', padding: '1rem', borderRadius: '8px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h3 style={{ margin: 0 }}>{item.year} - {item.role.en}</h3>
-                    <p style={{ color: '#0070f3', margin: '0.25rem 0' }}>{item.company}</p>
-                    <p style={{ color: '#888', margin: '0.5rem 0' }}>{item.description.en}</p>
-                    <p style={{ color: '#666', fontSize: '0.85rem' }}>Tech: {item.tech.join(', ')}</p>
+            <div className="grid gap-3">
+              {timeline.map((item) => (
+                <div key={item.id} className="bg-card border border-border p-4 flex justify-between items-start gap-4">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-sm font-semibold">{item.year} &mdash; {item.role.en}</h3>
+                    <p className="text-accent text-sm mt-0.5">{item.company}</p>
+                    <p className="text-muted-foreground text-sm mt-1 line-clamp-1">{item.description.en}</p>
+                    <p className="text-muted-foreground/60 text-xs mt-1 font-mono">{item.tech.join(' / ')}</p>
                   </div>
-                  <div>
+                  <div className="flex gap-2 shrink-0">
                     <button
                       onClick={() => { setEditingTimeline(item); setShowTimelineForm(true); }}
-                      style={{ padding: '0.25rem 0.5rem', marginRight: '0.5rem', background: '#0070f3', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+                      className="px-3 py-1 text-xs border border-border text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => deleteTimeline(item.id)}
-                      style={{ padding: '0.25rem 0.5rem', background: '#f44', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+                      className="px-3 py-1 text-xs border border-border text-muted-foreground hover:text-destructive hover:border-destructive transition-colors"
                     >
                       Delete
                     </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {activeTab === 'settings' && (
-        <SettingsPanel
-          settings={settings}
-          workspaces={workspaces}
-          githubRepos={githubRepos}
-          onSaveSettings={saveSettings}
-          onLoadWorkspaces={fetchWorkspaces}
-          onLoadGithubRepos={fetchGithubRepos}
-        />
-      )}
+        {activeTab === 'settings' && (
+          <SettingsPanel
+            settings={settings}
+            workspaces={workspaces}
+            githubRepos={githubRepos}
+            onSaveSettings={saveSettings}
+            onLoadWorkspaces={fetchWorkspaces}
+            onLoadGithubRepos={fetchGithubRepos}
+          />
+        )}
+      </main>
     </div>
   );
 }
@@ -408,26 +416,25 @@ function SettingsPanel({ settings, workspaces, githubRepos, onSaveSettings, onLo
 
   return (
     <div>
-      <h2 style={{ marginTop: 0 }}>Integration Settings</h2>
+      <h2 className="text-base font-semibold uppercase tracking-wider font-mono mb-6">Integration Settings</h2>
 
-      {/* ClickUp Workspace Selection */}
-      <div style={{ background: '#222', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
-        <h3 style={{ marginTop: 0, color: '#0070f3' }}>🔵 ClickUp Workspace</h3>
-        <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
+      <div className="bg-card border border-border p-5 mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-1">ClickUp Workspace</h3>
+        <p className="text-muted-foreground text-sm mb-4">
           Select which ClickUp workspace to display data from
         </p>
-        
+
         <button
           onClick={onLoadWorkspaces}
-          style={{ padding: '0.5rem 1rem', marginBottom: '1rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+          className="px-4 py-2 text-sm border border-border text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           {workspaces.length > 0 ? 'Refresh Workspaces' : 'Load Workspaces'}
         </button>
 
         {workspaces.length > 0 && (
-          <div>
+          <div className="space-y-2">
             {workspaces.map((ws: any) => (
-              <label key={ws.id} style={{ display: 'block', padding: '0.75rem', background: localSettings.clickup?.workspaceId === ws.id ? '#0070f3' : '#333', marginBottom: '0.5rem', borderRadius: '4px', cursor: 'pointer' }}>
+              <label key={ws.id} className={`block px-3 py-2.5 border cursor-pointer text-sm transition-colors ${localSettings.clickup?.workspaceId === ws.id ? 'border-accent bg-accent/10 text-foreground' : 'border-border bg-secondary text-muted-foreground hover:text-foreground'}`}>
                 <input
                   type="radio"
                   name="workspace"
@@ -436,7 +443,7 @@ function SettingsPanel({ settings, workspaces, githubRepos, onSaveSettings, onLo
                     ...localSettings,
                     clickup: { workspaceId: ws.id, workspaceName: ws.name }
                   })}
-                  style={{ marginRight: '0.5rem' }}
+                  className="mr-2 accent-accent"
                 />
                 {ws.name}
               </label>
@@ -445,56 +452,56 @@ function SettingsPanel({ settings, workspaces, githubRepos, onSaveSettings, onLo
         )}
       </div>
 
-      {/* GitHub Repo Selection */}
-      <div style={{ background: '#222', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
-        <h3 style={{ marginTop: 0, color: '#0070f3' }}>📦 GitHub Repositories</h3>
-        <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
+      <div className="bg-card border border-border p-5 mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-1">GitHub Repositories</h3>
+        <p className="text-muted-foreground text-sm mb-4">
           Select which repositories to show in Latest Projects section (leave empty to show all)
         </p>
 
         <button
           onClick={onLoadGithubRepos}
-          style={{ padding: '0.5rem 1rem', marginBottom: '1rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}
+          className="px-4 py-2 text-sm border border-border text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           {githubRepos.length > 0 ? 'Refresh Repositories' : 'Load Repositories'}
         </button>
 
         {githubRepos.length > 0 && (
-          <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-            <div style={{ marginBottom: '0.5rem', color: '#aaa', fontSize: '0.85rem' }}>
+          <div className="max-h-[400px] overflow-y-auto">
+            <div className="text-muted-foreground text-xs mb-2 font-mono">
               Selected: {localSettings.github?.selectedRepos?.length || 0} repos
             </div>
-            {githubRepos.map((repo: any) => (
-              <label key={repo.name} style={{ display: 'flex', alignItems: 'flex-start', padding: '0.75rem', background: localSettings.github?.selectedRepos?.includes(repo.name) ? '#0070f3' : '#333', marginBottom: '0.5rem', borderRadius: '4px', cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={localSettings.github?.selectedRepos?.includes(repo.name) || false}
-                  onChange={() => toggleRepo(repo.name)}
-                  style={{ marginRight: '0.75rem', marginTop: '0.25rem' }}
-                />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 'bold' }}>{repo.name}</div>
-                  {repo.description && <div style={{ color: '#aaa', fontSize: '0.85rem', marginTop: '0.25rem' }}>{repo.description}</div>}
-                  <div style={{ color: '#666', fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                    {repo.language && <span>🔹 {repo.language}</span>}
-                    {repo.stars > 0 && <span style={{ marginLeft: '1rem' }}>⭐ {repo.stars}</span>}
+            <div className="space-y-2">
+              {githubRepos.map((repo: any) => (
+                <label key={repo.name} className={`flex items-start px-3 py-2.5 border cursor-pointer transition-colors ${localSettings.github?.selectedRepos?.includes(repo.name) ? 'border-accent bg-accent/10' : 'border-border bg-secondary hover:border-muted-foreground'}`}>
+                  <input
+                    type="checkbox"
+                    checked={localSettings.github?.selectedRepos?.includes(repo.name) || false}
+                    onChange={() => toggleRepo(repo.name)}
+                    className="mr-3 mt-0.5 accent-accent"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold">{repo.name}</div>
+                    {repo.description && <div className="text-muted-foreground text-xs mt-0.5">{repo.description}</div>}
+                    <div className="text-muted-foreground/60 text-xs mt-0.5 font-mono">
+                      {repo.language && <span>{repo.language}</span>}
+                      {repo.stars > 0 && <span className="ml-3">{repo.stars} stars</span>}
+                    </div>
                   </div>
-                </div>
-              </label>
-            ))}
+                </label>
+              ))}
+            </div>
           </div>
         )}
       </div>
 
-      {/* Save Button */}
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <div className="flex gap-4 items-center">
         <button
           onClick={handleSave}
-          style={{ padding: '0.75rem 1.5rem', background: '#0a0', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold' }}
+          className="px-5 py-2.5 bg-accent text-accent-foreground text-sm font-medium uppercase tracking-wider hover:opacity-90 transition-opacity"
         >
-          💾 Save Settings
+          Save Settings
         </button>
-        {saved && <span style={{ color: '#0a0' }}>✓ Saved successfully!</span>}
+        {saved && <span className="text-accent text-sm font-mono">Saved</span>}
       </div>
     </div>
   );
@@ -519,54 +526,47 @@ function ImageUploader({ currentPath, onImageSet, label }: { currentPath: string
         credentials: 'include',
         body: formData,
       });
+      if (!res.ok) return;
       const data = await res.json();
-      if (data.success) {
-        onImageSet(data.path);
-      }
-    } catch (error) {
-      console.error('Upload failed', error);
-    }
+      if (data.success) onImageSet(data.path);
+    } catch { /* silent */ }
     setUploading(false);
   }
 
   async function loadExistingImages() {
     try {
       const res = await fetch(`${API_BASE}/api/images`, { credentials: 'include' });
+      if (!res.ok) return;
       const data = await res.json();
       setExistingImages(data);
-    } catch (error) {
-      console.error('Failed to load images');
-    }
+    } catch { /* silent */ }
   }
-
-  const inputStyle = { width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #444', background: '#333', color: '#fff', marginBottom: '0.5rem' };
-  const labelStyle: React.CSSProperties = { display: 'block', color: '#aaa', marginBottom: '0.25rem', fontSize: '0.85rem' };
 
   return (
     <div>
-      <label style={labelStyle}>{label}</label>
-      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        <input style={{ ...inputStyle, flex: 1 }} value={currentPath} onChange={(e) => onImageSet(e.target.value)} placeholder="/image.png" />
-        <label style={{ padding: '0.5rem 0.75rem', background: '#0070f3', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+      {label && <label className="block text-muted-foreground text-xs mb-1">{label}</label>}
+      <div className="flex gap-2 items-center">
+        <input className="flex-1 px-3 py-2 border border-border bg-input text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors" value={currentPath} onChange={(e) => onImageSet(e.target.value)} placeholder="/image.png" />
+        <label className="px-3 py-2 bg-secondary text-secondary-foreground text-xs cursor-pointer hover:bg-muted transition-colors whitespace-nowrap">
           {uploading ? '...' : 'Upload'}
-          <input type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
+          <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
         </label>
-        <button type="button" onClick={() => { setShowPicker(!showPicker); if (!showPicker) loadExistingImages(); }} style={{ padding: '0.5rem 0.75rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.8rem' }}>
+        <button type="button" onClick={() => { setShowPicker(!showPicker); if (!showPicker) loadExistingImages(); }} className="px-3 py-2 border border-border text-muted-foreground text-xs hover:text-foreground transition-colors">
           Browse
         </button>
       </div>
       {currentPath && (
-        <div style={{ marginTop: '0.5rem', padding: '0.5rem', background: '#2a2a2a', borderRadius: '4px' }}>
-          <img src={currentPath} alt="preview" style={{ maxHeight: '80px', borderRadius: '4px' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+        <div className="mt-2 p-2 bg-secondary">
+          <img src={currentPath} alt="preview" className="max-h-[80px]" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
         </div>
       )}
       {showPicker && (
-        <div style={{ marginTop: '0.5rem', maxHeight: '200px', overflowY: 'auto', background: '#1a1a1a', border: '1px solid #444', borderRadius: '4px', padding: '0.5rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '0.5rem' }}>
+        <div className="mt-2 max-h-[200px] overflow-y-auto bg-background border border-border p-2">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2">
             {existingImages.map((img) => (
-              <div key={img.name} onClick={() => { onImageSet(img.path); setShowPicker(false); }} style={{ cursor: 'pointer', padding: '0.25rem', border: currentPath === img.path ? '2px solid #0070f3' : '1px solid #333', borderRadius: '4px', textAlign: 'center' }}>
-                <img src={img.path} alt={img.name} style={{ width: '100%', height: '60px', objectFit: 'cover', borderRadius: '4px' }} onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg'; }} />
-                <div style={{ fontSize: '0.65rem', color: '#888', marginTop: '0.25rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{img.name}</div>
+              <div key={img.name} onClick={() => { onImageSet(img.path); setShowPicker(false); }} className={`cursor-pointer p-1 border text-center transition-colors ${currentPath === img.path ? 'border-accent' : 'border-border hover:border-muted-foreground'}`}>
+                <img src={img.path} alt={img.name} className="w-full h-[60px] object-cover" onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg'; }} />
+                <div className="text-[0.65rem] text-muted-foreground mt-1 truncate">{img.name}</div>
               </div>
             ))}
           </div>
@@ -611,121 +611,125 @@ function ProjectForm({ project, onSave, onCancel }: { project: Project | null; o
     });
   }
 
-  const inputStyle = { width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #444', background: '#333', color: '#fff', marginBottom: '0.5rem' };
-  const labelStyle: React.CSSProperties = { display: 'block', color: '#aaa', marginBottom: '0.25rem', fontSize: '0.85rem' };
+  const inputCls = "w-full px-3 py-2 border border-border bg-input text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors mb-1";
+  const labelCls = "block text-muted-foreground text-xs mb-1";
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: '#1a1a1a', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
-      <h3 style={{ marginTop: 0 }}>{project ? 'Edit Project' : 'Add New Project'}</h3>
+    <form onSubmit={handleSubmit} className="bg-card border border-border p-5 mb-4">
+      <h3 className="text-sm font-semibold uppercase tracking-wider font-mono mb-4">{project ? 'Edit Project' : 'Add New Project'}</h3>
       
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#aaa', fontSize: '0.85rem', cursor: 'pointer' }}>
-          <input type="checkbox" checked={form.featured || false} onChange={(e) => setForm({ ...form, featured: e.target.checked })} style={{ accentColor: '#0a0' }} />
+      <div className="mb-4">
+        <label className="flex items-center gap-2 text-muted-foreground text-xs cursor-pointer">
+          <input type="checkbox" checked={form.featured || false} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="accent-accent" />
           Featured (show on homepage - max 4)
         </label>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label style={labelStyle}>Title (EN)</label>
-          <input style={inputStyle} value={form.title?.en || ''} onChange={(e) => setForm({ ...form, title: { ...form.title!, en: e.target.value } })} required />
+          <label className={labelCls}>Title (EN)</label>
+          <input className={inputCls} value={form.title?.en || ''} onChange={(e) => setForm({ ...form, title: { ...form.title!, en: e.target.value } })} required />
         </div>
         <div>
-          <label style={labelStyle}>Title (DE)</label>
-          <input style={inputStyle} value={form.title?.de || ''} onChange={(e) => setForm({ ...form, title: { ...form.title!, de: e.target.value } })} required />
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div>
-          <label style={labelStyle}>Short Description (EN)</label>
-          <textarea style={{ ...inputStyle, minHeight: '60px' }} value={form.description?.en || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, en: e.target.value } })} required />
-        </div>
-        <div>
-          <label style={labelStyle}>Short Description (DE)</label>
-          <textarea style={{ ...inputStyle, minHeight: '60px' }} value={form.description?.de || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, de: e.target.value } })} required />
+          <label className={labelCls}>Title (DE)</label>
+          <input className={inputCls} value={form.title?.de || ''} onChange={(e) => setForm({ ...form, title: { ...form.title!, de: e.target.value } })} required />
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label style={labelStyle}>Long Description (EN)</label>
-          <textarea style={{ ...inputStyle, minHeight: '80px' }} value={form.longDescription?.en || ''} onChange={(e) => setForm({ ...form, longDescription: { ...form.longDescription!, en: e.target.value } })} required />
+          <label className={labelCls}>Short Description (EN)</label>
+          <textarea className={`${inputCls} min-h-[60px]`} value={form.description?.en || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, en: e.target.value } })} required />
         </div>
         <div>
-          <label style={labelStyle}>Long Description (DE)</label>
-          <textarea style={{ ...inputStyle, minHeight: '80px' }} value={form.longDescription?.de || ''} onChange={(e) => setForm({ ...form, longDescription: { ...form.longDescription!, de: e.target.value } })} required />
+          <label className={labelCls}>Short Description (DE)</label>
+          <textarea className={`${inputCls} min-h-[60px]`} value={form.description?.de || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, de: e.target.value } })} required />
         </div>
       </div>
 
-      <div>
-        <label style={labelStyle}>Tech Stack (comma separated)</label>
-        <input style={inputStyle} value={techInput} onChange={(e) => setTechInput(e.target.value)} placeholder="React, Node.js, MySQL" required />
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        <div>
+          <label className={labelCls}>Long Description (EN)</label>
+          <textarea className={`${inputCls} min-h-[80px]`} value={form.longDescription?.en || ''} onChange={(e) => setForm({ ...form, longDescription: { ...form.longDescription!, en: e.target.value } })} required />
+        </div>
+        <div>
+          <label className={labelCls}>Long Description (DE)</label>
+          <textarea className={`${inputCls} min-h-[80px]`} value={form.longDescription?.de || ''} onChange={(e) => setForm({ ...form, longDescription: { ...form.longDescription!, de: e.target.value } })} required />
+        </div>
       </div>
 
-      <ImageUploader
-        currentPath={form.image || ''}
-        onImageSet={(path) => setForm({ ...form, image: path })}
-        label="Main Image (upload or type path)"
-      />
+      <div className="mb-3">
+        <label className={labelCls}>Tech Stack (comma separated)</label>
+        <input className={inputCls} value={techInput} onChange={(e) => setTechInput(e.target.value)} placeholder="React, Node.js, MySQL" required />
+      </div>
 
-      <div style={{ marginTop: '0.5rem' }}>
-        <label style={labelStyle}>Additional Images</label>
+      <div className="mb-3">
+        <ImageUploader
+          currentPath={form.image || ''}
+          onImageSet={(path) => setForm({ ...form, image: path })}
+          label="Main Image (upload or type path)"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className={labelCls}>Additional Images</label>
         {additionalImages.map((img, i) => (
-          <div key={i} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'center' }}>
-            <ImageUploader
-              currentPath={img}
-              onImageSet={(path) => {
-                const updated = [...additionalImages];
-                updated[i] = path;
-                setAdditionalImages(updated);
-              }}
-              label=""
-            />
-            <button type="button" onClick={() => setAdditionalImages(additionalImages.filter((_, idx) => idx !== i))} style={{ padding: '0.25rem 0.5rem', background: '#f44', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.75rem' }}>
+          <div key={i} className="flex gap-2 mb-2 items-center">
+            <div className="flex-1">
+              <ImageUploader
+                currentPath={img}
+                onImageSet={(path) => {
+                  const updated = [...additionalImages];
+                  updated[i] = path;
+                  setAdditionalImages(updated);
+                }}
+                label=""
+              />
+            </div>
+            <button type="button" onClick={() => setAdditionalImages(additionalImages.filter((_, idx) => idx !== i))} className="px-2 py-1 text-xs border border-border text-muted-foreground hover:text-destructive hover:border-destructive transition-colors">
               X
             </button>
           </div>
         ))}
-        <button type="button" onClick={() => setAdditionalImages([...additionalImages, ''])} style={{ padding: '0.25rem 0.5rem', background: '#555', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.8rem' }}>
+        <button type="button" onClick={() => setAdditionalImages([...additionalImages, ''])} className="px-3 py-1 text-xs border border-border text-muted-foreground hover:text-foreground transition-colors">
           + Add Image
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '0.5rem' }}>
+      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label style={labelStyle}>GitHub/Source URL</label>
-          <input style={inputStyle} value={form.url || ''} onChange={(e) => setForm({ ...form, url: e.target.value })} required />
+          <label className={labelCls}>GitHub/Source URL</label>
+          <input className={inputCls} value={form.url || ''} onChange={(e) => setForm({ ...form, url: e.target.value })} required />
         </div>
         <div>
-          <label style={labelStyle}>Live URL (optional)</label>
-          <input style={inputStyle} value={form.liveUrl || ''} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} />
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div>
-          <label style={labelStyle}>Features (EN) - one per line</label>
-          <textarea style={{ ...inputStyle, minHeight: '100px' }} value={featuresEnInput} onChange={(e) => setFeaturesEnInput(e.target.value)} placeholder="Feature 1&#10;Feature 2&#10;Feature 3" />
-        </div>
-        <div>
-          <label style={labelStyle}>Features (DE) - one per line</label>
-          <textarea style={{ ...inputStyle, minHeight: '100px' }} value={featuresDeInput} onChange={(e) => setFeaturesDeInput(e.target.value)} placeholder="Feature 1&#10;Feature 2&#10;Feature 3" />
+          <label className={labelCls}>Live URL (optional)</label>
+          <input className={inputCls} value={form.liveUrl || ''} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} />
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label style={labelStyle}>Medium (EN)</label>
-          <input style={inputStyle} value={form.medium?.en || ''} onChange={(e) => setForm({ ...form, medium: { ...form.medium!, en: e.target.value } })} placeholder="Web App" required />
+          <label className={labelCls}>Features (EN) - one per line</label>
+          <textarea className={`${inputCls} min-h-[100px]`} value={featuresEnInput} onChange={(e) => setFeaturesEnInput(e.target.value)} placeholder="Feature 1&#10;Feature 2&#10;Feature 3" />
         </div>
         <div>
-          <label style={labelStyle}>Medium (DE)</label>
-          <input style={inputStyle} value={form.medium?.de || ''} onChange={(e) => setForm({ ...form, medium: { ...form.medium!, de: e.target.value } })} placeholder="Web App" required />
+          <label className={labelCls}>Features (DE) - one per line</label>
+          <textarea className={`${inputCls} min-h-[100px]`} value={featuresDeInput} onChange={(e) => setFeaturesDeInput(e.target.value)} placeholder="Feature 1&#10;Feature 2&#10;Feature 3" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 mb-4">
+        <div>
+          <label className={labelCls}>Medium (EN)</label>
+          <input className={inputCls} value={form.medium?.en || ''} onChange={(e) => setForm({ ...form, medium: { ...form.medium!, en: e.target.value } })} placeholder="Web App" required />
         </div>
         <div>
-          <label style={labelStyle}>Grid Span</label>
-          <select style={inputStyle} value={form.span || 'col-span-1 row-span-1'} onChange={(e) => setForm({ ...form, span: e.target.value })}>
+          <label className={labelCls}>Medium (DE)</label>
+          <input className={inputCls} value={form.medium?.de || ''} onChange={(e) => setForm({ ...form, medium: { ...form.medium!, de: e.target.value } })} placeholder="Web App" required />
+        </div>
+        <div>
+          <label className={labelCls}>Grid Span</label>
+          <select className={inputCls} value={form.span || 'col-span-1 row-span-1'} onChange={(e) => setForm({ ...form, span: e.target.value })}>
             <option value="col-span-1 row-span-1">1x1</option>
             <option value="col-span-2 row-span-1">2x1</option>
             <option value="col-span-1 row-span-2">1x2</option>
@@ -734,11 +738,11 @@ function ProjectForm({ project, onSave, onCancel }: { project: Project | null; o
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-        <button type="submit" style={{ padding: '0.5rem 1rem', background: '#0070f3', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
+      <div className="flex gap-2">
+        <button type="submit" className="px-4 py-2 text-sm bg-accent text-accent-foreground font-medium uppercase tracking-wider hover:opacity-90 transition-opacity">
           Save Project
         </button>
-        <button type="button" onClick={onCancel} style={{ padding: '0.5rem 1rem', background: '#666', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
+        <button type="button" onClick={onCancel} className="px-4 py-2 text-sm border border-border text-muted-foreground hover:text-foreground transition-colors">
           Cancel
         </button>
       </div>
@@ -763,56 +767,56 @@ function TimelineForm({ item, onSave, onCancel }: { item: TimelineItem | null; o
     onSave({ ...form, tech: techArray });
   }
 
-  const inputStyle = { width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #444', background: '#333', color: '#fff', marginBottom: '0.5rem' };
-  const labelStyle = { display: 'block', color: '#aaa', marginBottom: '0.25rem', fontSize: '0.85rem' };
+  const inputCls = "w-full px-3 py-2 border border-border bg-input text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors mb-1";
+  const labelCls = "block text-muted-foreground text-xs mb-1";
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: '#1a1a1a', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
-      <h3 style={{ marginTop: 0 }}>{item ? 'Edit Timeline Entry' : 'Add New Timeline Entry'}</h3>
+    <form onSubmit={handleSubmit} className="bg-card border border-border p-5 mb-4">
+      <h3 className="text-sm font-semibold uppercase tracking-wider font-mono mb-4">{item ? 'Edit Timeline Entry' : 'Add New Timeline Entry'}</h3>
       
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1rem' }}>
+      <div className="grid grid-cols-[1fr_2fr] gap-4 mb-3">
         <div>
-          <label style={labelStyle}>Year</label>
-          <input style={inputStyle} value={form.year || ''} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="2024" required />
+          <label className={labelCls}>Year</label>
+          <input className={inputCls} value={form.year || ''} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="2024" required />
         </div>
         <div>
-          <label style={labelStyle}>Company</label>
-          <input style={inputStyle} value={form.company || ''} onChange={(e) => setForm({ ...form, company: e.target.value })} required />
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div>
-          <label style={labelStyle}>Role (EN)</label>
-          <input style={inputStyle} value={form.role?.en || ''} onChange={(e) => setForm({ ...form, role: { ...form.role!, en: e.target.value } })} required />
-        </div>
-        <div>
-          <label style={labelStyle}>Role (DE)</label>
-          <input style={inputStyle} value={form.role?.de || ''} onChange={(e) => setForm({ ...form, role: { ...form.role!, de: e.target.value } })} required />
+          <label className={labelCls}>Company</label>
+          <input className={inputCls} value={form.company || ''} onChange={(e) => setForm({ ...form, company: e.target.value })} required />
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label style={labelStyle}>Description (EN)</label>
-          <textarea style={{ ...inputStyle, minHeight: '80px' }} value={form.description?.en || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, en: e.target.value } })} required />
+          <label className={labelCls}>Role (EN)</label>
+          <input className={inputCls} value={form.role?.en || ''} onChange={(e) => setForm({ ...form, role: { ...form.role!, en: e.target.value } })} required />
         </div>
         <div>
-          <label style={labelStyle}>Description (DE)</label>
-          <textarea style={{ ...inputStyle, minHeight: '80px' }} value={form.description?.de || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, de: e.target.value } })} required />
+          <label className={labelCls}>Role (DE)</label>
+          <input className={inputCls} value={form.role?.de || ''} onChange={(e) => setForm({ ...form, role: { ...form.role!, de: e.target.value } })} required />
         </div>
       </div>
 
-      <div>
-        <label style={labelStyle}>Tech/Skills (comma separated)</label>
-        <input style={inputStyle} value={techInput} onChange={(e) => setTechInput(e.target.value)} placeholder="React, Node.js, Leadership" required />
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        <div>
+          <label className={labelCls}>Description (EN)</label>
+          <textarea className={`${inputCls} min-h-[80px]`} value={form.description?.en || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, en: e.target.value } })} required />
+        </div>
+        <div>
+          <label className={labelCls}>Description (DE)</label>
+          <textarea className={`${inputCls} min-h-[80px]`} value={form.description?.de || ''} onChange={(e) => setForm({ ...form, description: { ...form.description!, de: e.target.value } })} required />
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-        <button type="submit" style={{ padding: '0.5rem 1rem', background: '#0070f3', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
+      <div className="mb-4">
+        <label className={labelCls}>Tech/Skills (comma separated)</label>
+        <input className={inputCls} value={techInput} onChange={(e) => setTechInput(e.target.value)} placeholder="React, Node.js, Leadership" required />
+      </div>
+
+      <div className="flex gap-2">
+        <button type="submit" className="px-4 py-2 text-sm bg-accent text-accent-foreground font-medium uppercase tracking-wider hover:opacity-90 transition-opacity">
           Save Entry
         </button>
-        <button type="button" onClick={onCancel} style={{ padding: '0.5rem 1rem', background: '#666', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
+        <button type="button" onClick={onCancel} className="px-4 py-2 text-sm border border-border text-muted-foreground hover:text-foreground transition-colors">
           Cancel
         </button>
       </div>

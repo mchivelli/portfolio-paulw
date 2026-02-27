@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { IBM_Plex_Sans, IBM_Plex_Mono, Bebas_Neue } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { LanguageProvider } from "@/components/language-provider"
 import "./globals.css"
@@ -57,7 +56,6 @@ export default function RootLayout({
             {children}
           </SmoothScroll>
         </LanguageProvider>
-        <Analytics />
       </body>
     </html>
   )
