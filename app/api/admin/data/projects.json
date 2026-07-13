@@ -42,14 +42,14 @@
   },
   {
     "id": 2,
-    "title": { "en": "Onboto — Onboarding, White-Labeled", "de": "Onboto — Onboarding, White-Label" },
+    "title": { "en": "Onboarding Platform — steuerservice.at", "de": "Onboarding-Plattform — steuerservice.at" },
     "description": {
-      "en": "A tax-firm client-onboarding portal, proven in production, rebuilt into a multi-tenant white-label product.",
-      "de": "Ein Mandanten-Onboarding-Portal für eine Steuerkanzlei, produktiv bewährt, zum mandantenfähigen White-Label-Produkt umgebaut."
+      "en": "A live client-onboarding portal for a Vienna tax firm — KYC, qualified e-signature and automatic document generation. In production at onboarding.steuerservice.at.",
+      "de": "Ein live betriebenes Mandanten-Onboarding-Portal für eine Wiener Steuerkanzlei — KYC, qualifizierte E-Signatur und automatische Dokumenten-Generierung. Produktiv unter onboarding.steuerservice.at."
     },
     "longDescription": {
-      "en": "A guided onboarding wizard that turns hours of client intake into minutes: OTP login with no account, a KYC / anti-money-laundering traffic light per WTBG, live Firmenbuch and WiEReG lookups via Compass, and qualified e-signature via XiTrust MOXIS — plus automatic document pre-fill and generation (SEPA mandate, offer, client folder) with signature anchors and a clean master-data export into BMD. Proven in production at G&W, then methodically decoupled into a multi-tenant white-label product (config packs, additive-only migrations). Launch in preparation.",
-      "de": "Ein geführter Onboarding-Wizard, der aus stundenlanger Mandanten-Aufnahme Minuten macht: OTP-Login ohne Konto, eine KYC- / Geldwäsche-Ampel nach WTBG, Live-Firmenbuch- und WiEReG-Abfragen über Compass und qualifizierte E-Signatur via XiTrust MOXIS — dazu automatische Dokumenten-Vorausfüllung und -Generierung (SEPA-Mandat, Angebot, Klientenmappe) mit Signatur-Ankern und ein sauberer Stammdaten-Export nach BMD. Produktiv bei G&W bewährt, dann methodisch zum mandantenfähigen White-Label-Produkt entkoppelt (Config-Packs, nur additive Migrationen). Markteinführung in Vorbereitung."
+      "en": "Built and operated for a Vienna tax firm and live in production at onboarding.steuerservice.at — a guided wizard that turns hours of client intake into minutes. OTP login with no account, a KYC / anti-money-laundering traffic light per WTBG, live Firmenbuch and WiEReG lookups via Compass, and qualified e-signature (QES) via XiTrust MOXIS — plus automatic document pre-fill and generation (SEPA mandate, offer, client folder) with signature anchors and a clean master-data export into BMD. A regulated, sensitive domain handled end-to-end: hundreds of audit tests, additive-only migrations, and a config-driven core built to extend to further firms.",
+      "de": "Gebaut und betrieben für eine Wiener Steuerkanzlei, live in Produktion unter onboarding.steuerservice.at — ein geführter Wizard, der aus stundenlanger Mandanten-Aufnahme Minuten macht. OTP-Login ohne Konto, eine KYC- / Geldwäsche-Ampel nach WTBG, Live-Firmenbuch- und WiEReG-Abfragen über Compass und qualifizierte E-Signatur (QES) via XiTrust MOXIS — dazu automatische Dokumenten-Vorausfüllung und -Generierung (SEPA-Mandat, Angebot, Klientenmappe) mit Signatur-Ankern und ein sauberer Stammdaten-Export nach BMD. Ein reguliertes, sensibles Feld end-to-end umgesetzt: hunderte Audit-Tests, nur additive Migrationen und ein config-getriebener Kern, der sich auf weitere Kanzleien erweitern lässt."
     },
     "tech": ["React 19", "Node.js / Express", "PostgreSQL", "XiTrust MOXIS (QES)", "Compass / WiEReG", "BMD Export"],
     "image": "/img/mockup-guw.png",
@@ -57,6 +57,7 @@
     "liveUrl": "https://onboarding.steuerservice.at",
     "features": {
       "en": [
+        "Live in production: onboarding.steuerservice.at",
         "Guided wizard — no account needed, OTP login",
         "KYC / AML traffic light (GREEN/YELLOW/RED) per WTBG 2017",
         "Live Firmenbuch + WiEReG lookup via Compass",
@@ -64,10 +65,10 @@
         "Document pre-fill: master data → SEPA, offer, client folder",
         "Automatic PDF/DOCX generation with signature anchors",
         "Clean master-data export into BMD (NTCS)",
-        "Multi-tenant: branding/legal/integrations via config pack",
-        "~600 audit tests, proven in production at G&W"
+        "Hundreds of audit tests, config-driven to extend to further firms"
       ],
       "de": [
+        "Live in Produktion: onboarding.steuerservice.at",
         "Geführter Wizard — kein Konto nötig, OTP-Login",
         "KYC- / Geldwäsche-Ampel (GRÜN/GELB/ROT) nach WTBG 2017",
         "Live-Firmenbuch- + WiEReG-Abfrage über Compass",
@@ -75,11 +76,10 @@
         "Dokumenten-Vorausfüllung: Stammdaten → SEPA, Angebot, Klientenmappe",
         "Automatische PDF/DOCX-Generierung mit Signatur-Ankern",
         "Sauberer Stammdaten-Export nach BMD (NTCS)",
-        "Mandantenfähig: Branding/Legal/Integrationen per Config-Pack",
-        "~600 Audit-Tests, produktiv bei G&W bewährt"
+        "Hunderte Audit-Tests, config-getrieben auf weitere Kanzleien erweiterbar"
       ]
     },
-    "medium": { "en": "SaaS Platform", "de": "SaaS-Plattform" },
+    "medium": { "en": "Client Project · SaaS", "de": "Kundenprojekt · SaaS" },
     "span": "col-span-2 row-span-1",
     "featured": true,
     "mockup": true
@@ -184,5 +184,41 @@
     "medium": { "en": "AI · RAG", "de": "AI · RAG" },
     "span": "col-span-1 row-span-1",
     "featured": false
+  },
+  {
+    "id": 6,
+    "title": { "en": "IO — Agentic Command Centre", "de": "IO — Agentic Command Centre" },
+    "description": {
+      "en": "My own multi-agent build environment: a fleet of specialised AI agents that plan, build, review and ship — behind hard, code-enforced safety gates.",
+      "de": "Meine eigene Multi-Agenten-Umgebung: eine Flotte spezialisierter KI-Agenten, die planen, bauen, prüfen und ausliefern — hinter harten, code-erzwungenen Sicherheits-Gates."
+    },
+    "longDescription": {
+      "en": "The environment I actually build in. A coordinator directs specialised agents — planner, builder, reviewer, guardian — down a real software-delivery line: PRD and stories, implementation in isolated git worktrees, adversarial code review, and code-enforced quality gates (secrets, SAST, tests, traceability) that fail the build rather than wave it through. A live dashboard tracks every agent, cron and project; a kernel-isolated bypass fleet runs long autonomous jobs; self-correcting loops re-plan and re-verify against the original request. It's the honest proof behind 'AI agents' — not a demo, the system I use to ship faster and safer.",
+      "de": "Die Umgebung, in der ich wirklich baue. Ein Koordinator dirigiert spezialisierte Agenten — Planner, Builder, Reviewer, Guardian — entlang einer echten Software-Auslieferungslinie: PRD und Stories, Implementierung in isolierten Git-Worktrees, adversariale Code-Reviews und code-erzwungene Quality-Gates (Secrets, SAST, Tests, Traceability), die den Build scheitern lassen statt ihn durchzuwinken. Ein Live-Dashboard verfolgt jeden Agenten, Cron und jedes Projekt; eine kernel-isolierte Bypass-Flotte fährt lange autonome Jobs; selbstkorrigierende Loops planen und verifizieren gegen den ursprünglichen Auftrag neu. Der ehrliche Beweis hinter 'KI-Agenten' — keine Demo, sondern das System, mit dem ich schneller und sicherer ausliefere."
+    },
+    "tech": ["Claude Code", "Node.js", "Dynamic Workflows", "Git Worktrees", "GitNexus", "Docker"],
+    "image": "",
+    "url": "#",
+    "features": {
+      "en": [
+        "Coordinator + specialised agents (Plan → Build → Review → Ship)",
+        "Isolated git worktrees per agent, parallel dependency waves",
+        "Code-enforced quality gates: secrets, SAST, tests, traceability",
+        "Adversarial reviews + self-correcting build loops",
+        "Live dashboard for agents, crons and projects",
+        "Kernel-isolated bypass fleet for autonomous long-runners"
+      ],
+      "de": [
+        "Koordinator + spezialisierte Agenten (Plan → Build → Review → Ship)",
+        "Isolierte Git-Worktrees pro Agent, parallele Abhängigkeits-Waves",
+        "Code-erzwungene Quality-Gates: Secrets, SAST, Tests, Traceability",
+        "Adversariale Reviews + selbstkorrigierende Build-Loops",
+        "Live-Dashboard für Agenten, Crons und Projekte",
+        "Kernel-isolierte Bypass-Flotte für autonome Langläufer"
+      ]
+    },
+    "medium": { "en": "R&D · Agent Infra", "de": "Eigenlabor · Agenten-Infra" },
+    "span": "col-span-2 md:col-span-4 row-span-1",
+    "featured": true
   }
 ]

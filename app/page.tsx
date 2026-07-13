@@ -23,11 +23,11 @@ export default function Page() {
         <DeviceShowcase
           id="showcase-onboto"
           reverse
-          label={{ de: "IM EINSATZ · SaaS", en: "IN PRODUCTION · SaaS" }}
-          title={{ de: "ONBOARDING,\nWHITE-LABEL", en: "ONBOARDING,\nWHITE-LABEL" }}
+          label={{ de: "IN PRODUKTION · STEUERKANZLEI", en: "IN PRODUCTION · TAX FIRM" }}
+          title={{ de: "ONBOARDING,\nLIVE BEIM KUNDEN", en: "ONBOARDING,\nLIVE IN PRODUCTION" }}
           sub={{
-            de: "OTP-Login, KYC-Ampel, Compass-Firmenbuch, MOXIS-QES-Signatur und automatische Dokument-Generierung — der geführte Wizard macht aus stundenlanger Mandanten-Aufnahme Minuten. Produktiv bewährt, zum White-Label-Produkt entkoppelt.",
-            en: "OTP login, KYC traffic light, Compass company lookup, MOXIS QES signature and automatic document generation — the guided wizard turns hours of client intake into minutes. Production-proven, decoupled into a white-label product.",
+            de: "OTP-Login, KYC-Ampel, Compass-Firmenbuch, MOXIS-QES-Signatur und automatische Dokument-Generierung — der geführte Wizard macht aus stundenlanger Mandanten-Aufnahme Minuten. Gebaut und live betrieben für eine Wiener Steuerkanzlei unter onboarding.steuerservice.at.",
+            en: "OTP login, KYC traffic light, Compass company lookup, MOXIS QES signature and automatic document generation — the guided wizard turns hours of client intake into minutes. Built and run in production for a Vienna tax firm at onboarding.steuerservice.at.",
           }}
           tech={["React 19", "Node / Express", "PostgreSQL", "MOXIS (QES)", "WiEReG", "BMD"]}
           href="/work/2"
