@@ -48,8 +48,8 @@
       "de": "Ein Mandanten-Onboarding-Portal für eine Steuerkanzlei, produktiv bewährt, zum mandantenfähigen White-Label-Produkt umgebaut."
     },
     "longDescription": {
-      "en": "Built for an Austrian tax consultancy: OTP login, a guided onboarding wizard for individuals and companies, KYC / anti-money-laundering checks, qualified e-signature and a clean data export into BMD. Proven in production at G&W, then methodically decoupled into a multi-tenant, resellable product — branding, legal PDFs and integrations swap via a config pack, migrations are additive-only so every tenant can be updated without touching their data. White-label launch is in preparation.",
-      "de": "Gebaut für eine österreichische Steuerberatung: OTP-Login, ein geführter Onboarding-Wizard für Privat und Firma, KYC- / Geldwäsche-Prüfung, qualifizierte E-Signatur und ein sauberer Datenexport nach BMD. Produktiv bei G&W bewährt, dann methodisch zu einem mandantenfähigen, wiederverkaufbaren Produkt entkoppelt — Branding, Rechts-PDFs und Integrationen tauschen über ein Config-Pack, Migrationen sind additiv, sodass jeder Mandant aktualisiert werden kann, ohne seine Daten anzufassen. Die White-Label-Markteinführung ist in Vorbereitung."
+      "en": "A guided onboarding wizard that turns hours of client intake into minutes: OTP login with no account, a KYC / anti-money-laundering traffic light per WTBG, live Firmenbuch and WiEReG lookups via Compass, and qualified e-signature via XiTrust MOXIS — plus automatic document pre-fill and generation (SEPA mandate, offer, client folder) with signature anchors and a clean master-data export into BMD. Proven in production at G&W, then methodically decoupled into a multi-tenant white-label product (config packs, additive-only migrations). Launch in preparation.",
+      "de": "Ein geführter Onboarding-Wizard, der aus stundenlanger Mandanten-Aufnahme Minuten macht: OTP-Login ohne Konto, eine KYC- / Geldwäsche-Ampel nach WTBG, Live-Firmenbuch- und WiEReG-Abfragen über Compass und qualifizierte E-Signatur via XiTrust MOXIS — dazu automatische Dokumenten-Vorausfüllung und -Generierung (SEPA-Mandat, Angebot, Klientenmappe) mit Signatur-Ankern und ein sauberer Stammdaten-Export nach BMD. Produktiv bei G&W bewährt, dann methodisch zum mandantenfähigen White-Label-Produkt entkoppelt (Config-Packs, nur additive Migrationen). Markteinführung in Vorbereitung."
     },
     "tech": ["React 19", "Node.js / Express", "PostgreSQL", "XiTrust MOXIS (QES)", "Compass / WiEReG", "BMD Export"],
     "image": "/img/mockup-guw.png",
@@ -57,22 +57,26 @@
     "liveUrl": "https://onboarding.steuerservice.at",
     "features": {
       "en": [
-        "OTP login + guided multi-step wizard",
-        "KYC / AML traffic-light per WTBG 2017",
-        "Qualified e-signature (XiTrust MOXIS)",
-        "Firmenbuch / WiEReG lookup via Compass",
-        "Clean data export into BMD (NTCS)",
-        "Multi-tenant config packs, additive-only migrations",
-        "~600 audit tests, proven in production"
+        "Guided wizard — no account needed, OTP login",
+        "KYC / AML traffic light (GREEN/YELLOW/RED) per WTBG 2017",
+        "Live Firmenbuch + WiEReG lookup via Compass",
+        "Qualified e-signature (QES) via XiTrust MOXIS",
+        "Document pre-fill: master data → SEPA, offer, client folder",
+        "Automatic PDF/DOCX generation with signature anchors",
+        "Clean master-data export into BMD (NTCS)",
+        "Multi-tenant: branding/legal/integrations via config pack",
+        "~600 audit tests, proven in production at G&W"
       ],
       "de": [
-        "OTP-Login + geführter mehrstufiger Wizard",
-        "KYC- / Geldwäsche-Ampel nach WTBG 2017",
-        "Qualifizierte E-Signatur (XiTrust MOXIS)",
-        "Firmenbuch- / WiEReG-Abfrage über Compass",
-        "Sauberer Datenexport nach BMD (NTCS)",
-        "Mandanten-Config-Packs, nur additive Migrationen",
-        "~600 Audit-Tests, produktiv bewährt"
+        "Geführter Wizard — kein Konto nötig, OTP-Login",
+        "KYC- / Geldwäsche-Ampel (GRÜN/GELB/ROT) nach WTBG 2017",
+        "Live-Firmenbuch- + WiEReG-Abfrage über Compass",
+        "Qualifizierte E-Signatur (QES) via XiTrust MOXIS",
+        "Dokumenten-Vorausfüllung: Stammdaten → SEPA, Angebot, Klientenmappe",
+        "Automatische PDF/DOCX-Generierung mit Signatur-Ankern",
+        "Sauberer Stammdaten-Export nach BMD (NTCS)",
+        "Mandantenfähig: Branding/Legal/Integrationen per Config-Pack",
+        "~600 Audit-Tests, produktiv bei G&W bewährt"
       ]
     },
     "medium": { "en": "SaaS Platform", "de": "SaaS-Plattform" },

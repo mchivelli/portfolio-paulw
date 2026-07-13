@@ -26,8 +26,8 @@ export default function Page() {
           label={{ de: "IM EINSATZ · SaaS", en: "IN PRODUCTION · SaaS" }}
           title={{ de: "ONBOARDING,\nWHITE-LABEL", en: "ONBOARDING,\nWHITE-LABEL" }}
           sub={{
-            de: "Vom OTP-Login über KYC und E-Signatur bis zum Admin-Dashboard — aus einer produktiv bewährten Kanzlei-Plattform zum mandantenfähigen Produkt entkoppelt.",
-            en: "From OTP login through KYC and e-signature to the admin dashboard — decoupled from a production-proven tax-firm platform into a multi-tenant product.",
+            de: "OTP-Login, KYC-Ampel, Compass-Firmenbuch, MOXIS-QES-Signatur und automatische Dokument-Generierung — der geführte Wizard macht aus stundenlanger Mandanten-Aufnahme Minuten. Produktiv bewährt, zum White-Label-Produkt entkoppelt.",
+            en: "OTP login, KYC traffic light, Compass company lookup, MOXIS QES signature and automatic document generation — the guided wizard turns hours of client intake into minutes. Production-proven, decoupled into a white-label product.",
           }}
           tech={["React 19", "Node / Express", "PostgreSQL", "MOXIS (QES)", "WiEReG", "BMD"]}
           href="/work/2"
