@@ -19,9 +19,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" })
 
 export const metadata: Metadata = {
-  title: "Paul Wallner — Full Stack Developer",
+  title: "Paul Wallner — Individualsoftware & KI-Agenten",
   description:
-    "Full Stack Developer specializing in scalable web applications. Building elegant solutions from frontend to backend with modern technologies.",
+    "Individualsoftware und KI-Agenten für KMU und Startups in Wien und im DACH-Raum. Produktiv erprobte Automatisierung, in der halben Zeit gebaut.",
   generator: "v0.app",
   icons: {
     icon: [
@@ -45,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-background">
+    <html lang="de" className="dark bg-background">
       <body
         className={`${ibmPlexSans.variable} ${bebasNeue.variable} ${ibmPlexMono.variable} font-sans antialiased overflow-x-hidden`}
       >

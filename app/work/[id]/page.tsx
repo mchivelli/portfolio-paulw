@@ -68,6 +68,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                     </p>
                 </div>
 
+                {/* Cinematic mockup hero */}
+                {project.mockup && project.image && (
+                    <div className="relative mb-16 border border-border/40 overflow-hidden">
+                        <img
+                            src={project.image}
+                            alt={project.title[lang]}
+                            className="w-full h-auto block"
+                        />
+                        <div className="absolute inset-0 border border-accent/10 m-2 pointer-events-none" />
+                    </div>
+                )}
+
                 {/* Links */}
                 <div className="flex gap-6 mb-16">
                     <a
@@ -112,7 +124,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                         </div>
 
                         {/* Image Placeholder or Preview */}
-                        {project.image && (
+                        {!project.mockup && project.image && (
                             <div className="relative aspect-video border border-border/40 bg-black/20 overflow-hidden group">
                                 <img
                                     src={project.image}
