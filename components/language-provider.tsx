@@ -23,6 +23,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         "nav.projects": { en: "Projects", de: "Projekte" },
         "nav.showcase": { en: "Devices", de: "Geräte" },
         "nav.demo": { en: "AI Demo", de: "KI-Demo" },
+        "nav.io": { en: "IO", de: "IO" },
         "nav.philosophy": { en: "Philosophy", de: "Philosophie" },
         "nav.productivity": { en: "Productivity", de: "Produktivität" },
         "nav.timeline": { en: "Timeline", de: "Zeitlinie" },

@@ -11,6 +11,7 @@ const navItems = [
   { id: "work", label: "nav.projects" },
   { id: "showcase", label: "nav.showcase" },
   { id: "demo", label: "nav.demo" },
+  { id: "io", label: "nav.io" },
   { id: "principles", label: "nav.philosophy" },
   { id: "productivity", label: "nav.productivity" },
   { id: "timeline", label: "nav.timeline" },
