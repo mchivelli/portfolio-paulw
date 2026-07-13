@@ -8,8 +8,9 @@ import { StaggeredMenu } from "@/components/ui/staggered-menu"
 
 const navItems = [
   { id: "hero", label: "nav.home" },
-  { id: "signals", label: "nav.recent" },
   { id: "work", label: "nav.projects" },
+  { id: "showcase", label: "nav.showcase" },
+  { id: "demo", label: "nav.demo" },
   { id: "principles", label: "nav.philosophy" },
   { id: "productivity", label: "nav.productivity" },
   { id: "timeline", label: "nav.timeline" },

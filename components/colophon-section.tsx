@@ -182,15 +182,15 @@ export function ColophonSection() {
           <ul className="space-y-2">
             <li>
               <a
-                href="mailto:paul@wallner.dev"
+                href="mailto:paul@paulwallner.me"
                 className="font-mono text-sm text-foreground/80 hover:text-accent transition-colors duration-200"
               >
-                paul@wallner.dev
+                paul@paulwallner.me
               </a>
             </li>
             <li>
               <a
-                href="https://github.com/paulwallner"
+                href="https://github.com/mchivelli"
                 className="font-mono text-sm text-foreground/80 hover:text-accent transition-colors duration-200"
               >
                 GitHub
@@ -211,10 +211,10 @@ export function ColophonSection() {
         <div>
           <h4 className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground mb-4">{t("footer.core_stack")}</h4>
           <ul className="space-y-2">
-            <li className="font-mono text-xs text-foreground/80">TypeScript / JavaScript</li>
-            <li className="font-mono text-xs text-foreground/80">React / Next.js / Node.js</li>
-            <li className="font-mono text-xs text-foreground/80">PostgreSQL / MongoDB</li>
-            <li className="font-mono text-xs text-foreground/80">Docker / AWS / Vercel</li>
+            <li className="font-mono text-xs text-foreground/80">TypeScript / Next.js / React</li>
+            <li className="font-mono text-xs text-foreground/80">Node.js / Python / PostgreSQL</li>
+            <li className="font-mono text-xs text-foreground/80">LLM Agents / RAG / n8n</li>
+            <li className="font-mono text-xs text-foreground/80">Docker / Azure / Hetzner</li>
           </ul>
         </div>
 
@@ -234,7 +234,7 @@ export function ColophonSection() {
       {/* Copyright */}
       <div className="mt-12 pt-8 border-t border-border/20">
         <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest text-center">
-          © 2025 Paul Wallner.
+          © 2026 Paul Wallner.
         </p>
       </div>
     </section>

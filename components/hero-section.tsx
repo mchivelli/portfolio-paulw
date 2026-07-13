@@ -83,6 +83,12 @@ export function HeroSection() {
             >
               {t("hero.experience")}
             </a>
+            <a
+              href="/cv"
+              className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-accent transition-colors duration-200"
+            >
+              CV
+            </a>
           </div>
 
           <div className="mt-12">
@@ -97,7 +103,7 @@ export function HeroSection() {
       <div className="hidden lg:block absolute bottom-12 right-12 w-80 z-20">
         <ProfileCard
           name="Paul M. Wallner"
-          title="Jr. Entwickler / IT Solutionist"
+          title="Individualsoftware & KI-Agenten"
           handle="paulwallner.me"
           status="Online"
           contactText="Contact me"

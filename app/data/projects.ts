@@ -14,6 +14,7 @@ export interface Project {
     medium: { [key: string]: string };
     span?: string;
     featured?: boolean;
+    mockup?: boolean;
 }
 
 export const projects: Project[] = projectsData as Project[];
