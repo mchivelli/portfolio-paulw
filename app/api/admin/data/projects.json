@@ -326,5 +326,50 @@
     "medium": { "en": "R&D · Open Source", "de": "Eigenlabor · Open Source" },
     "span": "col-span-2 row-span-1",
     "featured": true
+  },
+  {
+    "id": 8,
+    "title": { "en": "WillBellen — Animal Welfare Portal", "de": "WillBellen — Tierschutz-Portal" },
+    "description": {
+      "en": "A portal that brings dogs from Austrian shelters together in one place — with matching instead of endless lists.",
+      "de": "Ein Portal, das Hunde aus österreichischen Tierheimen an einem Ort zusammenführt — mit Matching statt endloser Listen."
+    },
+    "longDescription": {
+      "en": "A product I built end to end, from idea to launch: automated data aggregation from shelter sources, an energy-level assessment derived from German text analysis, geo-distance calculation for radius search, and a REST API with filtering, search and pagination. On top of it sits a deliberately calm interface — DreamMatch suggests dogs that fit your life instead of sending you through endless result lists. This is the piece I point at when the question is not whether I can build a system, but whether I can build something people actually enjoy using.",
+      "de": "Ein Produkt, das ich von der Idee bis zum Livegang selbst gebaut habe: automatisierte Datenaggregation aus Tierheim-Quellen, eine Einschätzung des Energielevels über deutsche Textanalyse, Geodistanz-Berechnung für die Umkreissuche und eine REST-API mit Filtern, Suche und Paginierung. Darauf sitzt ein bewusst ruhiges Interface — DreamMatch schlägt passende Hunde vor, statt Menschen durch endlose Trefferlisten zu schicken. Das ist das Projekt, auf das ich zeige, wenn es nicht darum geht, ob ich ein System bauen kann — sondern ob ich etwas baue, das Menschen gerne benutzen."
+    },
+    "tech": ["React", "FastAPI", "Python", "PostgreSQL", "REST API", "Geo-Distanz"],
+    "image": "/img/willbellen-desktop.jpg",
+    "url": "#",
+    "liveUrl": "https://willbellen.at",
+    "devices": {
+      "laptop": "/img/willbellen-desktop.jpg",
+      "phone": "/img/willbellen-mobile.jpg"
+    },
+    "stats": [
+      { "value": "242", "label": { "en": "dogs in the portal", "de": "Hunde im Portal" } },
+      { "value": "47", "label": { "en": "breeds filterable", "de": "Rassen filterbar" } }
+    ],
+    "features": {
+      "en": [
+        "DreamMatch — suggestions instead of endless result lists",
+        "Automated data aggregation from shelter sources",
+        "Energy-level assessment from German text analysis",
+        "Radius search via geo-distance calculation",
+        "REST API with filtering, search and pagination",
+        "Bilingual, favourites list and a guidance section"
+      ],
+      "de": [
+        "DreamMatch — Vorschläge statt endloser Trefferlisten",
+        "Automatisierte Datenaggregation aus Tierheim-Quellen",
+        "Energielevel-Einschätzung über deutsche Textanalyse",
+        "Umkreissuche über Geodistanz-Berechnung",
+        "REST-API mit Filtern, Suche und Paginierung",
+        "Zweisprachig, Merkliste und Ratgeber-Bereich"
+      ]
+    },
+    "medium": { "en": "R&D · Product & Design", "de": "Eigenlabor · Produkt & Design" },
+    "span": "col-span-2 md:col-span-4 row-span-1",
+    "featured": true
   }
 ]
