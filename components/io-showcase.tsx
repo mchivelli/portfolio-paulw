@@ -76,13 +76,174 @@ const STATS: { v: number; suffix?: string; fill: number; label: Loc }[] = [
   { v: 100, suffix: "%", fill: 1, label: { de: "code-erzwungen", en: "code-enforced" } },
 ]
 
+/** The live command-centre panel — reused on the homepage section and the IO case study. */
+export function IoPanel() {
+  const { language } = useLanguage()
+  const lang = (language === "en" ? "en" : "de") as Lang
+
+  const panelRef = useRef<HTMLDivElement>(null)
+  const [frame, setFrame] = useState(0)
+
+  // self-running loop, only while in view + motion allowed
+  useEffect(() => {
+    const el = panelRef.current
+    if (!el) return
+    const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reduce) { setFrame(FRAMES.length - 1); return }
+
+    let timer: ReturnType<typeof setInterval> | null = null
+    const start = () => { if (!timer) timer = setInterval(() => setFrame((f) => (f + 1) % FRAMES.length), 1700) }
+    const stop = () => { if (timer) { clearInterval(timer); timer = null } }
+
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => { e.isIntersecting ? start() : stop() }),
+      { threshold: 0.25 },
+    )
+    io.observe(el)
+    return () => { stop(); io.disconnect() }
+  }, [])
+
+  const f = FRAMES[frame]
+
+  return (
+    <div ref={panelRef} className="relative border border-border bg-card/60 backdrop-blur-sm">
+      {/* chrome */}
+      <div className="flex items-center gap-3 border-b border-border/60 px-5 py-3">
+        <span className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
+          <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
+          <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
+        </span>
+        <span className="font-mono text-[11px] tracking-widest text-muted-foreground">{T.chrome[lang]}</span>
+        <span className="ml-auto flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" /> {T.live[lang]}
+        </span>
+      </div>
+
+      <div className="grid gap-px bg-border/40 md:grid-cols-[1.1fr_1fr]">
+        {/* fleet */}
+        <div className="bg-card/40 p-5">
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.fleet[lang]}</span>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {AGENTS.map((a, i) => {
+              const active = i === f.agent
+              return (
+                <div
+                  key={a.name}
+                  className={cn(
+                    "relative flex items-center gap-3 border p-3 transition-all duration-500",
+                    active ? "border-accent/60 bg-accent/[0.07]" : "border-border/40 bg-transparent",
+                  )}
+                >
+                  <span className={cn(
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
+                    active ? "bg-accent/20 text-accent" : "bg-muted-foreground/10 text-muted-foreground",
+                  )}>
+                    <a.Icon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className={cn(
+                      "font-[var(--font-bebas)] text-xl leading-none tracking-tight transition-colors duration-500",
+                      active ? "text-accent" : "text-foreground",
+                    )}>
+                      {a.name}
+                    </div>
+                    <div className="mt-0.5 truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                      {a.role[lang]}
+                    </div>
+                  </div>
+                  <span className={cn(
+                    "absolute right-2 top-2 h-1.5 w-1.5 rounded-full transition-all duration-500",
+                    active ? "bg-accent animate-pulse" : "bg-muted-foreground/25",
+                  )} />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* pipeline + gates */}
+        <div className="bg-card/40 p-5">
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.pipeline[lang]}</span>
+          <div className="mt-4 flex items-center">
+            {STAGES.map((st, i) => {
+              const done = i < f.stage
+              const active = i === f.stage
+              return (
+                <div key={i} className="flex flex-1 items-center last:flex-none">
+                  <div className="flex flex-col items-center gap-2">
+                    <span className={cn(
+                      "flex h-7 w-7 items-center justify-center border font-mono text-[10px] transition-all duration-500",
+                      done ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400"
+                        : active ? "border-accent bg-accent/15 text-accent"
+                        : "border-border/50 text-muted-foreground/50",
+                    )}>
+                      {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
+                    </span>
+                    <span className={cn(
+                      "font-mono text-[9px] uppercase tracking-wider transition-colors duration-500",
+                      active ? "text-accent" : done ? "text-emerald-400/70" : "text-muted-foreground/50",
+                    )}>
+                      {st[lang]}
+                    </span>
+                  </div>
+                  {i < STAGES.length - 1 && (
+                    <div className="mx-1 mb-5 h-px flex-1 overflow-hidden bg-border/40">
+                      <div className={cn(
+                        "h-full bg-accent transition-all duration-700 ease-out",
+                        i < f.stage ? "w-full" : "w-0",
+                      )} />
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          <span className="mt-7 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.gates[lang]}</span>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {GATES.map((g, i) => {
+              const passed = i < f.gates
+              return (
+                <span
+                  key={i}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] transition-all duration-500",
+                    passed ? "border-emerald-500/40 bg-emerald-500/[0.07] text-emerald-300"
+                      : "border-border/50 bg-transparent text-muted-foreground/60",
+                  )}
+                >
+                  <span className={cn(
+                    "flex h-4 w-4 items-center justify-center rounded-full transition-colors duration-500",
+                    passed ? "bg-emerald-500/20 text-emerald-400" : "bg-muted-foreground/10 text-muted-foreground/50",
+                  )}>
+                    {passed ? <Check className="h-2.5 w-2.5" /> : <g.Icon className="h-2.5 w-2.5" />}
+                  </span>
+                  {g.label[lang]}
+                </span>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* console log line */}
+      <div className="flex items-center gap-2 border-t border-border/60 px-5 py-3">
+        <span className="font-mono text-xs text-accent">›</span>
+        <span key={frame} className="animate-[fadeIn_0.4s_ease] font-mono text-xs text-muted-foreground">
+          {f.log[lang]}
+        </span>
+        <span className="ml-0.5 inline-block h-3 w-1.5 bg-accent/70 animate-pulse" />
+      </div>
+    </div>
+  )
+}
+
 export function IoShowcase() {
   const { language } = useLanguage()
   const lang = (language === "en" ? "en" : "de") as Lang
 
   const sectionRef = useRef<HTMLElement>(null)
-  const [frame, setFrame] = useState(0)
-  const inView = useRef(false)
 
   // GSAP reveal
   useEffect(() => {
@@ -95,27 +256,6 @@ export function IoShowcase() {
     }, sectionRef)
     return () => ctx.revert()
   }, [])
-
-  // self-running loop, only while in view + motion allowed
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (reduce) { setFrame(FRAMES.length - 1); return }
-
-    let timer: ReturnType<typeof setInterval> | null = null
-    const start = () => { if (!timer) timer = setInterval(() => setFrame((f) => (f + 1) % FRAMES.length), 1700) }
-    const stop = () => { if (timer) { clearInterval(timer); timer = null } }
-
-    const io = new IntersectionObserver(
-      (es) => es.forEach((e) => { inView.current = e.isIntersecting; e.isIntersecting ? start() : stop() }),
-      { threshold: 0.25 },
-    )
-    io.observe(el)
-    return () => { stop(); io.disconnect() }
-  }, [])
-
-  const f = FRAMES[frame]
 
   return (
     <section
@@ -140,135 +280,8 @@ export function IoShowcase() {
       </div>
 
       {/* command-centre panel */}
-      <div className="io-reveal relative mx-auto max-w-4xl border border-border bg-card/60 backdrop-blur-sm">
-        {/* chrome */}
-        <div className="flex items-center gap-3 border-b border-border/60 px-5 py-3">
-          <span className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
-            <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
-            <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
-          </span>
-          <span className="font-mono text-[11px] tracking-widest text-muted-foreground">{T.chrome[lang]}</span>
-          <span className="ml-auto flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" /> {T.live[lang]}
-          </span>
-        </div>
-
-        <div className="grid gap-px bg-border/40 md:grid-cols-[1.1fr_1fr]">
-          {/* fleet */}
-          <div className="bg-card/40 p-5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.fleet[lang]}</span>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              {AGENTS.map((a, i) => {
-                const active = i === f.agent
-                return (
-                  <div
-                    key={a.name}
-                    className={cn(
-                      "relative flex items-center gap-3 border p-3 transition-all duration-500",
-                      active ? "border-accent/60 bg-accent/[0.07]" : "border-border/40 bg-transparent",
-                    )}
-                  >
-                    <span className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
-                      active ? "bg-accent/20 text-accent" : "bg-muted-foreground/10 text-muted-foreground",
-                    )}>
-                      <a.Icon className="h-4 w-4" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className={cn(
-                        "font-[var(--font-bebas)] text-xl leading-none tracking-tight transition-colors duration-500",
-                        active ? "text-accent" : "text-foreground",
-                      )}>
-                        {a.name}
-                      </div>
-                      <div className="mt-0.5 truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                        {a.role[lang]}
-                      </div>
-                    </div>
-                    <span className={cn(
-                      "absolute right-2 top-2 h-1.5 w-1.5 rounded-full transition-all duration-500",
-                      active ? "bg-accent animate-pulse" : "bg-muted-foreground/25",
-                    )} />
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* pipeline + gates */}
-          <div className="bg-card/40 p-5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.pipeline[lang]}</span>
-            <div className="mt-4 flex items-center">
-              {STAGES.map((st, i) => {
-                const done = i < f.stage
-                const active = i === f.stage
-                return (
-                  <div key={i} className="flex flex-1 items-center last:flex-none">
-                    <div className="flex flex-col items-center gap-2">
-                      <span className={cn(
-                        "flex h-7 w-7 items-center justify-center border font-mono text-[10px] transition-all duration-500",
-                        done ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400"
-                          : active ? "border-accent bg-accent/15 text-accent"
-                          : "border-border/50 text-muted-foreground/50",
-                      )}>
-                        {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
-                      </span>
-                      <span className={cn(
-                        "font-mono text-[9px] uppercase tracking-wider transition-colors duration-500",
-                        active ? "text-accent" : done ? "text-emerald-400/70" : "text-muted-foreground/50",
-                      )}>
-                        {st[lang]}
-                      </span>
-                    </div>
-                    {i < STAGES.length - 1 && (
-                      <div className="mx-1 mb-5 h-px flex-1 overflow-hidden bg-border/40">
-                        <div className={cn(
-                          "h-full bg-accent transition-all duration-700 ease-out",
-                          i < f.stage ? "w-full" : "w-0",
-                        )} />
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-
-            <span className="mt-7 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.gates[lang]}</span>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {GATES.map((g, i) => {
-                const passed = i < f.gates
-                return (
-                  <span
-                    key={i}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] transition-all duration-500",
-                      passed ? "border-emerald-500/40 bg-emerald-500/[0.07] text-emerald-300"
-                        : "border-border/50 bg-transparent text-muted-foreground/60",
-                    )}
-                  >
-                    <span className={cn(
-                      "flex h-4 w-4 items-center justify-center rounded-full transition-colors duration-500",
-                      passed ? "bg-emerald-500/20 text-emerald-400" : "bg-muted-foreground/10 text-muted-foreground/50",
-                    )}>
-                      {passed ? <Check className="h-2.5 w-2.5" /> : <g.Icon className="h-2.5 w-2.5" />}
-                    </span>
-                    {g.label[lang]}
-                  </span>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* console log line */}
-        <div className="flex items-center gap-2 border-t border-border/60 px-5 py-3">
-          <span className="font-mono text-xs text-accent">›</span>
-          <span key={frame} className="animate-[fadeIn_0.4s_ease] font-mono text-xs text-muted-foreground">
-            {f.log[lang]}
-          </span>
-          <span className="ml-0.5 inline-block h-3 w-1.5 bg-accent/70 animate-pulse" />
-        </div>
+      <div className="io-reveal mx-auto max-w-4xl">
+        <IoPanel />
       </div>
 
       {/* footer + cta */}

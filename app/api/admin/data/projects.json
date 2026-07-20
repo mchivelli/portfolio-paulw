@@ -11,9 +11,23 @@
       "de": "Ein End-to-End-Betriebssystem für eine KFZ-Werkstatt: mehrsprachige Kundenseite, Online-Terminbuchung, volles CRM, RKSV-konforme Kassa und eine Mechaniker-Tablet-App — mit einer KI-Schicht, die wirklich arbeitet. Der Admin-Assistent ruft ~26 echte Datenbank-Tools auf, hat persistentes Gedächtnis, eskaliert destruktive Aktionen hinter einer PIN und ist gegen Prompt-Injection abgesichert. GPT-4o-Vision liest den Zulassungsschein per Kamera, Whisper transkribiert den Mechaniker an der Hebebühne, und ein RAG-Chatbot beantwortet Preisfragen über Web und WhatsApp."
     },
     "tech": ["Next.js 15", "TypeScript", "Drizzle / SQLite", "LLM Tool-Calling", "n8n", "Qdrant", "GPT-4o Vision", "Whisper"],
-    "image": "/img/mockup-kfz.png",
+    "image": "/img/kfz-admin-desktop.jpg",
     "url": "#",
     "liveUrl": "https://kfz-bozo.at",
+    "devices": {
+      "laptop": "/img/kfz-admin-desktop.jpg",
+      "tablet": "/img/kfz-preise-tablet.jpg",
+      "phone": "/img/kfz-book-mobile.jpg"
+    },
+    "gallery": [
+      { "src": "/img/kfz-bot-meister.jpg", "caption": { "en": "Bot-Meister — the tool-calling assistant at work", "de": "Bot-Meister — der Tool-callende Assistent im Einsatz" } },
+      { "src": "/img/kfz-book-desktop.jpg", "caption": { "en": "Online booking wizard", "de": "Online-Buchungs-Wizard" } }
+    ],
+    "stats": [
+      { "value": "793", "label": { "en": "tests green", "de": "Tests grün" } },
+      { "value": "~26", "label": { "en": "AI tools", "de": "KI-Tools" } },
+      { "value": "9", "label": { "en": "languages", "de": "Sprachen" } }
+    ],
     "features": {
       "en": [
         "Tool-calling AI assistant (~26 database tools)",
@@ -55,6 +69,16 @@
     "image": "/img/mockup-guw.png",
     "url": "#",
     "liveUrl": "https://onboarding.steuerservice.at",
+    "devices": {
+      "laptop": "/img/onboto-admin-desktop.jpg",
+      "tablet": "/img/onboto-login-desktop.jpg",
+      "phone": "/img/onboto-login-mobile.jpg"
+    },
+    "stats": [
+      { "value": "~600", "label": { "en": "audit tests", "de": "Audit-Tests" } },
+      { "value": "4", "label": { "en": "live integrations", "de": "Live-Integrationen" } },
+      { "value": "QES", "label": { "en": "legally binding", "de": "rechtsgültig signiert" } }
+    ],
     "features": {
       "en": [
         "Live in production: onboarding.steuerservice.at",
@@ -81,8 +105,7 @@
     },
     "medium": { "en": "Client Project · SaaS", "de": "Kundenprojekt · SaaS" },
     "span": "col-span-2 row-span-1",
-    "featured": true,
-    "mockup": true
+    "featured": true
   },
   {
     "id": 3,
@@ -98,6 +121,10 @@
     "tech": ["Flutter", "Supabase", "PostgreSQL"],
     "image": "/img/mockup-kiga.png",
     "url": "#",
+    "stats": [
+      { "value": "1", "label": { "en": "kindergarten live", "de": "Kindergarten live" } },
+      { "value": "iOS + Android", "label": { "en": "one codebase", "de": "eine Codebase" } }
+    ],
     "features": {
       "en": [
         "Attendance overview per group",
@@ -129,8 +156,12 @@
       "de": "Eine Recruiting- und Mitarbeiter-Onboarding-Plattform: ein Bewerber-Wizard mit verschlüsselten Doku-Uploads, ein Persönlichkeitstest und automatisch zugewiesene, serverseitig benotete Fachtests (IQ/Logik, Teams, Outlook, BMD für Buchhalter), Interview-Terminierung mit Kalendereinladungen und eine Onboarding-Checklisten-Engine für Phase 2. KI liest den Lebenslauf zu einem Prefill-Vorschlag — nie zu einer Auto-Bewertung — und ist gegen PII-Abfluss abgesichert."
     },
     "tech": ["React 19", "Node.js / Express", "PostgreSQL", "AES-256-GCM", "Claude (CV parse)"],
-    "image": "/img/mockup-stepin.png",
+    "image": "",
     "url": "#",
+    "stats": [
+      { "value": "AES-256", "label": { "en": "encrypted uploads", "de": "verschlüsselte Uploads" } },
+      { "value": "4", "label": { "en": "graded test types", "de": "benotete Testarten" } }
+    ],
     "features": {
       "en": [
         "Applicant wizard + encrypted document uploads",
@@ -163,8 +194,12 @@
       "de": "Eine Retrieval-Augmented-Generation-Pipeline über den Wissenskorpus einer Kanzlei (Fachliteratur, Seminarunterlagen): Multi-Format-Extraktion (PDF/DOCX/PPTX/XLSX/Outlook/OCR), jahr-bewusste Metadaten und Dedup, layout-bewusstes Chunking, hybride BM25/Cosine-Retrieval und eine extraktive, quellenzitierende Antwort — oder eine ehrliche Absage, wenn nichts relevant ist. Auf echten Korpus-Dokumenten mit 100% Recall und Citation evaluiert."
     },
     "tech": ["Python", "Sentence-Transformers", "BM25", "Azure AI Search", "Azure OpenAI"],
-    "image": "/img/mockup-rag.png",
+    "image": "",
     "url": "#",
+    "stats": [
+      { "value": "100%", "label": { "en": "recall on eval set", "de": "Recall im Eval-Set" } },
+      { "value": "6", "label": { "en": "source formats", "de": "Quellformate" } }
+    ],
     "features": {
       "en": [
         "Multi-format extraction incl. OCR + Outlook",
@@ -199,6 +234,11 @@
     "tech": ["Claude Code", "Node.js", "Dynamic Workflows", "Git Worktrees", "GitNexus", "Docker"],
     "image": "",
     "url": "#",
+    "stats": [
+      { "value": "4", "label": { "en": "agents in the team", "de": "Agenten im Team" } },
+      { "value": "4", "label": { "en": "gates per build", "de": "Gates pro Build" } },
+      { "value": "0", "label": { "en": "secrets committed", "de": "Secrets committed" } }
+    ],
     "features": {
       "en": [
         "Coordinator + specialised agents (Plan → Build → Review → Ship)",
@@ -219,6 +259,7 @@
     },
     "medium": { "en": "R&D · Agent Infra", "de": "Eigenlabor · Agenten-Infra" },
     "span": "col-span-2 md:col-span-4 row-span-1",
-    "featured": true
+    "featured": true,
+    "visual": "io-panel"
   }
 ]

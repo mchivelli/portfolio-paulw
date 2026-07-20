@@ -15,6 +15,14 @@ export interface Project {
     span?: string;
     featured?: boolean;
     mockup?: boolean;
+    /** Real product screenshots rendered in laptop/tablet/phone frames */
+    devices?: { laptop: string; tablet: string; phone: string };
+    /** Captioned screenshot gallery */
+    gallery?: { src: string; caption: { [key: string]: string } }[];
+    /** Headline numbers shown as a stat band */
+    stats?: { value: string; label: { [key: string]: string } }[];
+    /** Named code-rendered visual when no screenshot exists (e.g. "io-panel") */
+    visual?: string;
 }
 
 export const projects: Project[] = projectsData as Project[];
