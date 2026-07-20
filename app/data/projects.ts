@@ -15,8 +15,8 @@ export interface Project {
     span?: string;
     featured?: boolean;
     mockup?: boolean;
-    /** Real product screenshots rendered in laptop/tablet/phone frames */
-    devices?: { laptop: string; tablet: string; phone: string };
+    /** Real product screenshots rendered in laptop/tablet/phone frames (tablet + phone optional) */
+    devices?: { laptop: string; tablet?: string; phone?: string };
     /** Captioned screenshot gallery */
     gallery?: { src: string; caption: { [key: string]: string } }[];
     /** Headline numbers shown as a stat band */

@@ -233,18 +233,23 @@ export function CaseStudy({ project }: { project: Project }) {
 
 /* ---------- device frames (sharp-cornered, matching the homepage) ---------- */
 
-function DeviceTrio({ images }: { images: { laptop: string; tablet: string; phone: string } }) {
+function DeviceTrio({ images }: { images: { laptop: string; tablet?: string; phone?: string } }) {
+  const hasTablet = !!images.tablet
   return (
     <div className="relative mx-auto aspect-[16/9] w-full max-w-4xl">
-      <div className="absolute left-0 top-[18%] w-[26%] -rotate-[6deg]">
-        <Tablet src={images.tablet} />
-      </div>
-      <div className="absolute right-0 top-0 w-[74%]">
+      {hasTablet && (
+        <div className="absolute left-0 top-[18%] w-[26%] -rotate-[6deg]">
+          <Tablet src={images.tablet!} />
+        </div>
+      )}
+      <div className={cn("absolute top-0", hasTablet ? "right-0 w-[74%]" : "left-1/2 w-[84%] -translate-x-1/2")}>
         <Laptop src={images.laptop} />
       </div>
-      <div className="absolute -bottom-2 right-[6%] w-[14%] rotate-[4deg]">
-        <Phone src={images.phone} />
-      </div>
+      {images.phone && (
+        <div className={cn("absolute -bottom-2 w-[14%] rotate-[4deg]", hasTablet ? "right-[6%]" : "right-0")}>
+          <Phone src={images.phone} />
+        </div>
+      )}
     </div>
   )
 }

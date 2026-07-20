@@ -119,8 +119,13 @@
       "de": "Eine Betriebs-App für einen kommunalen Kindergarten — Anwesenheits-Tracking, Gruppen- und Personalübersicht, Aktivitäten und Eltern-Nachrichten in einer ruhigen Oberfläche. Als plattformübergreifende App auf einem managed Postgres-Backend gebaut."
     },
     "tech": ["Flutter", "Supabase", "PostgreSQL"],
-    "image": "/img/mockup-kiga.png",
+    "image": "/img/kiga-login-desktop.jpg",
     "url": "#",
+    "liveUrl": "https://kiga.paulwallner.me",
+    "devices": {
+      "laptop": "/img/kiga-login-desktop.jpg",
+      "phone": "/img/kiga-login-mobile.jpg"
+    },
     "stats": [
       { "value": "1", "label": { "en": "kindergarten live", "de": "Kindergarten live" } },
       { "value": "iOS + Android", "label": { "en": "one codebase", "de": "eine Codebase" } }
@@ -141,8 +146,7 @@
     },
     "medium": { "en": "Mobile · Ops", "de": "Mobile · Betrieb" },
     "span": "col-span-1 row-span-1",
-    "featured": true,
-    "mockup": true
+    "featured": true
   },
   {
     "id": 4,
@@ -156,8 +160,16 @@
       "de": "Eine Recruiting- und Mitarbeiter-Onboarding-Plattform: ein Bewerber-Wizard mit verschlüsselten Doku-Uploads, ein Persönlichkeitstest und automatisch zugewiesene, serverseitig benotete Fachtests (IQ/Logik, Teams, Outlook, BMD für Buchhalter), Interview-Terminierung mit Kalendereinladungen und eine Onboarding-Checklisten-Engine für Phase 2. KI liest den Lebenslauf zu einem Prefill-Vorschlag — nie zu einer Auto-Bewertung — und ist gegen PII-Abfluss abgesichert."
     },
     "tech": ["React 19", "Node.js / Express", "PostgreSQL", "AES-256-GCM", "Claude (CV parse)"],
-    "image": "",
+    "image": "/img/stepin-hero-desktop.jpg",
     "url": "#",
+    "liveUrl": "https://join.paulwallner.me",
+    "devices": {
+      "laptop": "/img/stepin-hero-desktop.jpg",
+      "phone": "/img/stepin-mobile.jpg"
+    },
+    "gallery": [
+      { "src": "/img/stepin-positionen.jpg", "caption": { "en": "Open positions — the application and its tests adapt to the role", "de": "Offene Positionen — Bewerbung und Tests passen sich der Rolle an" } }
+    ],
     "stats": [
       { "value": "AES-256", "label": { "en": "encrypted uploads", "de": "verschlüsselte Uploads" } },
       { "value": "4", "label": { "en": "graded test types", "de": "benotete Testarten" } }
