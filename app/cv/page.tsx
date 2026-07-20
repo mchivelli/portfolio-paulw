@@ -15,8 +15,8 @@ const T: Record<string, Loc> = {
   download: { de: "Als PDF herunterladen", en: "Download as PDF" },
   role: { de: "Individualsoftware & KI-Agenten für KMU", en: "Custom Software & AI Agents for SMBs" },
   summary: {
-    de: "Entwickler mit produktiv laufenden Systemen: ein Werkstatt-CRM mit echtem Tool-callendem KI-Assistenten und eine zum White-Label-Produkt entkoppelte Kanzlei-Plattform. Ich baue Individualsoftware und KI-Automatisierung, die im Dauerbetrieb hält.",
-    en: "Developer with systems live in production: a workshop CRM with a real tool-calling AI assistant, and a tax-firm platform decoupled into a white-label product. I build custom software and AI automation that holds up in daily operation.",
+    de: "Entwickler mit produktiv laufenden Systemen: ein Werkstatt-CRM mit echtem Tool-callendem KI-Assistenten und eine live betriebene Mandanten-Plattform für eine Wiener Steuerkanzlei. Daneben ein Open-Source-Mod mit über 340.000 Downloads. Ich baue Individualsoftware und KI-Automatisierung, die im Dauerbetrieb hält.",
+    en: "Developer with systems live in production: a workshop CRM with a real tool-calling AI assistant, and a client-onboarding platform running live for a Vienna tax firm. Alongside that, an open-source mod downloaded over 340,000 times. I build custom software and AI automation that holds up in daily operation.",
   },
   experience: { de: "Erfahrung", en: "Experience" },
   projects: { de: "Ausgewählte Projekte", en: "Selected Projects" },
@@ -34,7 +34,7 @@ const T: Record<string, Loc> = {
 }
 
 const HIGHLIGHTS: { v: Loc; l: Loc }[] = [
-  { v: { de: "2+", en: "2+" }, l: { de: "Produktiv-Systeme", en: "production systems" } },
+  { v: { de: "4+", en: "4+" }, l: { de: "Produktiv-Systeme", en: "production systems" } },
   { v: { de: "800+", en: "800+" }, l: { de: "automatisierte Tests", en: "automated tests" } },
   { v: { de: "Agentic", en: "Agentic" }, l: { de: "KI mit Tool-Calling", en: "AI, tool-calling" } },
   { v: { de: "Wien → DACH", en: "Vienna → DACH" }, l: { de: "Zielmarkt", en: "target market" } },
