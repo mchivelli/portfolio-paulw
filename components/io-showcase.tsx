@@ -136,17 +136,17 @@ export function IoPanel() {
               <div
                 key={a.name}
                 className={cn(
-                  "flex flex-col items-center gap-2 border px-2 py-3 transition-all duration-500",
+                  "flex items-center gap-3 border px-3 py-3 transition-all duration-500",
                   active ? "border-accent/60 bg-accent/[0.08] shadow-[0_0_30px_-12px] shadow-accent/70" : "border-border/40",
                 )}
               >
                 <span className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-500",
+                  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
                   active ? "bg-accent/20 text-accent" : "bg-muted-foreground/10 text-muted-foreground",
                 )}>
                   <a.Icon className="h-4 w-4" />
                 </span>
-                <div className="text-center">
+                <div className="min-w-0">
                   <div className={cn(
                     "font-[var(--font-bebas)] text-lg leading-none tracking-tight transition-colors duration-500 md:text-xl",
                     active ? "text-accent" : "text-foreground",
@@ -226,14 +226,14 @@ export function IoPanel() {
         <span className="relative mt-8 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {T.gates[lang]}
         </span>
-        <div className="relative mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="relative mt-3 flex flex-wrap gap-2">
           {GATES.map((g, i) => {
             const passed = i < f.gates
             return (
               <span
                 key={i}
                 className={cn(
-                  "inline-flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[11px] transition-all duration-500",
+                  "inline-flex items-center gap-1.5 border px-3 py-1.5 font-mono text-[11px] transition-all duration-500",
                   passed ? "border-emerald-500/40 bg-emerald-500/[0.08] text-emerald-300"
                     : "border-border/50 text-muted-foreground/50",
                 )}
