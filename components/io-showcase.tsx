@@ -120,110 +120,134 @@ export function IoPanel() {
         </span>
       </div>
 
-      <div className="grid gap-px bg-border/40 md:grid-cols-[1.1fr_1fr]">
-        {/* fleet */}
-        <div className="bg-card/40 p-5">
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.fleet[lang]}</span>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {AGENTS.map((a, i) => {
-              const active = i === f.agent
-              return (
-                <div
-                  key={a.name}
-                  className={cn(
-                    "relative flex items-center gap-3 border p-3 transition-all duration-500",
-                    active ? "border-accent/60 bg-accent/[0.07]" : "border-border/40 bg-transparent",
-                  )}
-                >
-                  <span className={cn(
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
-                    active ? "bg-accent/20 text-accent" : "bg-muted-foreground/10 text-muted-foreground",
+      {/* ---- schematic: fleet -> routed trace -> delivery rail -> gates ---- */}
+      <div className="relative bg-[#0a0a0c] px-5 pb-7 pt-6 md:px-8">
+        {/* blueprint texture */}
+        <div className="grid-bg pointer-events-none absolute inset-0 opacity-[0.10]" aria-hidden="true" />
+
+        {/* agent fleet */}
+        <span className="relative block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+          {T.fleet[lang]}
+        </span>
+        <div className="relative mt-4 grid grid-cols-4 gap-2 md:gap-4">
+          {AGENTS.map((a, i) => {
+            const active = i === f.agent
+            return (
+              <div
+                key={a.name}
+                className={cn(
+                  "flex flex-col items-center gap-2 border px-2 py-3 transition-all duration-500",
+                  active ? "border-accent/60 bg-accent/[0.08] shadow-[0_0_30px_-12px] shadow-accent/70" : "border-border/40",
+                )}
+              >
+                <span className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-500",
+                  active ? "bg-accent/20 text-accent" : "bg-muted-foreground/10 text-muted-foreground",
+                )}>
+                  <a.Icon className="h-4 w-4" />
+                </span>
+                <div className="text-center">
+                  <div className={cn(
+                    "font-[var(--font-bebas)] text-lg leading-none tracking-tight transition-colors duration-500 md:text-xl",
+                    active ? "text-accent" : "text-foreground",
                   )}>
-                    <a.Icon className="h-4 w-4" />
-                  </span>
-                  <div className="min-w-0">
-                    <div className={cn(
-                      "font-[var(--font-bebas)] text-xl leading-none tracking-tight transition-colors duration-500",
-                      active ? "text-accent" : "text-foreground",
-                    )}>
-                      {a.name}
-                    </div>
-                    <div className="mt-0.5 truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                      {a.role[lang]}
-                    </div>
+                    {a.name}
                   </div>
+                  <div className="mt-0.5 font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                    {a.role[lang]}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* routed trace: which agent is currently driving which stage */}
+        <svg
+          className="relative mt-1 h-12 w-full overflow-visible text-accent"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d={`M ${12.5 + f.agent * 25} 0 L ${12.5 + f.agent * 25} 34 L ${12.5 + f.stage * 25} 66 L ${12.5 + f.stage * 25} 100`}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.25}
+            strokeDasharray="3 3"
+            vectorEffect="non-scaling-stroke"
+            className="opacity-70 transition-all duration-700 ease-out"
+          />
+        </svg>
+
+        {/* delivery rail */}
+        <span className="relative block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+          {T.pipeline[lang]}
+        </span>
+        <div className="relative mt-4">
+          {/* base rail + progress + travelling pulse */}
+          <div className="absolute left-[12.5%] right-[12.5%] top-[15px] h-px bg-border/60" />
+          <div
+            className="absolute top-[15px] h-px bg-accent transition-all duration-700 ease-out"
+            style={{ left: "12.5%", width: `${f.stage * 25}%` }}
+          />
+          <div
+            className="absolute top-[11px] h-2 w-2 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_14px_3px] shadow-accent/60 transition-all duration-700 ease-out"
+            style={{ left: `${12.5 + f.stage * 25}%` }}
+          />
+
+          <div className="relative grid grid-cols-4">
+            {STAGES.map((st, i) => {
+              const done = i < f.stage
+              const active = i === f.stage
+              return (
+                <div key={i} className="flex flex-col items-center gap-2">
                   <span className={cn(
-                    "absolute right-2 top-2 h-1.5 w-1.5 rounded-full transition-all duration-500",
-                    active ? "bg-accent animate-pulse" : "bg-muted-foreground/25",
-                  )} />
+                    "relative z-10 flex h-8 w-8 items-center justify-center border bg-[#0a0a0c] font-mono text-[11px] transition-all duration-500",
+                    done ? "border-emerald-500/60 text-emerald-400"
+                      : active ? "border-accent text-accent shadow-[0_0_24px_-6px] shadow-accent/80"
+                      : "border-border/50 text-muted-foreground/50",
+                  )}>
+                    {done ? <Check className="h-4 w-4" /> : i + 1}
+                  </span>
+                  <span className={cn(
+                    "font-mono text-[9px] uppercase tracking-wider transition-colors duration-500",
+                    active ? "text-accent" : done ? "text-emerald-400/70" : "text-muted-foreground/50",
+                  )}>
+                    {st[lang]}
+                  </span>
                 </div>
               )
             })}
           </div>
         </div>
 
-        {/* pipeline + gates */}
-        <div className="bg-card/40 p-5">
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.pipeline[lang]}</span>
-          <div className="mt-4 flex items-center">
-            {STAGES.map((st, i) => {
-              const done = i < f.stage
-              const active = i === f.stage
-              return (
-                <div key={i} className="flex flex-1 items-center last:flex-none">
-                  <div className="flex flex-col items-center gap-2">
-                    <span className={cn(
-                      "flex h-7 w-7 items-center justify-center border font-mono text-[10px] transition-all duration-500",
-                      done ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400"
-                        : active ? "border-accent bg-accent/15 text-accent"
-                        : "border-border/50 text-muted-foreground/50",
-                    )}>
-                      {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
-                    </span>
-                    <span className={cn(
-                      "font-mono text-[9px] uppercase tracking-wider transition-colors duration-500",
-                      active ? "text-accent" : done ? "text-emerald-400/70" : "text-muted-foreground/50",
-                    )}>
-                      {st[lang]}
-                    </span>
-                  </div>
-                  {i < STAGES.length - 1 && (
-                    <div className="mx-1 mb-5 h-px flex-1 overflow-hidden bg-border/40">
-                      <div className={cn(
-                        "h-full bg-accent transition-all duration-700 ease-out",
-                        i < f.stage ? "w-full" : "w-0",
-                      )} />
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-
-          <span className="mt-7 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">{T.gates[lang]}</span>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {GATES.map((g, i) => {
-              const passed = i < f.gates
-              return (
-                <span
-                  key={i}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] transition-all duration-500",
-                    passed ? "border-emerald-500/40 bg-emerald-500/[0.07] text-emerald-300"
-                      : "border-border/50 bg-transparent text-muted-foreground/60",
-                  )}
-                >
-                  <span className={cn(
-                    "flex h-4 w-4 items-center justify-center rounded-full transition-colors duration-500",
-                    passed ? "bg-emerald-500/20 text-emerald-400" : "bg-muted-foreground/10 text-muted-foreground/50",
-                  )}>
-                    {passed ? <Check className="h-2.5 w-2.5" /> : <g.Icon className="h-2.5 w-2.5" />}
-                  </span>
-                  {g.label[lang]}
+        {/* quality gates */}
+        <span className="relative mt-8 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+          {T.gates[lang]}
+        </span>
+        <div className="relative mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {GATES.map((g, i) => {
+            const passed = i < f.gates
+            return (
+              <span
+                key={i}
+                className={cn(
+                  "inline-flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[11px] transition-all duration-500",
+                  passed ? "border-emerald-500/40 bg-emerald-500/[0.08] text-emerald-300"
+                    : "border-border/50 text-muted-foreground/50",
+                )}
+              >
+                <span className={cn(
+                  "flex h-4 w-4 items-center justify-center rounded-full transition-colors duration-500",
+                  passed ? "bg-emerald-500/20 text-emerald-400" : "bg-muted-foreground/10 text-muted-foreground/50",
+                )}>
+                  {passed ? <Check className="h-2.5 w-2.5" /> : <g.Icon className="h-2.5 w-2.5" />}
                 </span>
-              )
-            })}
-          </div>
+                {g.label[lang]}
+              </span>
+            )
+          })}
         </div>
       </div>
 
@@ -261,31 +285,32 @@ export function IoShowcase() {
     <section
       ref={sectionRef}
       id="io"
-      className="relative overflow-hidden border-t border-border/30 py-32 pl-6 pr-6 md:pl-28 md:pr-12"
+      className="relative overflow-hidden border-t border-border/30 py-24 pl-6 pr-6 md:pl-28 md:pr-12"
     >
       <div className="pointer-events-none absolute -top-32 left-1/3 h-[34rem] w-[34rem] rounded-full bg-accent/10 blur-[130px]" />
 
-      {/* header */}
-      <div className="io-reveal mb-14 max-w-3xl">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">{T.label[lang]}</span>
-        <h2 className="mt-4 whitespace-pre-line font-[var(--font-bebas)] text-5xl leading-[0.85] tracking-tight md:text-7xl">
-          {T.title[lang]}
-        </h2>
-        <p className="mt-6 max-w-xl font-mono text-sm leading-relaxed text-muted-foreground">{T.sub[lang]}</p>
+      {/* header row: claim left, numbers right — a control-room masthead */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <span className="io-reveal block font-mono text-[10px] uppercase tracking-[0.3em] text-accent">{T.label[lang]}</span>
+          <h2 className="io-reveal mt-4 whitespace-pre-line font-[var(--font-bebas)] text-5xl leading-[0.85] tracking-tight md:text-7xl">
+            {T.title[lang]}
+          </h2>
+          <p className="io-reveal mt-6 max-w-xl font-mono text-sm leading-relaxed text-muted-foreground">{T.sub[lang]}</p>
+        </div>
+
+        <div className="io-reveal grid grid-cols-2 gap-3 sm:grid-cols-4 lg:w-[36rem]">
+          {STATS.map((s, i) => <StatCard key={i} s={s} lang={lang} />)}
+        </div>
       </div>
 
-      {/* stat band */}
-      <div className="io-reveal mb-12 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
-        {STATS.map((s, i) => <StatCard key={i} s={s} lang={lang} />)}
-      </div>
-
-      {/* command-centre panel */}
-      <div className="io-reveal mx-auto max-w-4xl">
+      {/* full-width schematic */}
+      <div className="io-reveal mt-12">
         <IoPanel />
       </div>
 
       {/* footer + cta */}
-      <div className="io-reveal mx-auto mt-6 flex max-w-4xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="io-reveal mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-xl font-mono text-[10px] leading-relaxed text-muted-foreground/50">{T.foot[lang]}</p>
         <Link
           href="/work/6"

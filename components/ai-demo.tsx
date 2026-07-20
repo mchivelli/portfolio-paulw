@@ -82,10 +82,9 @@ const SCRIPTS: Script[] = [
 const CHIP_ICON: Record<string, typeof Wrench> = { parts: Wrench, booking: CalendarClock, revenue: Euro }
 
 const STATS: { v: number; prefix?: string; suffix?: string; fill: number; label: Loc }[] = [
+  { v: 26, prefix: "~", fill: 0.82, label: { de: "echte Tools", en: "real tools" } },
   { v: 793, fill: 0.96, label: { de: "Tests grün", en: "tests green" } },
-  { v: 26, prefix: "~", fill: 0.72, label: { de: "KI-Tools", en: "AI tools" } },
   { v: 9, fill: 0.6, label: { de: "Sprachen", en: "languages" } },
-  { v: 600, prefix: "~", fill: 0.86, label: { de: "Audit-Tests", en: "audit tests" } },
 ]
 
 type Msg =
@@ -107,6 +106,7 @@ const T = {
   demo: { de: "DEMO", en: "DEMO" },
   placeholder: { de: "Frag nach Teilen, Terminen, Umsatz…", en: "Ask about parts, slots, revenue…" },
   calling: { de: "Tool wird ausgeführt", en: "Calling tool" },
+  boot: { de: "Sitzung wird aufgebaut", en: "Opening session" },
   pinTitle: { de: "Sensible Aktion — PIN erforderlich", en: "Sensitive action — PIN required" },
   pinConfirm: { de: "Bestätigen", en: "Confirm" },
   pinApproved: { de: "PIN bestätigt", en: "PIN confirmed" },
@@ -200,6 +200,31 @@ export function AiDemo() {
     await finish(s)
   }, [finish])
 
+  // Autoplay: on first scroll-in the agent starts working by itself, so a
+  // passing visitor sees the point of the section without clicking anything.
+  const autoPlayed = useRef(false)
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting || autoPlayed.current) return
+          autoPlayed.current = true
+          io.disconnect()
+          if (reduce) return
+          setTimeout(() => {
+            if (alive.current && !running.current) run(SCRIPTS[0])
+          }, 850)
+        })
+      },
+      { threshold: 0.3 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [run])
+
   const submitFree = useCallback((raw: string) => {
     const q = raw.trim().toLowerCase()
     if (!q || busy) return
@@ -224,28 +249,42 @@ export function AiDemo() {
     <section
       ref={sectionRef}
       id="demo"
-      className="relative py-32 pl-6 md:pl-28 pr-6 md:pr-12 border-t border-border/30 overflow-hidden"
+      className="relative overflow-hidden border-t border-border/30 py-24 pl-6 pr-6 md:pl-28 md:pr-12"
     >
       {/* ambient accent glow */}
       <div className="pointer-events-none absolute -top-40 right-0 h-[36rem] w-[36rem] rounded-full bg-accent/10 blur-[120px]" />
 
-      <div className="ai-reveal mb-14 max-w-3xl">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">{T.label[lang]}</span>
-        <h2 className="mt-4 font-[var(--font-bebas)] text-5xl md:text-7xl leading-[0.9] tracking-tight">
-          {T.title[lang]}
-        </h2>
-        <p className="mt-6 font-mono text-sm text-muted-foreground leading-relaxed max-w-xl">{T.sub[lang]}</p>
-      </div>
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,23rem)_1fr] lg:gap-16">
+        {/* ---- left rail: the claim ---- */}
+        <div>
+          <span className="ai-reveal block font-mono text-[10px] uppercase tracking-[0.3em] text-accent">{T.label[lang]}</span>
+          <h2 className="ai-reveal mt-4 font-[var(--font-bebas)] text-5xl leading-[0.88] tracking-tight md:text-7xl">
+            {T.title[lang]}
+          </h2>
+          <p className="ai-reveal mt-6 font-mono text-sm leading-relaxed text-muted-foreground">{T.sub[lang]}</p>
 
-      <div className="ai-reveal mb-12 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
-        {STATS.map((s, i) => (
-          <StatCard key={i} s={s} lang={lang} />
-        ))}
-      </div>
+          <div className="ai-reveal mt-10 grid grid-cols-3 gap-3">
+            {STATS.map((s, i) => (
+              <StatCard key={i} s={s} lang={lang} />
+            ))}
+          </div>
 
-      <div className="ai-reveal relative mx-auto max-w-3xl border border-border bg-card/60 backdrop-blur-sm">
+          <p className="ai-reveal mt-8 font-mono text-[10px] leading-relaxed text-muted-foreground/50">
+            {T.disclaimer[lang]}
+          </p>
+        </div>
+
+        {/* ---- right: the live session ---- */}
+        <div className="ai-reveal relative">
+          {/* glow bleeding out from behind the panel */}
+          <div className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-accent/[0.07] blur-3xl" />
+
+          <div className="relative border border-border/80 bg-[#09090b] shadow-[0_50px_140px_-50px_rgba(0,0,0,0.95)]">
+            {/* screen texture + top highlight so it reads as a display, not a div */}
+            <div className="grid-bg pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/25 to-transparent" />
         {/* window chrome */}
-        <div className="flex items-center gap-3 border-b border-border/60 px-5 py-3">
+        <div className="relative flex items-center gap-3 border-b border-border/60 px-5 py-3">
           <span className="flex gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
             <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/30" />
@@ -258,7 +297,7 @@ export function AiDemo() {
         </div>
 
         {/* transcript */}
-        <div ref={scrollRef} className="h-[380px] overflow-y-auto px-5 py-6 space-y-4 scrollbar-hide" style={{ scrollbarWidth: "none" }}>
+        <div ref={scrollRef} className="relative h-[380px] space-y-4 overflow-y-auto px-5 py-6 scrollbar-hide lg:h-[440px]" style={{ scrollbarWidth: "none" }}>
           <AnimatePresence initial={false}>
             {msgs.map((m, i) => (
               <motion.div
@@ -335,15 +374,22 @@ export function AiDemo() {
           </AnimatePresence>
 
           {msgs.length === 0 && (
-            <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-              <ShieldCheck className="h-6 w-6 text-accent/50" />
-              <p className="max-w-xs font-mono text-xs text-muted-foreground/70">{T.sub[lang]}</p>
+            <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+              <ShieldCheck className="h-5 w-5 text-accent/40" />
+              <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground/50">
+                {T.boot[lang]}
+                <span className="flex gap-1">
+                  <span className="h-1 w-1 rounded-full bg-accent/70 animate-pulse" />
+                  <span className="h-1 w-1 rounded-full bg-accent/70 animate-pulse [animation-delay:200ms]" />
+                  <span className="h-1 w-1 rounded-full bg-accent/70 animate-pulse [animation-delay:400ms]" />
+                </span>
+              </p>
             </div>
           )}
         </div>
 
         {/* suggestion chips */}
-        <div className="flex flex-wrap gap-2 border-t border-border/60 px-5 pt-4">
+        <div className="relative flex flex-wrap gap-2 border-t border-border/60 px-5 pt-4">
           {SCRIPTS.map((s) => {
             const Icon = CHIP_ICON[s.id]
             return (
@@ -365,7 +411,7 @@ export function AiDemo() {
         {/* input */}
         <form
           onSubmit={(e) => { e.preventDefault(); submitFree(input) }}
-          className="flex items-center gap-3 px-5 py-4"
+          className="relative flex items-center gap-3 px-5 py-4"
         >
           <CornerDownLeft className="h-4 w-4 shrink-0 text-muted-foreground/40" />
           <input
@@ -382,12 +428,10 @@ export function AiDemo() {
           >
             <Send className="h-3.5 w-3.5" />
           </button>
-        </form>
+            </form>
+          </div>
+        </div>
       </div>
-
-      <p className="ai-reveal mx-auto mt-4 max-w-3xl font-mono text-[10px] leading-relaxed text-muted-foreground/50">
-        {T.disclaimer[lang]}
-      </p>
     </section>
   )
 }
