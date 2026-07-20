@@ -20,7 +20,7 @@ interface ShowcaseProps {
   sub?: Loc
   tech?: string[]
   href?: string
-  images?: { laptop: string; tablet: string; phone: string }
+  images?: { laptop: string; tablet?: string; phone?: string }
   reverse?: boolean
 }
 
@@ -137,15 +137,22 @@ export function DeviceShowcase(props: ShowcaseProps = {}) {
         {/* Device cluster */}
         <div ref={clusterRef} className={cn("ds-reveal relative mx-auto aspect-[5/4] w-full max-w-2xl [perspective:1200px]", reverse && "lg:order-1")}>
           <div ref={tiltRef} className="relative h-full w-full [transform-style:preserve-3d]">
-            <div ref={tabletRef} className="absolute left-0 top-[16%] w-[38%] -rotate-[7deg]">
-              <Tablet src={images.tablet} />
-            </div>
-            <div ref={laptopRef} className="absolute right-0 top-0 w-[82%]">
+            {images.tablet && (
+              <div ref={tabletRef} className="absolute left-0 top-[16%] w-[38%] -rotate-[7deg]">
+                <Tablet src={images.tablet} />
+              </div>
+            )}
+            <div
+              ref={laptopRef}
+              className={cn("absolute top-0", images.tablet ? "right-0 w-[82%]" : "left-1/2 w-[90%] -translate-x-1/2")}
+            >
               <Laptop src={images.laptop} />
             </div>
-            <div ref={phoneRef} className="absolute -bottom-4 right-8 w-[20%] rotate-[4deg]">
-              <Phone src={images.phone} />
-            </div>
+            {images.phone && (
+              <div className={cn("absolute -bottom-4 w-[20%] rotate-[4deg]", images.tablet ? "right-8" : "right-0")} ref={phoneRef}>
+                <Phone src={images.phone} />
+              </div>
+            )}
           </div>
         </div>
       </div>

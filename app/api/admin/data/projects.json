@@ -71,9 +71,11 @@
     "liveUrl": "https://onboarding.steuerservice.at",
     "devices": {
       "laptop": "/img/onboto-admin-desktop.jpg",
-      "tablet": "/img/onboto-login-desktop.jpg",
       "phone": "/img/onboto-login-mobile.jpg"
     },
+    "gallery": [
+      { "src": "/img/onboto-login-desktop.jpg", "caption": { "en": "OTP login — clients get in without an account", "de": "OTP-Login — Mandanten kommen ohne Konto hinein" } }
+    ],
     "stats": [
       { "value": "~600", "label": { "en": "audit tests", "de": "Audit-Tests" } },
       { "value": "4", "label": { "en": "live integrations", "de": "Live-Integrationen" } },

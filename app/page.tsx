@@ -32,7 +32,7 @@ export default function Page() {
           }}
           tech={["React 19", "Node / Express", "PostgreSQL", "MOXIS (QES)", "WiEReG", "BMD"]}
           href="/work/2"
-          images={{ laptop: "/img/onboto-admin-desktop.jpg", tablet: "/img/onboto-login-desktop.jpg", phone: "/img/onboto-login-mobile.jpg" }}
+          images={{ laptop: "/img/onboto-admin-desktop.jpg", phone: "/img/onboto-login-mobile.jpg" }}
         />
         <AiDemo />
         <IoShowcase />
