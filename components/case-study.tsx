@@ -114,7 +114,7 @@ export function CaseStudy({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 border border-foreground/20 px-6 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-all duration-200 hover:border-accent hover:text-accent"
             >
-              {T.repo[lang]}
+              {project.urlLabel?.[lang] ?? T.repo[lang]}
               <BitmapChevron className="transition-transform group-hover:rotate-45" />
             </a>
           )}

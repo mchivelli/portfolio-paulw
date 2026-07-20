@@ -270,8 +270,59 @@
       ]
     },
     "medium": { "en": "R&D · Agent Infra", "de": "Eigenlabor · Agenten-Infra" },
-    "span": "col-span-2 md:col-span-4 row-span-1",
+    "span": "col-span-2 row-span-1",
     "featured": true,
     "visual": "io-panel"
+  },
+  {
+    "id": 7,
+    "title": { "en": "War 'N Taxes — Open Source", "de": "War 'N Taxes — Open Source" },
+    "description": {
+      "en": "An open-source Minecraft mod downloaded over 340,000 times — born on the multiplayer platform I build and run myself.",
+      "de": "Ein Open-Source-Minecraft-Mod mit über 340.000 Downloads — entstanden auf der Multiplayer-Plattform, die ich selbst baue und betreibe."
+    },
+    "longDescription": {
+      "en": "A MineColonies addon that turns colonies into economies and battlegrounds: a configurable taxation system per building, war and raid mechanics with territory control, vassalage and tribute, PvP arena duels, and a complete in-game guidebook. Published open source on CurseForge (340,591 downloads) and Modrinth, and used in modpacks worldwide. It grew out of Warborn Realms — a platform I build and operate myself: a web portal with accounts, forum, wiki and leaderboards on Next.js, Node and PostgreSQL, over 30 independent Java modules, a Discord bot for community workflows, and AI-driven NPCs with persistent memory and relationship tracking running live with real players. A 600-member community, funded by its own supporters. Every module goes through a three-tier test pipeline: datapack validation, a live load test over RCON, then behaviour.",
+      "de": "Ein MineColonies-Addon, das Kolonien in Volkswirtschaften und Schlachtfelder verwandelt: ein konfigurierbares Steuersystem pro Gebäude, Kriegs- und Raid-Mechanik mit Territorialkontrolle, Vasallen- und Tributsysteme, PvP-Arena-Duelle und ein vollständiges In-Game-Handbuch. Quelloffen veröffentlicht auf CurseForge (340.591 Downloads) und Modrinth, weltweit in Modpacks im Einsatz. Entstanden ist es auf Warborn Realms — einer Plattform, die ich selbst baue und betreibe: ein Web-Portal mit Benutzerkonten, Forum, Wiki und Ranglisten auf Next.js, Node und PostgreSQL, über 30 eigenständige Java-Module, ein Discord-Bot für Community-Abläufe und KI-NPCs mit persistentem Gedächtnis und Beziehungsmodell, live mit echten Spielern. Eine Community mit 600 Mitgliedern, getragen von ihren eigenen Unterstützern. Jedes Modul läuft durch eine dreistufige Testpipeline: Datapack-Validierung, Live-Ladetest per RCON, dann Verhalten."
+    },
+    "tech": ["Java", "Forge / NeoForge", "Patchouli", "Next.js", "Node.js", "PostgreSQL", "Discord API"],
+    "image": "/img/warborn-desktop.jpg",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/minecolonies-war-n-taxes",
+    "urlLabel": { "en": "View on CurseForge", "de": "Auf CurseForge ansehen" },
+    "liveUrl": "https://warbornrealms.com",
+    "devices": {
+      "laptop": "/img/warborn-desktop.jpg",
+      "phone": "/img/warborn-mobile.jpg"
+    },
+    "stats": [
+      { "value": "340k+", "label": { "en": "downloads", "de": "Downloads" } },
+      { "value": "600", "label": { "en": "community members", "de": "Community-Mitglieder" } },
+      { "value": "30+", "label": { "en": "Java modules", "de": "Java-Module" } }
+    ],
+    "features": {
+      "en": [
+        "340,591 downloads on CurseForge, ~9,000 more on Modrinth",
+        "Taxation, war and raid mechanics, vassalage and tribute systems",
+        "PvP arena duels and a complete in-game guidebook (Patchouli)",
+        "Warborn Realms: web portal with accounts, forum, wiki and leaderboards",
+        "AI NPCs with persistent memory and relationship tracking — live with real players",
+        "30+ independent Java modules; mostly my own work, plus integrated and ported third-party mods",
+        "Three-tier test pipeline: datapack validation, live RCON load test, behaviour",
+        "600-member community, funded by its own supporters"
+      ],
+      "de": [
+        "340.591 Downloads auf CurseForge, dazu ~9.000 auf Modrinth",
+        "Steuersystem, Kriegs- und Raid-Mechanik, Vasallen- und Tributsysteme",
+        "PvP-Arena-Duelle und vollständiges In-Game-Handbuch (Patchouli)",
+        "Warborn Realms: Web-Portal mit Konten, Forum, Wiki und Ranglisten",
+        "KI-NPCs mit persistentem Gedächtnis und Beziehungsmodell — live mit echten Spielern",
+        "30+ eigenständige Java-Module; Großteil Eigenentwicklung, dazu integrierte und portierte Fremd-Mods",
+        "Dreistufige Testpipeline: Datapack-Validierung, Live-Ladetest per RCON, Verhalten",
+        "Community mit 600 Mitgliedern, von den eigenen Unterstützern getragen"
+      ]
+    },
+    "medium": { "en": "R&D · Open Source", "de": "Eigenlabor · Open Source" },
+    "span": "col-span-2 row-span-1",
+    "featured": true
   }
 ]

@@ -23,6 +23,8 @@ export interface Project {
     stats?: { value: string; label: { [key: string]: string } }[];
     /** Named code-rendered visual when no screenshot exists (e.g. "io-panel") */
     visual?: string;
+    /** Overrides the default "Repository" label on the `url` button */
+    urlLabel?: { [key: string]: string };
 }
 
 export const projects: Project[] = projectsData as Project[];
