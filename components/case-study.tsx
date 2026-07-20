@@ -197,7 +197,7 @@ export function CaseStudy({ project }: { project: Project }) {
             </h2>
             <span className="h-px flex-1 bg-border/40" />
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className={cn("grid gap-6", gallery.length > 1 ? "md:grid-cols-2" : "max-w-3xl")}>
             {gallery.map((g, i) => (
               <figure key={i} className="group">
                 <div className="relative overflow-hidden border border-border/40 bg-black/20">
