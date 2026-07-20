@@ -16,8 +16,8 @@
     "role": { "en": "Full-Stack & AI Developer", "de": "Full-Stack- & KI-Entwickler" },
     "company": "G&W Steuerberatung / Onboto",
     "description": {
-      "en": "Built a production client-onboarding platform (qualified e-signature, KYC, BMD export) and its white-label product spin-off — plus a recruiting portal, a RAG knowledge base and SEO tooling.",
-      "de": "Produktive Mandanten-Onboarding-Plattform gebaut (qualifizierte E-Signatur, KYC, BMD-Export) und ihr White-Label-Produkt-Spin-off — plus Recruiting-Portal, RAG-Wissensdatenbank und SEO-Tooling."
+      "en": "Built a client-onboarding platform (qualified e-signature, KYC, BMD export) that runs live at the firm — plus a recruiting portal, a RAG knowledge base and SEO tooling.",
+      "de": "Mandanten-Onboarding-Plattform gebaut (qualifizierte E-Signatur, KYC, BMD-Export), die live bei der Kanzlei läuft — plus Recruiting-Portal, RAG-Wissensdatenbank und SEO-Tooling."
     },
     "tech": ["React", "Node.js", "PostgreSQL", "E-Signature", "Azure"]
   },
