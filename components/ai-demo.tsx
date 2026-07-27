@@ -82,8 +82,8 @@ const SCRIPTS: Script[] = [
 const CHIP_ICON: Record<string, typeof Wrench> = { parts: Wrench, booking: CalendarClock, revenue: Euro }
 
 const STATS: { v: number; prefix?: string; suffix?: string; fill: number; label: Loc }[] = [
-  { v: 26, prefix: "~", fill: 0.82, label: { de: "echte Tools", en: "real tools" } },
-  { v: 793, fill: 0.96, label: { de: "Tests grün", en: "tests green" } },
+  { v: 74, fill: 0.9, label: { de: "KI-Aktionen", en: "AI actions" } },
+  { v: 1900, suffix: "+", fill: 0.96, label: { de: "Tests", en: "tests" } },
   { v: 9, fill: 0.6, label: { de: "Sprachen", en: "languages" } },
 ]
 

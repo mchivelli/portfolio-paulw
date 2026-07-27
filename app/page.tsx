@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/hero-section"
 import { WorkSection } from "@/components/work-section"
 import { AiDemo } from "@/components/ai-demo"
 import { IoShowcase } from "@/components/io-showcase"
+import { CapabilityMap } from "@/components/capability-map"
 import { DeviceShowcase } from "@/components/device-showcase"
 import { PrinciplesSection } from "@/components/principles-section"
 import { ProductivitySection } from "@/components/productivity-section"
@@ -36,6 +37,7 @@ export default function Page() {
         />
         <AiDemo />
         <IoShowcase />
+        <CapabilityMap />
         <PrinciplesSection />
         <ProductivitySection />
         <ContactSection />

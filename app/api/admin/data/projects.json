@@ -7,8 +7,8 @@
       "de": "Produktive Plattform für eine KFZ-Werkstatt mit echtem Tool-callendem KI-Assistenten, Kamera-OCR und mehrsprachigem Kunden-Chatbot."
     },
     "longDescription": {
-      "en": "An end-to-end operating system for a car workshop: a multilingual customer site, online booking, a full CRM, an RKSV-compliant point of sale and a mechanic tablet app — with an AI layer that actually does the work. The admin assistant calls ~26 real database tools, keeps persistent memory, escalates destructive actions behind a PIN and is guarded against prompt injection. GPT-4o vision reads the Austrian vehicle registration by camera, Whisper transcribes the mechanic at the bench, and a RAG chatbot answers price questions over web and WhatsApp.",
-      "de": "Ein End-to-End-Betriebssystem für eine KFZ-Werkstatt: mehrsprachige Kundenseite, Online-Terminbuchung, volles CRM, RKSV-konforme Kassa und eine Mechaniker-Tablet-App — mit einer KI-Schicht, die wirklich arbeitet. Der Admin-Assistent ruft ~26 echte Datenbank-Tools auf, hat persistentes Gedächtnis, eskaliert destruktive Aktionen hinter einer PIN und ist gegen Prompt-Injection abgesichert. GPT-4o-Vision liest den Zulassungsschein per Kamera, Whisper transkribiert den Mechaniker an der Hebebühne, und ein RAG-Chatbot beantwortet Preisfragen über Web und WhatsApp."
+      "en": "Two things in one. A multilingual customer site — online booking, prices, chatbot, polished on every device — and behind it the real engine: an AI CRM that takes over the workshop's actual work. The assistant runs 74 real actions straight against the database: writing and sending emails via Microsoft Graph, coordinating appointments across five bays with double-booking checks, pulling parts from the REPDOC catalog, reading the vehicle registration by camera to auto-create customer, vehicle and job, all the way to finished report, offer and invoice PDFs. Provider-agnostic (Claude, GPT, OpenRouter), with persistent memory, RBAC and a PIN gate on sensitive actions, guarded against prompt injection, and backed by over 1,900 automated tests. The mechanic dictates at the bench via Whisper — the system acts.",
+      "de": "Zwei Dinge in einem. Eine mehrsprachige Kundenseite — Online-Buchung, Preise, Chatbot, auf jedem Gerät poliert — und dahinter das eigentliche Kraftwerk: ein KI-CRM, das die Werkstatt-Arbeit übernimmt. Der Assistent führt 74 echte Aktionen direkt auf der Datenbank aus: E-Mails schreiben und über Microsoft Graph verschicken, Termine über fünf Hebebühnen mit Doppelbelegungs-Check koordinieren, Teile aus dem REPDOC-Katalog heraussuchen, den Zulassungsschein per Kamera einlesen und Kunde, Fahrzeug und Auftrag automatisch anlegen, bis hin zu fertigen Berichts-, Angebots- und Rechnungs-PDFs. Provider-agnostisch (Claude, GPT, OpenRouter), mit persistentem Gedächtnis, RBAC und PIN-Gate für sensible Aktionen, gegen Prompt-Injection abgesichert und mit über 1.900 automatisierten Tests hinterlegt. Der Mechaniker diktiert per Whisper an der Hebebühne — das System handelt."
     },
     "tech": ["Next.js 15", "TypeScript", "Drizzle / SQLite", "LLM Tool-Calling", "n8n", "Qdrant", "GPT-4o Vision", "Whisper"],
     "image": "/img/kfz-admin-desktop.jpg",
@@ -24,30 +24,32 @@
       { "src": "/img/kfz-book-desktop.jpg", "caption": { "en": "Online booking wizard", "de": "Online-Buchungs-Wizard" } }
     ],
     "stats": [
-      { "value": "793", "label": { "en": "tests green", "de": "Tests grün" } },
-      { "value": "~26", "label": { "en": "AI tools", "de": "KI-Tools" } },
+      { "value": "74", "label": { "en": "AI actions", "de": "KI-Aktionen" } },
+      { "value": "1.900+", "label": { "en": "automated tests", "de": "automatisierte Tests" } },
       { "value": "9", "label": { "en": "languages", "de": "Sprachen" } }
     ],
     "features": {
       "en": [
-        "Tool-calling AI assistant (~26 database tools)",
-        "Persistent agent memory + PIN-gated destructive actions",
-        "Camera OCR of the vehicle registration (GPT-4o Vision)",
-        "Voice-to-text at the mechanic tablet (Whisper)",
-        "RAG price chatbot on web + WhatsApp",
-        "RKSV point of sale + DSGVO export",
-        "9-language customer site",
-        "793 automated tests green, live on staging"
+        "AI CRM with 74 tool-actions on the workshop database",
+        "Email + offer/invoice PDFs sent via Microsoft Graph",
+        "Appointment coordination across 5 bays, double-booking checked",
+        "Parts search in the REPDOC catalog + offer generation",
+        "Vehicle registration by camera → customer/vehicle/job auto-created (GPT-4o Vision)",
+        "Whisper voice input at the mechanic tablet",
+        "Persistent memory, RBAC, PIN gate, provider-agnostic (Claude/GPT/OpenRouter)",
+        "9-language PWA customer site, RKSV receipts + DSGVO export",
+        "Over 1,900 automated tests"
       ],
       "de": [
-        "Tool-callender KI-Assistent (~26 Datenbank-Tools)",
-        "Persistentes Agent-Gedächtnis + PIN-gesicherte Aktionen",
-        "Kamera-OCR des Zulassungsscheins (GPT-4o Vision)",
-        "Sprache-zu-Text am Mechaniker-Tablet (Whisper)",
-        "RAG-Preis-Chatbot auf Web + WhatsApp",
-        "RKSV-Kassa + DSGVO-Export",
-        "Kundenseite in 9 Sprachen",
-        "793 automatisierte Tests grün, live auf Staging"
+        "KI-CRM mit 74 Tool-Aktionen auf die Werkstatt-Datenbank",
+        "E-Mail + Angebots-/Rechnungs-PDFs über Microsoft Graph",
+        "Terminkoordination über 5 Hebebühnen mit Doppelbelegungs-Check",
+        "Teilesuche im REPDOC-Katalog + Angebots-Erstellung",
+        "Zulassungsschein per Kamera → Kunde/Fahrzeug/Auftrag automatisch (GPT-4o Vision)",
+        "Whisper-Spracheingabe am Mechaniker-Tablet",
+        "Persistentes Gedächtnis, RBAC, PIN-Gate, provider-agnostisch (Claude/GPT/OpenRouter)",
+        "Kundenseite als PWA in 9 Sprachen, RKSV-Belege + DSGVO-Export",
+        "Über 1.900 automatisierte Tests"
       ]
     },
     "medium": { "en": "Agentic AI · CRM", "de": "Agentic AI · CRM" },
@@ -357,7 +359,8 @@
         "Energy-level assessment from German text analysis",
         "Radius search via geo-distance calculation",
         "REST API with filtering, search and pagination",
-        "Bilingual, favourites list and a guidance section"
+        "Native iOS + Android app (Capacitor)",
+        "Breeder marketplace with Stripe (in beta)"
       ],
       "de": [
         "DreamMatch — Vorschläge statt endloser Trefferlisten",
@@ -365,7 +368,8 @@
         "Energielevel-Einschätzung über deutsche Textanalyse",
         "Umkreissuche über Geodistanz-Berechnung",
         "REST-API mit Filtern, Suche und Paginierung",
-        "Zweisprachig, Merkliste und Ratgeber-Bereich"
+        "Native iOS- + Android-App (Capacitor)",
+        "Züchter-Marktplatz mit Stripe (in Beta)"
       ]
     },
     "medium": { "en": "R&D · Product & Design", "de": "Eigenlabor · Produkt & Design" },

@@ -12,6 +12,7 @@ const navItems = [
   { id: "showcase", label: "nav.showcase" },
   { id: "demo", label: "nav.demo" },
   { id: "io", label: "nav.io" },
+  { id: "capabilities", label: "nav.capabilities" },
   { id: "principles", label: "nav.philosophy" },
   { id: "productivity", label: "nav.productivity" },
   { id: "timeline", label: "nav.timeline" },
