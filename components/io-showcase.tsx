@@ -129,7 +129,7 @@ export function IoPanel() {
         <span className="relative block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {T.fleet[lang]}
         </span>
-        <div className="relative mt-4 grid grid-cols-4 gap-2 md:gap-4">
+        <div className="relative mt-4 grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
           {AGENTS.map((a, i) => {
             const active = i === f.agent
             return (
@@ -162,9 +162,10 @@ export function IoPanel() {
           })}
         </div>
 
-        {/* routed trace: which agent is currently driving which stage */}
+        {/* routed trace: which agent drives which stage — its 4-column geometry
+            only holds at md+, so it is hidden on the 2-column mobile fleet */}
         <svg
-          className="relative mt-1 h-12 w-full overflow-visible text-accent"
+          className="relative mt-1 hidden h-12 w-full overflow-visible text-accent md:block"
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
           aria-hidden="true"
@@ -181,7 +182,7 @@ export function IoPanel() {
         </svg>
 
         {/* delivery rail */}
-        <span className="relative block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+        <span className="relative mt-8 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 md:mt-0">
           {T.pipeline[lang]}
         </span>
         <div className="relative mt-4">
