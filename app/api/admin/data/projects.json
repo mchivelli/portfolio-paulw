@@ -64,19 +64,21 @@
       "de": "Ein live betriebenes Mandanten-Onboarding-Portal für eine Wiener Steuerkanzlei — KYC, qualifizierte E-Signatur und automatische Dokumenten-Generierung. Produktiv unter onboarding.steuerservice.at."
     },
     "longDescription": {
-      "en": "Built and operated for a Vienna tax firm and live in production at onboarding.steuerservice.at — a guided wizard that turns hours of client intake into minutes. OTP login with no account, a KYC / anti-money-laundering traffic light per WTBG, live Firmenbuch and WiEReG lookups via Compass, and qualified e-signature (QES) via XiTrust MOXIS — plus automatic document pre-fill and generation (SEPA mandate, offer, client folder) with signature anchors and a clean master-data export into BMD. A regulated, sensitive domain handled end-to-end: hundreds of audit tests, additive-only migrations, and a config-driven core built to extend to further firms.",
-      "de": "Gebaut und betrieben für eine Wiener Steuerkanzlei, live in Produktion unter onboarding.steuerservice.at — ein geführter Wizard, der aus stundenlanger Mandanten-Aufnahme Minuten macht. OTP-Login ohne Konto, eine KYC- / Geldwäsche-Ampel nach WTBG, Live-Firmenbuch- und WiEReG-Abfragen über Compass und qualifizierte E-Signatur (QES) via XiTrust MOXIS — dazu automatische Dokumenten-Vorausfüllung und -Generierung (SEPA-Mandat, Angebot, Klientenmappe) mit Signatur-Ankern und ein sauberer Stammdaten-Export nach BMD. Ein reguliertes, sensibles Feld end-to-end umgesetzt: hunderte Audit-Tests, nur additive Migrationen und ein config-getriebener Kern, der sich auf weitere Kanzleien erweitern lässt."
+      "en": "Built and run in production for a Vienna tax firm at onboarding.steuerservice.at. The client enters their company — the platform fetches the rest itself: the commercial register and beneficial owners are pulled live via Compass, a KYC / anti-money-laundering traffic light (GREEN/YELLOW/RED per WTBG 2017) screens automatically, and the client signs by phone with a qualified e-signature (QES via XiTrust MOXIS). At the end the finished client, together with automatically generated documents (SEPA mandate, offer, client folder), lands straight in BMD via batch import — no typing, no re-entry. Hours of client intake become minutes. A regulated, sensitive domain handled end to end: hundreds of audit tests, a secure on-prem hand-off, and a config-driven core designed to extend to further firms as a white-label.",
+      "de": "Gebaut und live betrieben für eine Wiener Steuerkanzlei unter onboarding.steuerservice.at. Der Mandant gibt seine Firma ein — den Rest holt die Plattform selbst: Firmenbuch und wirtschaftliche Eigentümer werden live über Compass abgefragt, eine KYC- / Geldwäsche-Ampel (GRÜN/GELB/ROT nach WTBG 2017) prüft automatisch, und der Klient signiert qualifiziert per Handy (QES via XiTrust MOXIS). Am Ende landet der fertige Klient samt automatisch erzeugten Dokumenten (SEPA-Mandat, Angebot, Klientenmappe) per Stapelimport direkt in BMD — kein Abtippen, kein Nacherfassen. Aus stundenlanger Mandanten-Aufnahme werden Minuten. Ein reguliertes, sensibles Feld end-to-end umgesetzt: hunderte Audit-Tests, eine gesicherte On-Prem-Übergabe und ein config-getriebener Kern, der als White-Label auf weitere Kanzleien ausgelegt ist."
     },
     "tech": ["React 19", "Node.js / Express", "PostgreSQL", "XiTrust MOXIS (QES)", "Compass / WiEReG", "BMD Export"],
-    "image": "/img/mockup-guw.png",
+    "image": "/img/guw-01-kyc-start.jpg",
     "url": "#",
     "liveUrl": "https://onboarding.steuerservice.at",
     "devices": {
-      "laptop": "/img/onboto-admin-desktop.jpg",
-      "phone": "/img/onboto-login-mobile.jpg"
+      "laptop": "/img/guw-01-kyc-start.jpg",
+      "phone": "/img/guw-login-mobile.jpg"
     },
     "gallery": [
-      { "src": "/img/onboto-login-desktop.jpg", "caption": { "en": "OTP login — clients get in without an account", "de": "OTP-Login — Mandanten kommen ohne Konto hinein" } }
+      { "src": "/img/guw-04-ergebnis.jpg", "caption": { "en": "KYC result: low risk → mandate possible, with 3 documents generated automatically", "de": "KYC-Ergebnis: niedriges Risiko → Mandat möglich, mit 3 automatisch erzeugten Dokumenten" } },
+      { "src": "/img/guw-03-gwp.jpg", "caption": { "en": "AML risk checklist per §§ 91–92 WTBG 2017 (PEP, sanctions, FATF)", "de": "Geldwäsche-Risiko-Checkliste nach §§ 91–92 WTBG 2017 (PEP, Sanktionen, FATF)" } },
+      { "src": "/img/guw-02-checkliste.jpg", "caption": { "en": "Identification checklist per § 90 WTBG — before mandate acceptance", "de": "Identifizierungs-Checkliste nach § 90 WTBG — vor Mandatsannahme" } }
     ],
     "stats": [
       { "value": "~600", "label": { "en": "audit tests", "de": "Audit-Tests" } },
@@ -92,7 +94,7 @@
         "Qualified e-signature (QES) via XiTrust MOXIS",
         "Document pre-fill: master data → SEPA, offer, client folder",
         "Automatic PDF/DOCX generation with signature anchors",
-        "Clean master-data export into BMD (NTCS)",
+        "Client + documents auto-created in BMD (batch import — no re-entry)",
         "Hundreds of audit tests, config-driven to extend to further firms"
       ],
       "de": [
@@ -103,7 +105,7 @@
         "Qualifizierte E-Signatur (QES) via XiTrust MOXIS",
         "Dokumenten-Vorausfüllung: Stammdaten → SEPA, Angebot, Klientenmappe",
         "Automatische PDF/DOCX-Generierung mit Signatur-Ankern",
-        "Sauberer Stammdaten-Export nach BMD (NTCS)",
+        "Klient + Dokumente automatisch in BMD (Stapelimport — kein Nacherfassen)",
         "Hunderte Audit-Tests, config-getrieben auf weitere Kanzleien erweiterbar"
       ]
     },

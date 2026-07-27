@@ -28,12 +28,12 @@ export default function Page() {
           label={{ de: "IN PRODUKTION · STEUERKANZLEI", en: "IN PRODUCTION · TAX FIRM" }}
           title={{ de: "ONBOARDING,\nLIVE BEIM KUNDEN", en: "ONBOARDING,\nLIVE IN PRODUCTION" }}
           sub={{
-            de: "OTP-Login, KYC-Ampel, Compass-Firmenbuch, MOXIS-QES-Signatur und automatische Dokument-Generierung — der geführte Wizard macht aus stundenlanger Mandanten-Aufnahme Minuten. Gebaut und live betrieben für eine Wiener Steuerkanzlei unter onboarding.steuerservice.at.",
-            en: "OTP login, KYC traffic light, Compass company lookup, MOXIS QES signature and automatic document generation — the guided wizard turns hours of client intake into minutes. Built and run in production for a Vienna tax firm at onboarding.steuerservice.at.",
+            de: "Der Mandant gibt seine Firma ein — Firmenbuch und wirtschaftliche Eigentümer holt die Plattform live über Compass, die KYC-Ampel prüft automatisch, signiert wird qualifiziert per Handy. Am Ende landet der fertige Klient samt Dokumenten per Knopfdruck direkt in BMD — kein Abtippen, kein Nacherfassen. Live für eine Wiener Steuerkanzlei.",
+            en: "The client enters their company — the platform pulls the register and beneficial owners live via Compass, the KYC traffic light screens automatically, signing is qualified and done by phone. At the end the finished client and documents land straight in BMD — no typing, no re-entry. Live for a Vienna tax firm.",
           }}
-          tech={["React 19", "Node / Express", "PostgreSQL", "MOXIS (QES)", "WiEReG", "BMD"]}
+          tech={["React 19", "Node / Express", "PostgreSQL", "MOXIS (QES)", "Compass / WiEReG", "BMD"]}
           href="/work/2"
-          images={{ laptop: "/img/onboto-admin-desktop.jpg", phone: "/img/onboto-login-mobile.jpg" }}
+          images={{ laptop: "/img/guw-01-kyc-start.jpg", phone: "/img/guw-login-mobile.jpg" }}
         />
         <AiDemo />
         <IoShowcase />
