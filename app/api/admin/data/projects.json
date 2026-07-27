@@ -78,7 +78,9 @@
     "gallery": [
       { "src": "/img/guw-04-ergebnis.jpg", "caption": { "en": "KYC result: low risk → mandate possible, with 3 documents generated automatically", "de": "KYC-Ergebnis: niedriges Risiko → Mandat möglich, mit 3 automatisch erzeugten Dokumenten" } },
       { "src": "/img/guw-03-gwp.jpg", "caption": { "en": "AML risk checklist per §§ 91–92 WTBG 2017 (PEP, sanctions, FATF)", "de": "Geldwäsche-Risiko-Checkliste nach §§ 91–92 WTBG 2017 (PEP, Sanktionen, FATF)" } },
-      { "src": "/img/guw-02-checkliste.jpg", "caption": { "en": "Identification checklist per § 90 WTBG — before mandate acceptance", "de": "Identifizierungs-Checkliste nach § 90 WTBG — vor Mandatsannahme" } }
+      { "src": "/img/guw-02-checkliste.jpg", "caption": { "en": "Identification checklist per § 90 WTBG — before mandate acceptance", "de": "Identifizierungs-Checkliste nach § 90 WTBG — vor Mandatsannahme" } },
+      { "src": "/img/bmd-proof-docs.png", "caption": { "en": "Proof it lands fully automatically in BMD: client + all documents created via batch import (author: STAPEL) — no re-keying", "de": "Beweis: alles landet vollautomatisch in BMD — Klient + sämtliche Dokumente per Stapelimport angelegt (Ersteller: STAPEL), kein Abtippen" } },
+      { "src": "/img/bmd-proof-stamm.png", "caption": { "en": "Master data created in BMD with live Compass verification (green check); tax ID / SVNR / UID redacted", "de": "Stammdaten in BMD angelegt, mit Live-Compass-Abgleich (grüner Haken); Steuer-Nr. / SVNR / UID geschwärzt" } }
     ],
     "stats": [
       { "value": "~600", "label": { "en": "audit tests", "de": "Audit-Tests" } },
